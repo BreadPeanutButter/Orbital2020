@@ -1,1 +1,2 @@
-This project is called NUS WhatToDO?
+Team name: NUS WhatToDo?
+Member: Yong Ming, Joon Jie
