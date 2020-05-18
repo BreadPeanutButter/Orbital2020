@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orbital/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../home/home.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -7,32 +9,59 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final AuthService _auth = AuthService();
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _email, _password;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue[100],
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        elevation: 0.0,
-        title: Text('Sign in to NUS WhatToDo?'),
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: RaisedButton(
-          child: Text('sign in anon'),
-          onPressed: () async{
-            dynamic result = await _auth.signInAnon();
-            if(result == null){
-              print('error signing in');
-            }
-            else{
-              print('signed in');
-              print(result);
-            }
-          },
-        ),
+    return new Scaffold(
+      appBar: new AppBar(),
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              validator: (input) {
+                if(input.isEmpty){
+                  return 'Provide an email';
+                }
+              },
+              decoration: InputDecoration(
+                labelText: 'Email'
+              ),
+              onSaved: (input) => _email = input,
+            ),
+            TextFormField(
+              validator: (input) {
+                if(input.length < 6){
+                  return 'Longer password please';
+                }
+              },
+              decoration: InputDecoration(
+                labelText: 'Password'
+              ),
+              onSaved: (input) => _password = input,
+              obscureText: true,
+            ),
+            RaisedButton(
+              onPressed: signIn,
+              child: Text('Sign in'),
+            ),
+          ],
+        )
       ),
     );
+  }
+
+  void signIn() async {
+    if(_formKey.currentState.validate()){
+      _formKey.currentState.save();
+      try{
+        FirebaseUser user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password)).user;
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Home(user: user)));
+      }catch(e){
+        print(e.message);
+      }
+    }
   }
 }
