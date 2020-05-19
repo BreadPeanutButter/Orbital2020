@@ -15,11 +15,12 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(),
+      appBar: new AppBar(title: Text('Login Page'),),
       body: Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
+            Image.asset("images/logo.png", height: 200, width: 200,),
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
@@ -27,8 +28,11 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                 }
               },
               decoration: InputDecoration(
-                labelText: 'Email'
+                labelText: 'Email',
+                hintText: 'you@email.com',
+                icon: Icon(Icons.email)
               ),
+              keyboardType: TextInputType.emailAddress,
               onSaved: (input) => _email = input,
             ),
             TextFormField(
@@ -38,7 +42,8 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                 }
               },
               decoration: InputDecoration(
-                labelText: 'Password'
+                labelText: 'Password',
+                icon: Icon(Icons.account_box),
               ),
               onSaved: (input) => _password = input,
               obscureText: true,
