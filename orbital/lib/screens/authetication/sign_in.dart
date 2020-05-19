@@ -15,7 +15,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: Text('Login Page'),),
+      appBar: new AppBar(title: Text('Login Page'),centerTitle: true),
       body: Form(
         key: _formKey,
         child: Column(
