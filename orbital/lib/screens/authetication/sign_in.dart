@@ -81,12 +81,12 @@ class _SignInState extends State<SignIn> {
               actions: <Widget>[
                 FlatButton(
                   child: Text('OK'),
-                  onPressed: () => Navigator.pop(context),)
+                  onPressed: () => Navigator.pushNamed(context, '/',),)
               ]
             );
           }
         );
-        print(e.message);
+        
       }
     }
   }
