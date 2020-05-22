@@ -50,10 +50,12 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
               onSaved: (input) => _password = input,
               obscureText: true,
             ),
+            SizedBox(height: 30),
             CupertinoButton.filled(
               onPressed: signIn,
               child: Text('Log in'),
             ),
+            SizedBox(height: 30),
             CupertinoButton.filled(
               onPressed: null,
               child: Text('Sign Up')
