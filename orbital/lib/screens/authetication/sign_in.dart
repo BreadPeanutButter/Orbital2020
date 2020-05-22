@@ -3,8 +3,6 @@ import 'package:orbital/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../home/home.dart';
-
 class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
@@ -73,7 +71,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
       _formKey.currentState.save();
       try{
         FirebaseUser user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password)).user;
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Home(user: user)));
+        Navigator.pushNamed(context, '/activity');
       }catch(e){
         print(e.message);
       }
