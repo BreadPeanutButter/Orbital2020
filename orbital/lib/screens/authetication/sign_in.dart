@@ -73,6 +73,19 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
         FirebaseUser user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password)).user;
         Navigator.pushNamed(context, '/activity');
       }catch(e){
+        showDialog(
+          context: context,
+          builder: (BuildContext context)  {
+            return AlertDialog(
+              content: Text('Incorrect email or password. \nTry again.'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('OK'),
+                  onPressed: () => Navigator.pop(context),)
+              ]
+            );
+          }
+        );
         print(e.message);
       }
     }
