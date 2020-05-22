@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'app_drawer.dart';
+import '../app_drawer.dart';
 
 class ActivityFeed extends StatelessWidget  {
 

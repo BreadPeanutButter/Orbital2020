@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orbital/screens/wrapper.dart';
 
-import 'screens/activity_feed.dart';
+import 'screens/activity_feed/activity_feed.dart';
 
 void main() {
   runApp(MyApp());
