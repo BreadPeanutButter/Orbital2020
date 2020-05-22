@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+
 import '../home/home.dart';
 
 class SignIn extends StatefulWidget {
@@ -18,7 +20,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
       appBar: new AppBar(title: Text('Login Page'),centerTitle: true),
       body: Form(
         key: _formKey,
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Image.asset("images/logo.png", height: 200, width: 200,),
             TextFormField(
@@ -29,7 +31,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
               },
               decoration: InputDecoration(
                 labelText: 'Email',
-                hintText: 'you@email.com',
+                hintText: 'you@example.com',
                 icon: Icon(Icons.email)
               ),
               keyboardType: TextInputType.emailAddress,
@@ -48,9 +50,13 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
               onSaved: (input) => _password = input,
               obscureText: true,
             ),
-            RaisedButton(
+            CupertinoButton.filled(
               onPressed: signIn,
-              child: Text('Sign in'),
+              child: Text('Log in'),
+            ),
+            CupertinoButton.filled(
+              onPressed: null,
+              child: Text('Sign Up')
             ),
           ],
         )
