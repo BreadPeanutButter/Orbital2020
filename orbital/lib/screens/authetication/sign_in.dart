@@ -17,12 +17,14 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: Text('Login Page'),centerTitle: true),
+      appBar: new AppBar(title: Text('Welcome!'),centerTitle: true),
       body: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
+            SizedBox(height: 50),
             Image.asset("images/logo.png", height: 200, width: 200,),
+            SizedBox(height: 30),
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
