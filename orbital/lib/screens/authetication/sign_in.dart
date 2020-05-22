@@ -9,7 +9,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email, _password;
 
   @override
@@ -52,7 +52,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
             ),
             SizedBox(height: 30),
             CupertinoButton.filled(
-              onPressed: signIn,
+              onPressed: _signIn,
               child: Text('Log in'),
             ),
             SizedBox(height: 30),
@@ -66,7 +66,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     );
   }
 
-  void signIn() async {
+  void _signIn() async {
     if(_formKey.currentState.validate()){
       _formKey.currentState.save();
       try{
