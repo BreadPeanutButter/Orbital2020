@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orbital/screens/wrapper.dart';
 
 import 'screens/activity_feed/activity_feed.dart';
+import 'screens/explore/explore.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (BuildContext ctx) => Wrapper(),
         '/activity': (BuildContext ctx) => ActivityFeed(),
+        '/explore': (BuildContext ctx) => Explore(),
       },
       
     );

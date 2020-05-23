@@ -13,12 +13,12 @@ class AppDrawer extends StatelessWidget {
       ListTile(
         leading: Icon(Icons.looks_one),
         title: Text('Activity Feed'),
-        onTap: null,
+        onTap: () => Navigator.pushNamed(context, '/activity'),
       ),
       ListTile(
         leading: Icon(Icons.looks_two),
         title: Text('Explore CCAs'),
-        onTap: null,
+        onTap: () => Navigator.pushNamed(context, '/explore'),
       ),
       ListTile(
         leading: Icon(Icons.looks_3),

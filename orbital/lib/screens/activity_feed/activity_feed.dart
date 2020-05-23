@@ -21,20 +21,20 @@ class ActivityFeed extends StatelessWidget {
               unselectedLabelColor: Colors.grey[50],
               tabs: <Widget>[
                 Tab(
+                  icon: Icon(Icons.star),
+                  child: Text('Favourites'),
+                ),
+                Tab(
                   icon: Icon(Icons.whatshot),
                   child: Text('All'),
                 ),
-                Tab(
-                  icon: Icon(Icons.star),
-                  child: Text('My Favourites'),
-                )
               ],
             ),
           ),
           body: TabBarView(
             children: <Widget>[
-              Text('All: Display List of all CCAs queried from Cloud Firebase'),
-              Text('Favourite: Display List of favourite CCAs queried from Cloud Firebase')
+              Text('All: Display List of all CCA activity queried from Cloud Firebase'),
+              Text('Favourite: Display List of favourite CCAs activity queried from Cloud Firebase')
             ],),
           drawer: AppDrawer(),
         ));
