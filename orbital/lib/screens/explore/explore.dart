@@ -58,15 +58,15 @@ class Explore extends StatelessWidget {
                   child: categories[6],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(Icons.fitness_center),
                   child: categories[7],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(Icons.directions_bike),
                   child: categories[8],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(Icons.laptop_chromebook),
                   child: categories[9],
                 ),
               ],
