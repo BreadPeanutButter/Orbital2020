@@ -36,7 +36,7 @@ class ActivityFeed extends StatelessWidget {
               Text('All: Display List of all CCA activity queried from Cloud Firebase'),
               Text('Favourite: Display List of favourite CCAs activity queried from Cloud Firebase')
             ],),
-          drawer: AppDrawer(),
+          drawer: AppDrawer(drawer: Drawers.activity),
         ));
   }
 }

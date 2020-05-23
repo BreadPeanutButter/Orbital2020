@@ -75,7 +75,7 @@ class Explore extends StatelessWidget {
           body: TabBarView(
             children: categories, 
             ),
-          drawer: AppDrawer(),
+          drawer: AppDrawer(drawer: Drawers.explore),
         ));
   }
 }
