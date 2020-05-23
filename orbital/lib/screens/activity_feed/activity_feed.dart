@@ -14,6 +14,11 @@ class ActivityFeed extends StatelessWidget {
             title: Text('Activity Feed'),
             centerTitle: true,
             bottom: TabBar(
+              labelStyle: TextStyle(fontSize: 22.0),
+              indicatorColor: Colors.amber[700] ,
+              indicatorWeight: 4.0,
+              labelColor: Colors.amber[800],
+              unselectedLabelColor: Colors.grey[50],
               tabs: <Widget>[
                 Tab(
                   icon: Icon(Icons.whatshot),
