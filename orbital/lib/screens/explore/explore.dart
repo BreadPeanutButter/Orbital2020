@@ -5,28 +5,33 @@ import 'package:flutter/cupertino.dart';
 import '../app_drawer.dart';
 
 class Explore extends StatelessWidget {
-
-  static const categories = <Text>[Text('Favourites'), Text('All'),
-                                   Text('Academic'), Text('Adventure'),
-                                   Text('Arts'), Text('Social Cause'),
-                                   Text('Cultural'), Text('Health'),
-                                   Text('Sports'), Text('Technology')];
+  static const categories = <Text>[
+    Text('Favourites'),
+    Text('All'),
+    Text('Academic'),
+    Text('Adventure'),
+    Text('Arts'),
+    Text('Social Cause'),
+    Text('Cultural'),
+    Text('Health'),
+    Text('Sports'),
+    Text('Technology')
+  ];
 
   @override
   Widget build(BuildContext context) {
-  
     return DefaultTabController(
         length: 10,
         child: Scaffold(
           appBar: new AppBar(
-            title: Text('Explore CCAs'),
+            title: Text('Explore CCAs', style: TextStyle(color: Colors.black)),
             centerTitle: true,
             bottom: TabBar(
               isScrollable: true,
               labelStyle: TextStyle(fontSize: 22.0),
-              indicatorColor: Colors.amber[700] ,
+              indicatorColor: Colors.amber[700],
               indicatorWeight: 4.0,
-              labelColor: Colors.amber[800],
+              labelColor: Colors.black,
               unselectedLabelColor: Colors.grey[50],
               tabs: <Widget>[
                 Tab(
@@ -73,8 +78,8 @@ class Explore extends StatelessWidget {
             ),
           ),
           body: TabBarView(
-            children: categories, 
-            ),
+            children: categories,
+          ),
           drawer: AppDrawer(drawer: Drawers.explore),
         ));
   }

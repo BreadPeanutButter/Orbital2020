@@ -11,13 +11,13 @@ class ActivityFeed extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: new AppBar(
-            title: Text('Activity Feed'),
+            title: Text('Activity Feed', style: TextStyle(color: Colors.black)),
             centerTitle: true,
             bottom: TabBar(
               labelStyle: TextStyle(fontSize: 22.0),
-              indicatorColor: Colors.amber[700] ,
+              indicatorColor: Colors.amber[700],
               indicatorWeight: 4.0,
-              labelColor: Colors.amber[800],
+              labelColor: Colors.black,
               unselectedLabelColor: Colors.grey[50],
               tabs: <Widget>[
                 Tab(
@@ -33,9 +33,12 @@ class ActivityFeed extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              Text('All: Display List of all CCA activity queried from Cloud Firebase'),
-              Text('Favourite: Display List of favourite CCAs activity queried from Cloud Firebase')
-            ],),
+              Text(
+                  'All: Display List of all CCA activity queried from Cloud Firebase'),
+              Text(
+                  'Favourite: Display List of favourite CCAs activity queried from Cloud Firebase')
+            ],
+          ),
           drawer: AppDrawer(drawer: Drawers.activity),
         ));
   }
