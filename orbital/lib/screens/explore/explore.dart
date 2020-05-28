@@ -3,6 +3,7 @@ import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../app_drawer.dart';
+import 'explore_all.dart';
 
 class Explore extends StatelessWidget {
   static const categories = <Text>[
@@ -78,7 +79,10 @@ class Explore extends StatelessWidget {
             ),
           ),
           body: TabBarView(
-            children: categories,
+            children: [categories[0], ExploreAll(), categories[2],
+                       categories[3], categories[4], categories[5],
+                       categories[6], categories[7], categories[8],
+                       categories[9]],
           ),
           drawer: AppDrawer(drawer: Drawers.explore),
         ));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orbital/screens/wrapper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'screens/activity_feed/activity_feed.dart';
 import 'screens/explore/explore.dart';
