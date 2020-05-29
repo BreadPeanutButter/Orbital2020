@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:orbital/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:orbital/screens/authetication/sign_up.dart';
+
 
 class SignIn extends StatefulWidget {
   @override
@@ -65,10 +68,14 @@ class _SignInState extends State<SignIn> {
                 child: Text('Log in'),
               ),
               SizedBox(height: 30),
-              CupertinoButton.filled(onPressed: null, child: Text('Sign Up')),
+            CupertinoButton.filled(onPressed: navigateToSignUp , child: Text('Sign Up')),
             ],
           )),
     );
+  }
+
+  void navigateToSignUp(){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage(), fullscreenDialog: true));
   }
 
   void _signIn() async {
