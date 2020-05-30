@@ -46,13 +46,6 @@ class AppDrawer extends StatelessWidget {
             title: Text('My Profile'),
             onTap: null,
           )),
-      Ink(
-        color: drawer == Drawers.event ? Colors.blue : Colors.transparent,
-        child: ListTile(
-          leading: Icon(Icons.looks_5),
-          title: Text('Starred Events'),
-          onTap: null,
-        )),
     ]));
   }
 }
