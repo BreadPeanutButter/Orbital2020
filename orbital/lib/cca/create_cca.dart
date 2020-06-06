@@ -30,8 +30,14 @@ class _CreateCCAState extends State<CreateCCA> {
           key: _key,
           child: ListView(children: <Widget>[
             SizedBox(height: 10),
-            Text('Complete and submit the form below to create a new CCA',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Container(
+                padding: EdgeInsets.all(8),
+                child: Text(
+                    'Complete and submit the form below to create a new CCA',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ))),
             SizedBox(height: 30),
             Container(
               padding: EdgeInsets.all(8),
@@ -135,7 +141,7 @@ class _CreateCCAState extends State<CreateCCA> {
                   maxLines: null,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return 'Provide contact details. Enter each form of contact on a new line.';
+                      return 'Users will see this. Enter each form of contact on a new line.';
                     }
                   },
                   decoration: InputDecoration(
