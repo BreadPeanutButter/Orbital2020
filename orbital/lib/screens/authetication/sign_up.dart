@@ -16,11 +16,22 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(),
+      appBar: new AppBar(
+        title: Text(
+          'SignUp!',
+          style: TextStyle(color: Colors.red),
+        ),
+        centerTitle: true,
+      ),
       body: Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
+            Image.asset(
+                "images/logo.png",
+                height: 200,
+                width: 200,
+              ),
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
