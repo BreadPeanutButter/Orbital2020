@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orbital/screens/home/home.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -78,6 +79,8 @@ class _SignInState extends State<SignIn> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage(), fullscreenDialog: true));
   }
 
+  
+
   void _signIn() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -85,7 +88,7 @@ class _SignInState extends State<SignIn> {
         FirebaseUser user = (await FirebaseAuth.instance
                 .signInWithEmailAndPassword(email: _email, password: _password))
             .user;
-        Navigator.pushNamed(context, '/activity');
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home(user: user)));
       } catch (e) {
         showDialog(
             context: context,

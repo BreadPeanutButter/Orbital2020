@@ -70,9 +70,23 @@ class _SignUpPageState extends State<SignUpPage> {
       _formKey.currentState.save();
       try{
         await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
+        
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  SignIn()));
       }catch(e){
-        print(e.message);
+        showDialog( 
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Sign in failed'),
+              content: Text("This email is being used! Please try another email."),
+              actions: [
+                FlatButton(
+                  onPressed: () { Text('OK'); },
+                  child: Text('OK'), 
+                ),
+              ],
+            );
+          });
       }
     }
   }
