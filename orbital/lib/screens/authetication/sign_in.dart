@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:orbital/screens/home/home.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -98,10 +99,10 @@ class _SignInState extends State<SignIn> {
                   actions: <Widget>[
                     FlatButton(
                       child: Text('OK'),
-                      onPressed: () => Navigator.pushNamed(
-                        context,
-                        '/',
-                      ),
+                      onPressed: () => SchedulerBinding.instance.addPostFrameCallback((_) {
+                         Navigator.of(context).pushNamedAndRemoveUntil(
+                           '/', (Route<dynamic> route) => false);
+                      })
                     )
                   ]);
             });
