@@ -1,21 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital/cca/cca_normal_about.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class CCANormalView extends StatelessWidget {
+  final DocumentSnapshot document;
 
-  final name;
+  CCANormalView({this.document});
 
-  CCANormalView({this.name});
-  
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: new AppBar(
-            title: Text(name, style: TextStyle(color: Colors.black)),
+            title:
+                Text(document['Name'], style: TextStyle(color: Colors.black)),
             centerTitle: true,
             bottom: TabBar(
               labelStyle: TextStyle(fontSize: 22.0),
@@ -36,7 +37,12 @@ class CCANormalView extends StatelessWidget {
             ),
           ),
           body: TabBarView(
-            children: [Text("About"), Text("Events")],
+            children: [
+              CCANormalAbout(
+                document: document,
+              ),
+              Text("Events")
+            ],
           ),
         ));
   }
