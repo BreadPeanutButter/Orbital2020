@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:orbital/cca/cca_normal_view.dart';
 
 class ExploreAll extends StatelessWidget {
   final database = Firestore.instance;
@@ -25,12 +26,22 @@ class ExploreAll extends StatelessWidget {
                         margin: EdgeInsets.all(10),
                         elevation: 3.0,
                         shadowColor: Colors.blue,
-                        child: ListTile(
-                          title: new Text(document['Name'],
-                              style: TextStyle(fontSize: 24)),
-                          subtitle: new Text(document['Category'],
-                              style: TextStyle(fontSize: 20)),
-                        )));
+                        child: InkWell(
+                            highlightColor: Colors.blueAccent,
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CCANormalView(
+                                            document: document,
+                                          )));
+                            },
+                            child: ListTile(
+                              title: new Text(document['Name'],
+                                  style: TextStyle(fontSize: 24)),
+                              subtitle: new Text(document['Category'],
+                                  style: TextStyle(fontSize: 20)),
+                            ))));
               }).toList(),
             );
         }
