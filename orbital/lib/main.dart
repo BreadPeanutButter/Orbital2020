@@ -8,6 +8,7 @@ import 'screens/explore/explore.dart';
 import 'package:orbital/screens/authetication/sign_up.dart';
 import 'package:orbital/cca/create_event.dart';
 import 'package:orbital/cca/create_cca.dart';
+import 'package:orbital/cca/cca_normal_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         '/explore': (BuildContext ctx) => Explore(),
         '/signUp' : (BuildContext ctx) => SignUpPage(),
         '/createcca' : (BuildContext ctx) => CreateCCA(),
-        '/createevent': (BuildContext ctx) => CreateEvent()
+        '/createevent': (BuildContext ctx) => CreateEvent(),
+        '/ccanormalview': (BuildContext ctx) => CCANormalView(name: "hi")
       
       },
       
