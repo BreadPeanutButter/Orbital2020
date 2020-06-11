@@ -89,7 +89,7 @@ class _SignInState extends State<SignIn> {
         FirebaseUser user = (await FirebaseAuth.instance
                 .signInWithEmailAndPassword(email: _email, password: _password))
             .user;
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home(user: user)));
+          Navigator.pushNamed(context, '/activity');
       } catch (e) {
         showDialog(
             context: context,
