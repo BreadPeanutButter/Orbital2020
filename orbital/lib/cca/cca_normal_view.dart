@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital/cca/cca_normal_about.dart';
+import 'package:orbital/cca/cca_normal_eventlist.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -41,7 +42,9 @@ class CCANormalView extends StatelessWidget {
               CCANormalAbout(
                 document: document,
               ),
-              Text("Events")
+              CCANormalEventlist(
+                eventSubCollection: document.reference.collection('Event'),
+              )
             ],
           ),
         ));

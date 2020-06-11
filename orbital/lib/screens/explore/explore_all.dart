@@ -10,7 +10,7 @@ class ExploreAll extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('CCA').snapshots(),
+      stream: database.collection('CCA').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
