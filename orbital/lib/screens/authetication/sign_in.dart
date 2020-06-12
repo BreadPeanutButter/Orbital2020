@@ -86,9 +86,8 @@ class _SignInState extends State<SignIn> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       try {
-        FirebaseUser user = (await FirebaseAuth.instance
-                .signInWithEmailAndPassword(email: _email, password: _password))
-            .user;
+        await FirebaseAuth.instance
+                .signInWithEmailAndPassword(email: _email, password: _password);
           Navigator.pushNamed(context, '/activity');
       } catch (e) {
         showDialog(
