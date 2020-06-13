@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 class CCANormalView extends StatelessWidget {
   final DocumentSnapshot document;
 
-  CCANormalView({this.document});
+  CCANormalView({@required this.document});
 
   @override
   Widget build(BuildContext context) {
