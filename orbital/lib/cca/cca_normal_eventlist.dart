@@ -28,7 +28,7 @@ class CCANormalEventlist extends StatelessWidget {
                     child: Card(
                         shape: RoundedRectangleBorder(
                             side:
-                                new BorderSide(color: Colors.grey, width: 2.0),
+                                new BorderSide(color: Colors.grey, width: 1.0),
                             borderRadius: BorderRadius.circular(4.0)),
                         margin: EdgeInsets.all(3),
                         elevation: 3.0,
