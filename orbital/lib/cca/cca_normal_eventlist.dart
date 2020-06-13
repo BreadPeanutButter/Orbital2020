@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:orbital/cca/event_normal_view.dart';
 
 class CCANormalEventlist extends StatelessWidget {
   final CollectionReference eventSubCollection;
@@ -22,10 +23,14 @@ class CCANormalEventlist extends StatelessWidget {
             return new ListView(
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
-                return new Container(
-                    height: 115,
+                return new SizedBox(
+                    height: 100,
                     child: Card(
-                        margin: EdgeInsets.all(10),
+                        shape: RoundedRectangleBorder(
+                            side:
+                                new BorderSide(color: Colors.grey, width: 2.0),
+                            borderRadius: BorderRadius.circular(4.0)),
+                        margin: EdgeInsets.all(3),
                         elevation: 3.0,
                         shadowColor: Colors.blue,
                         child: InkWell(
@@ -34,7 +39,8 @@ class CCANormalEventlist extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => null));
+                                      builder: (context) =>
+                                          EventNormalView(document: document)));
                             },
                             child: ListTile(
                               title: new Text(document['Name'],
