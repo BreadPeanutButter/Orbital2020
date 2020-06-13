@@ -20,10 +20,14 @@ class ExploreAll extends StatelessWidget {
             return new ListView(
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
-                return new Container(
-                    height: 115,
+                return new SizedBox(
+                    height: 100,
                     child: Card(
-                        margin: EdgeInsets.all(10),
+                        shape: RoundedRectangleBorder(
+                            side:
+                                new BorderSide(color: Colors.grey, width: 2.0),
+                            borderRadius: BorderRadius.circular(4.0)),
+                        margin: EdgeInsets.all(3),
                         elevation: 3.0,
                         shadowColor: Colors.blue,
                         child: InkWell(
