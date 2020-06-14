@@ -27,6 +27,23 @@ class Explore extends StatelessWidget {
           appBar: new AppBar(
             title: Text('Explore CCAs', style: TextStyle(color: Colors.black)),
             centerTitle: true,
+            actions: [
+              Ink(
+                  decoration: ShapeDecoration(
+                      color: Colors.blue,
+                      shape: CircleBorder( 
+                          side: BorderSide(
+                        width: 2,
+                        color: Colors.black,
+                      ))),
+                  child: IconButton(
+                    highlightColor: Colors.blue[900],
+                    icon: Icon(Icons.add),
+                    iconSize: 35,
+                    onPressed: () {Navigator.pushNamed(context, '/createcca');},
+                    color: Colors.white,
+                  ))
+            ],
             bottom: TabBar(
               isScrollable: true,
               labelStyle: TextStyle(fontSize: 22.0),
@@ -79,10 +96,18 @@ class Explore extends StatelessWidget {
             ),
           ),
           body: TabBarView(
-            children: [categories[0], ExploreAll(), categories[2],
-                       categories[3], categories[4], categories[5],
-                       categories[6], categories[7], categories[8],
-                       categories[9]],
+            children: [
+              categories[0],
+              ExploreAll(),
+              categories[2],
+              categories[3],
+              categories[4],
+              categories[5],
+              categories[6],
+              categories[7],
+              categories[8],
+              categories[9]
+            ],
           ),
           drawer: AppDrawer(drawer: Drawers.explore),
         ));
