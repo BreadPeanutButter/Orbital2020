@@ -53,8 +53,8 @@ class _SignInState extends State<SignIn> {
               ),
               TextFormField(
                 validator: (input) {
-                  if (input.length < 6) {
-                    return 'Longer password please';
+                  if (input.isEmpty) {
+                    return 'Provide a password';
                   }
                 },
                 decoration: InputDecoration(
