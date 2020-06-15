@@ -14,8 +14,7 @@ class CreateCCA extends StatefulWidget {
 }
 
 class _CreateCCAState extends State<CreateCCA> {
-  String _name, _description, _contact;
-  CCACategories _cat;
+  String _name, _description, _contact, _cat;
   final GlobalKey<FormState> _key = GlobalKey();
 
   void _showDialog() {
@@ -26,7 +25,8 @@ class _CreateCCAState extends State<CreateCCA> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Close this page"),
-          content: new Text("Your application will not be saved. Do you still want to close this page?"),
+          content: new Text(
+              "Your application will not be saved. Do you still want to close this page?"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             FlatButton(
@@ -101,39 +101,39 @@ class _CreateCCAState extends State<CreateCCA> {
                 dataSource: [
                   {
                     "display": "Academic",
-                    "value": CCACategories.Academic,
+                    "value": "Academic",
                   },
                   {
                     "display": "Adventure",
-                    "value": CCACategories.Adventure,
+                    "value": "Adventure",
                   },
                   {
                     "display": "Arts",
-                    "value": CCACategories.Arts,
+                    "value": "Arts",
                   },
                   {
                     "display": "Cultural",
-                    "value": CCACategories.Cultural,
+                    "value": "Cultural",
                   },
                   {
                     "display": "Health",
-                    "value": CCACategories.Health,
+                    "value": "Health",
                   },
                   {
                     "display": "Social Cause",
-                    "value": CCACategories.SocialCause,
+                    "value": "Social Cause",
                   },
                   {
                     "display": "Specialist",
-                    "value": CCACategories.Specialist,
+                    "value": "Specialist",
                   },
                   {
                     "display": "Sports",
-                    "value": CCACategories.Sports,
+                    "value": "Sports",
                   },
                   {
                     "display": "Technology",
-                    "value": CCACategories.Technology,
+                    "value": "Technology",
                   },
                 ],
                 textField: 'display',
@@ -185,17 +185,96 @@ class _CreateCCAState extends State<CreateCCA> {
                     labelText: 'Contact details',
                     hintText: 'Email: cca@nus.com\nWhatsapp: 8888 8888',
                   ),
-                  onSaved: (input) => _description = input,
+                  onSaved: (input) => _contact = input,
                 )),
             SizedBox(height: 30),
             Container(
               padding: EdgeInsets.all(8),
               child: CupertinoButton.filled(
+                child: Text('Reset form'),
+                onPressed: () {
+                  _key.currentState.reset();
+                },
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(8),
+              child: CupertinoButton.filled(
                 child: Text('Submit Application'),
-                onPressed: null,
+                onPressed: _submitApplication,
               ),
             )
           ]),
         )));
+  }
+
+  void _successDialog(BuildContext ctx, String name) {
+    // flutter defined function
+    showDialog(
+      context: ctx,
+      builder: (BuildContext ctx) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Success!"),
+          content: new Text(
+              "Congratulations, you have created a new CCA! You are now the admin of $name."),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            OutlineButton(
+                highlightedBorderColor: Colors.blue,
+                borderSide: BorderSide(color: Colors.blue),
+                child: new Text("Hurray!"),
+                onPressed: () {}),
+                 SizedBox(width: 110),
+          ],
+        );
+      },
+    );
+  }
+
+  void _failureDialog(BuildContext ctx, String name) {
+    // flutter defined function
+    showDialog(
+      context: ctx,
+      builder: (BuildContext ctx) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Oops!"),
+          content: new Text(
+              "The CCA $name already exists. Choose a non-existing name to proceed."),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            OutlineButton(
+                highlightedBorderColor: Colors.blue,
+                borderSide: BorderSide(color: Colors.blue),
+                child: new Text("OK"),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                }),
+            SizedBox(width: 110),
+          ],
+        );
+      },
+    );
+  }
+
+  void _submitApplication() async {
+    if (_key.currentState.validate()) {
+      _key.currentState.save();
+      final docRef = Firestore.instance.collection('CCA').document(_name);
+      final snapShot = await docRef.get();
+      if (snapShot.exists) {
+        _failureDialog(context, _name);
+      } else {
+        await docRef.setData({
+          'Name': _name,
+          'Category': _cat,
+          'Description': _description,
+          'Contact': _contact,
+          'DateJoined': DateTime.now()
+        });
+        _successDialog(context, _name);
+      }
+    }
   }
 }
