@@ -17,10 +17,47 @@ class _CreateCCAState extends State<CreateCCA> {
   String _name, _description, _contact;
   CCACategories _cat;
   final GlobalKey<FormState> _key = GlobalKey();
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Close this page"),
+          content: new Text("Your application will not be saved. Do you still want to close this page?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            FlatButton(
+                child: new Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            FlatButton(
+                child: new Text("Yes"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            highlightColor: Colors.blue[900],
+            icon: Icon(Icons.cancel),
+            iconSize: 45,
+            onPressed: _showDialog,
+            color: Colors.white,
+          ),
           title: Text('CCA Application'),
           centerTitle: true,
         ),

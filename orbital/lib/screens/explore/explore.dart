@@ -19,6 +19,34 @@ class Explore extends StatelessWidget {
     Text('Technology')
   ];
 
+  void _showDialog(BuildContext ctx) {
+    // flutter defined function
+    showDialog(
+      context: ctx,
+      builder: (BuildContext ctx) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Create a CCA"),
+          content: new Text("Can't find what you are looking for? Would you like to create a new CCA?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            FlatButton(
+                child: new Text("Nah"),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                }),
+            FlatButton(
+                child: new Text("Yes!"),
+                onPressed: () {
+                  Navigator.pushNamed(ctx, '/createcca');
+                }),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -40,7 +68,7 @@ class Explore extends StatelessWidget {
                     highlightColor: Colors.blue[900],
                     icon: Icon(Icons.add),
                     iconSize: 35,
-                    onPressed: () {Navigator.pushNamed(context, '/createcca');},
+                    onPressed: () {_showDialog(context);},
                     color: Colors.white,
                   ))
             ],
