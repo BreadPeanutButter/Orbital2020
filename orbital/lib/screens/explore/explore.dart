@@ -27,7 +27,7 @@ class Explore extends StatelessWidget {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Create a CCA"),
-          content: new Text("Can't find what you are looking for? Would you like to create a new CCA?"),
+          content: new Text("Can't find what you're looking for? Would you like to create a new CCA?"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             FlatButton(
