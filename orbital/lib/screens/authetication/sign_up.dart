@@ -82,8 +82,8 @@ class _SignUpPageState extends State<SignUpPage> {
     await databaseReference.collection("User")
         .document(user.uid)
         .setData({
-          'email1': _email,
-          'Name': _name
+          'email': _email,
+          'displayName': _name
         });
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orbital/cca/create_cca.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import "package:orbital/screens/profile.dart";
 import 'screens/activity_feed/activity_feed.dart';
 import 'screens/explore/explore.dart';
 import 'package:orbital/screens/authetication/sign_up.dart';
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (BuildContext ctx) => SignIn(),
+        '/profile': (BuildContext ctx) => Profile(),
         '/activity': (BuildContext ctx) => ActivityFeed(),
         '/explore': (BuildContext ctx) => Explore(),
         '/signUp' : (BuildContext ctx) => SignUpPage(),

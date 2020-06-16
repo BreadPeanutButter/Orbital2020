@@ -44,7 +44,7 @@ class AppDrawer extends StatelessWidget {
           child: ListTile(
             leading: Icon(Icons.looks_4),
             title: Text('My Profile'),
-            onTap: null,
+            onTap: () => Navigator.pushNamed(context, '/profile'),
           )),
     ]));
   }
