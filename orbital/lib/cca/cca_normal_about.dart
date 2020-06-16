@@ -14,7 +14,7 @@ class CCANormalAbout extends StatelessWidget {
     // TODO: implement build
     final String category = document['Category'];
     final String description = document['Description'];
-    final String email = document['Email'];
+    final String email = document['Contact'];
 
     return ListView(children: [
       Container(height: 50, child:Card(
