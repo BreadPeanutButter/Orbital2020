@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:orbital/cca/cca_categories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:orbital/cca/cca_admin_view.dart';
 
 class CreateCCA extends StatefulWidget {
   @override
@@ -208,34 +209,43 @@ class _CreateCCAState extends State<CreateCCA> {
         )));
   }
 
-  void _successDialog(BuildContext ctx, String name) {
+  void _successDialog(DocumentSnapshot doc) {
     // flutter defined function
     showDialog(
-      context: ctx,
+      context: context,
       builder: (BuildContext ctx) {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Success!"),
           content: new Text(
-              "Congratulations, you have created a new CCA! You are now the admin of $name."),
+              "Congratulations, you have created a new CCA! You are now the admin of ${doc['Name']}."),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             OutlineButton(
                 highlightedBorderColor: Colors.blue,
                 borderSide: BorderSide(color: Colors.blue),
                 child: new Text("Hurray!"),
-                onPressed: () {}),
-                 SizedBox(width: 110),
+                onPressed: () {
+                  Navigator.pushNamed(ctx, '/explore');
+                  Navigator.push(
+                      ctx,
+                      MaterialPageRoute(
+                          builder: (c) => CCAAdminView(
+                                document: doc,
+                              )));
+                }),
+
+            SizedBox(width: 110),
           ],
         );
       },
     );
   }
 
-  void _failureDialog(BuildContext ctx, String name) {
+  void _failureDialog(String name) {
     // flutter defined function
     showDialog(
-      context: ctx,
+      context: context,
       builder: (BuildContext ctx) {
         // return object of type Dialog
         return AlertDialog(
@@ -264,7 +274,7 @@ class _CreateCCAState extends State<CreateCCA> {
       final docRef = Firestore.instance.collection('CCA').document(_name);
       final snapShot = await docRef.get();
       if (snapShot.exists) {
-        _failureDialog(context, _name);
+        _failureDialog(_name);
       } else {
         await docRef.setData({
           'Name': _name,
@@ -273,7 +283,8 @@ class _CreateCCAState extends State<CreateCCA> {
           'Contact': _contact,
           'DateJoined': DateTime.now()
         });
-        _successDialog(context, _name);
+        DocumentSnapshot _newSnapShot = await docRef.get();
+        _successDialog(_newSnapShot);
       }
     }
   }
