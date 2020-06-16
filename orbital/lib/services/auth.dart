@@ -21,8 +21,8 @@ class Auth {
 
   void getName1(String uid) async {
     DocumentSnapshot document = await Firestore.instance.collection('User').document(uid).get();
-    name =  document.data["displayName"];
-    email = document.data["email"];
+    name =  document.data["Name"];
+    email = document.data["Email"];
   }
 
 }
