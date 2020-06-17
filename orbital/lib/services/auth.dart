@@ -12,14 +12,19 @@ class Auth {
   String email = "";
   String uid = "";
 
+  Auth() {
+    getCurrentUser();
+  }
+
   void getCurrentUser() async {
     mCurrentUser = await FirebaseAuth.instance.currentUser();
     uid = mCurrentUser.uid;
-    getName1(uid);
+    getName1();
+    
 
   }
 
-  void getName1(String uid) async {
+  void getName1() async {
     DocumentSnapshot document = await Firestore.instance.collection('User').document(uid).get();
     name =  document.data["Name"];
     email = document.data["Email"];

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'profile.dart';
 
 enum Drawers { activity, explore, event, profile }
 
 class AppDrawer extends StatelessWidget {
   Drawers drawer;
+  Auth auth;
 
-  AppDrawer({this.drawer});
+  AppDrawer({@required this.drawer}) {
+    auth = new Auth();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +41,17 @@ class AppDrawer extends StatelessWidget {
             title: Text('My Events'),
             onTap: null,
           )),
-
-        
       Ink(
           color: drawer == Drawers.profile ? Colors.blue : Colors.transparent,
           child: ListTile(
             leading: Icon(Icons.looks_4),
             title: Text('My Profile'),
-            onTap: () => Navigator.pushNamed(context, '/profile'),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (c) => Profile(
+                          auth: auth,
+                        ))),
           )),
     ]));
   }

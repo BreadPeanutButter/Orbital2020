@@ -5,15 +5,16 @@ import 'package:flutter/scheduler.dart';
 import 'package:orbital/services/auth.dart';
 
 class Profile extends StatefulWidget {
+
+  Auth auth;
+  Profile({@required this.auth});
+
   @override
   _ProfileState createState() => new _ProfileState();
 }
 
 
 class _ProfileState extends State<Profile> {
-  Auth a = new Auth();
-
-  
   
   signOut() async{
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -28,7 +29,6 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    a.getCurrentUser();
   }
 
    @override
@@ -50,9 +50,9 @@ class _ProfileState extends State<Profile> {
                 width: 200,
               ),
           SizedBox(height: 40),
-          Text('Name: ' + a.name, style: TextStyle(fontSize: 20,  height: 1.2 )),
+          Text('Name: ' + widget.auth.name, style: TextStyle(fontSize: 20,  height: 1.2 )),
           SizedBox(height: 20),
-          Text('Email: ' + a.email,style: TextStyle(fontSize: 15)),
+          Text('Email: ' + widget.auth.email, style: TextStyle(fontSize: 15)),
           SizedBox(height: 20),
           new RaisedButton(
           onPressed: () => signOut(),
