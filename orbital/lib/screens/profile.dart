@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:orbital/services/auth.dart';
+import 'app_drawer.dart';
+
 
 class Profile extends StatefulWidget {
 
@@ -26,6 +28,43 @@ class _ProfileState extends State<Profile> {
 
   } 
 
+    showAlertDialog(BuildContext context) {
+      Widget cancelButton = FlatButton(
+        child: Text("Cancel"),
+        onPressed:  () {Navigator.of(context).pop();},
+      );
+      Widget continueButton = FlatButton(
+        child: Text("Continue"),
+        onPressed:  () {
+          resetEmail(widget.auth.email);
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/', (Route<dynamic> route) => false);
+                      });
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("Reset password"),
+        content: Text("Would you like to reset your NUS WhatToDo password ? An email will be sent once you click continue."),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
+  Future resetEmail(String email) async{
+    return FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +80,7 @@ class _ProfileState extends State<Profile> {
         ),
         centerTitle: true,
       ),
+      drawer: AppDrawer(drawer: Drawers.activity),
       body: new Center(
         child : Column(
         children: <Widget>[
@@ -60,11 +100,11 @@ class _ProfileState extends State<Profile> {
             "Logout",
           )),
           new RaisedButton(
-          onPressed: null,
+          onPressed: () => showAlertDialog(context),
           child: new Text(
             "Change password",
           ))
-          ],
+        ],
           
     )));
     
