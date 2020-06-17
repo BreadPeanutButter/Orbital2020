@@ -47,7 +47,7 @@ class _ProfileState extends State<Profile> {
       // set up the AlertDialog
       AlertDialog alert = AlertDialog(
         title: Text("Reset password"),
-        content: Text("Would you like to reset your NUS WhatToDo password ? An email will be sent once you click continue."),
+        content: Text("Would you like to reset your password? An email will be sent to you after you press continue."),
         actions: [
           cancelButton,
           continueButton,
