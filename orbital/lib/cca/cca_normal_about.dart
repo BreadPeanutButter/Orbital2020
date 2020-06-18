@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/src/painting/_network_image_io.dart';
 
 class CCANormalAbout extends StatelessWidget {
   final DocumentSnapshot document;
@@ -18,11 +19,7 @@ class CCANormalAbout extends StatelessWidget {
     final String imageURL = document['profile image'];
 
     return ListView(children: [
-      Image.network(
-          imageURL,
-          height: 200,
-          width: 200,
-          ),
+      
       Container(height: 50, child:Card(
           margin: EdgeInsets.all(5),
           elevation: 1.0,

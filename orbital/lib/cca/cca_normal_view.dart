@@ -17,12 +17,31 @@ class CCANormalView extends StatefulWidget {
 }
 
 class _CCANormalViewState extends State<CCANormalView> {
-  
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  void _snackBar() {
+    String ccaName = widget.document['Name'];
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      backgroundColor: Colors.blueAccent,
+      duration: Duration(seconds: 2),
+      content: Text(!widget.favCCA
+          ? "You have added $ccaName to your Favourites"
+          : "You have removed $ccaName from your Favourites",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontSize: 16,
+          ),
+          textAlign: TextAlign.center,),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
+          key: _scaffoldKey,
           appBar: new AppBar(
             title: Text(widget.document['Name'],
                 style: TextStyle(color: Colors.black)),
@@ -49,6 +68,7 @@ class _CCANormalViewState extends State<CCANormalView> {
                             icon: Icon(Icons.star),
                             iconSize: 35,
                             onPressed: () {
+                              _snackBar();
                               if (widget.favCCA) {
                                 widget.auth.removeFavouriteCCA(
                                     widget.document['Name']);
@@ -58,7 +78,7 @@ class _CCANormalViewState extends State<CCANormalView> {
                               }
                               setState(() {
                                 widget.favCCA = !widget.favCCA;
-                              }); 
+                              });
                             },
                             color: widget.favCCA ? Colors.orange : Colors.white,
                           );
