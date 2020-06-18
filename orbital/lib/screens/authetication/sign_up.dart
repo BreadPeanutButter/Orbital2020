@@ -83,7 +83,8 @@ class _SignUpPageState extends State<SignUpPage> {
         .document(user.uid)
         .setData({
           'Email': _email,
-          'Name': _name
+          'Name': _name,
+          'Favourite': <String>[]
         });
   }
 
