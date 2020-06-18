@@ -6,6 +6,7 @@ import '../app_drawer.dart';
 import 'explore_all.dart';
 
 class Explore extends StatelessWidget {
+  Auth auth = new Auth();
   static const categories = <Text>[
     Text('Favourites'),
     Text('All'),
@@ -20,6 +21,7 @@ class Explore extends StatelessWidget {
   ];
 
   void _showDialog(BuildContext ctx) {
+    
     // flutter defined function
     showDialog(
       context: ctx,
@@ -126,7 +128,7 @@ class Explore extends StatelessWidget {
           body: TabBarView(
             children: [
               categories[0],
-              ExploreAll(),
+              ExploreAll(auth: auth),
               categories[2],
               categories[3],
               categories[4],

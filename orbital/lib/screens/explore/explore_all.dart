@@ -2,9 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/cca/cca_normal_view.dart';
+import 'package:orbital/services/auth.dart';
 
 class ExploreAll extends StatelessWidget {
   final database = Firestore.instance;
+  Auth auth;
+
+  ExploreAll({@required this.auth});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,7 @@ class ExploreAll extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (context) => CCANormalView(
                                             document: document,
+                                            auth: auth,
                                           )));
                             },
                             child: ListTile(
