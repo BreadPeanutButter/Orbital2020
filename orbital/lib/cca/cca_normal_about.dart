@@ -15,8 +15,14 @@ class CCANormalAbout extends StatelessWidget {
     final String category = document['Category'];
     final String description = document['Description'];
     final String email = document['Contact'];
+    final String imageURL = document['profile image'];
 
     return ListView(children: [
+      Image.network(
+          imageURL,
+          height: 200,
+          width: 200,
+          ),
       Container(height: 50, child:Card(
           margin: EdgeInsets.all(5),
           elevation: 1.0,

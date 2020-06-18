@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,6 +6,9 @@ import 'package:orbital/cca/cca_categories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:orbital/cca/cca_admin_view.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as Path;
 
 class CreateCCA extends StatefulWidget {
   @override
@@ -15,7 +19,8 @@ class CreateCCA extends StatefulWidget {
 }
 
 class _CreateCCAState extends State<CreateCCA> {
-  String _name, _description, _contact, _cat;
+  String _name, _description, _contact, _cat, _imageURL;
+  File _image;
   final GlobalKey<FormState> _key = GlobalKey();
 
   void _showDialog() {
@@ -192,6 +197,15 @@ class _CreateCCAState extends State<CreateCCA> {
             Container(
               padding: EdgeInsets.all(8),
               child: CupertinoButton.filled(
+                child: Text('Upload Profile picture'),
+                onPressed: () {
+                  getImage(context);
+                }
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(8),
+              child: CupertinoButton.filled(
                 child: Text('Reset form'),
                 onPressed: () {
                   _key.currentState.reset();
@@ -280,6 +294,7 @@ class _CreateCCAState extends State<CreateCCA> {
           'Name': _name,
           'Category': _cat,
           'Description': _description,
+          'profile image' : _imageURL,
           'Contact': _contact,
           'DateJoined': DateTime.now()
         });
@@ -288,4 +303,22 @@ class _CreateCCAState extends State<CreateCCA> {
       }
     }
   }
+
+  Future getImage(BuildContext context) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('profile/${Path.basename(_image.path)}');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    await uploadTask.onComplete;
+    setState(() {
+      firebaseStorageRef.getDownloadURL().then((fileURL) { 
+      _imageURL = fileURL;
+      });
+    });
+    print(_imageURL);
+    
+  } 
 }
