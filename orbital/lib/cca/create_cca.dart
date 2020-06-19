@@ -53,6 +53,60 @@ class _CreateCCAState extends State<CreateCCA> {
     );
   }
 
+  showAlertDialog(BuildContext context) {
+      Widget OkayButton = FlatButton(
+        child: Text("Okay"),
+        onPressed:  () {Navigator.of(context).pop();},
+      );
+            AlertDialog alert = AlertDialog(
+        title: Text("Uploading image"),
+        content: Text("Image uploaded"),
+        actions: [
+          OkayButton,
+          
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
+  Future getImage(BuildContext context) async {
+    double _progress = 0;
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('profile/${Path.basename(_image.path)}}');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();   
+     setState(() {    
+       _imageURL = dowurl.toString();
+        
+     });
+     showAlertDialog(context);
+
+
+     uploadTask.events.listen((event) {
+      setState(() {
+        _progress = event.snapshot.bytesTransferred.toDouble() /
+            event.snapshot.totalByteCount.toDouble();
+            Text('Uploading ${(_progress * 100).toStringAsFixed(2)} %');
+            CircularProgressIndicator(value: _progress);
+      });
+    }).onError((error) {
+      // do something to handle error
+    });
+
+    
+
+    print(_imageURL);
+  } 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -294,7 +348,7 @@ class _CreateCCAState extends State<CreateCCA> {
           'Name': _name,
           'Category': _cat,
           'Description': _description,
-          'profile image' : _imageURL,
+          'image' : _imageURL,
           'Contact': _contact,
           'DateJoined': DateTime.now()
         });
@@ -304,21 +358,5 @@ class _CreateCCAState extends State<CreateCCA> {
     }
   }
 
-  Future getImage(BuildContext context) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _image = File(pickedFile.path);
-    });
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('profile/${Path.basename(_image.path)}');
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-    await uploadTask.onComplete;
-    setState(() {
-      firebaseStorageRef.getDownloadURL().then((fileURL) { 
-      _imageURL = fileURL;
-      });
-    });
-    print(_imageURL);
-    
-  } 
+  
 }
