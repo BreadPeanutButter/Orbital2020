@@ -139,6 +139,7 @@ class _CreateCCAState extends State<CreateCCA> {
             Container(
               padding: EdgeInsets.all(8),
               child: DropDownFormField(
+                autovalidate: true,
                 titleText: 'CCA Category',
                 hintText: 'Category',
                 value: _cat,
@@ -204,6 +205,7 @@ class _CreateCCAState extends State<CreateCCA> {
             Container(
                 padding: EdgeInsets.all(8),
                 child: TextFormField(
+                  autovalidate: true,
                   validator: (input) {
                     if (input.isEmpty || input == null) {
                       return 'Provide a CCA name';
@@ -220,6 +222,7 @@ class _CreateCCAState extends State<CreateCCA> {
                 padding: EdgeInsets.all(8),
                 child: TextFormField(
                   maxLines: null,
+                  autovalidate: true,
                   validator: (input) {
                     if (input.isEmpty || input == null) {
                       return 'Provide a CCA Description';
@@ -235,6 +238,7 @@ class _CreateCCAState extends State<CreateCCA> {
             Container(
                 padding: EdgeInsets.all(8),
                 child: TextFormField(
+                  autovalidate: true,
                   maxLines: null,
                   validator: (input) {
                     if (input.isEmpty || input == null) {
