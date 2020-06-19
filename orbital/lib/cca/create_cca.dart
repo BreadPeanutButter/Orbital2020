@@ -205,7 +205,7 @@ class _CreateCCAState extends State<CreateCCA> {
                 padding: EdgeInsets.all(8),
                 child: TextFormField(
                   validator: (input) {
-                    if (input.isEmpty) {
+                    if (input.isEmpty || input == null) {
                       return 'Provide a CCA name';
                     }
                   },
@@ -221,7 +221,7 @@ class _CreateCCAState extends State<CreateCCA> {
                 child: TextFormField(
                   maxLines: null,
                   validator: (input) {
-                    if (input.isEmpty) {
+                    if (input.isEmpty || input == null) {
                       return 'Provide a CCA Description';
                     }
                   },
@@ -237,7 +237,7 @@ class _CreateCCAState extends State<CreateCCA> {
                 child: TextFormField(
                   maxLines: null,
                   validator: (input) {
-                    if (input.isEmpty) {
+                    if (input.isEmpty || input == null) {
                       return 'Users will see this. Enter each form of contact on a new line.';
                     }
                   },
@@ -251,7 +251,7 @@ class _CreateCCAState extends State<CreateCCA> {
             Container(
               padding: EdgeInsets.all(8),
               child: CupertinoButton.filled(
-                child: Text('Upload Profile picture'),
+                child: Text('Upload Display picture'),
                 onPressed: () {
                   getImage(context);
                 }
