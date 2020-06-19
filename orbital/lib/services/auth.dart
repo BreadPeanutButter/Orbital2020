@@ -27,15 +27,21 @@ class Auth {
     email = document.data["Email"];
   }
 
-  Future<bool> isFavouriteCCA(String ccaName) async {
-   
-   DocumentSnapshot snapshot = await Firestore.instance.collection('User').document(uid).get();
-   return List.from(snapshot['Favourite']).contains(ccaName);
+  Future<List<String>> getFavourites() async {
+    await getCurrentUser();
+    DocumentSnapshot snapshot =
+        await Firestore.instance.collection('User').document(uid).get();
+    return List.from(snapshot['Favourite']);
+  }
 
+  Future<bool> isFavouriteCCA(String ccaName) async {
+    getCurrentUser();
+    return (await getFavourites()).contains(ccaName);
   }
 
   void addFavouriteCCA(String ccaName) {
-    DocumentReference document =  
+    getCurrentUser();
+    DocumentReference document =
         firestoreInstance.collection('User').document(uid);
     document.updateData({
       "Favourite": FieldValue.arrayUnion([ccaName])
