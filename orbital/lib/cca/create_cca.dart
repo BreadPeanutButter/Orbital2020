@@ -54,25 +54,26 @@ class _CreateCCAState extends State<CreateCCA> {
   }
 
   showAlertDialog(BuildContext context) {
-      Widget OkayButton = FlatButton(
-        child: Text("Okay"),
-        onPressed:  () {Navigator.of(context).pop();},
-      );
-            AlertDialog alert = AlertDialog(
-        title: Text("Uploading image"),
-        content: Text("Image uploaded"),
-        actions: [
-          OkayButton,
-          
-        ],
-      );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
+    Widget OkayButton = FlatButton(
+      child: Text("Okay"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Uploading image"),
+      content: Text("Image uploaded"),
+      actions: [
+        OkayButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   Future getImage(BuildContext context) async {
     double _progress = 0;
@@ -81,31 +82,29 @@ class _CreateCCAState extends State<CreateCCA> {
     setState(() {
       _image = File(pickedFile.path);
     });
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('profile/${Path.basename(_image.path)}}');
+    StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('profile/${Path.basename(_image.path)}}');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-    var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();   
-     setState(() {    
-       _imageURL = dowurl.toString();
-        
-     });
-     showAlertDialog(context);
+    var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    setState(() {
+      _imageURL = dowurl.toString();
+    });
+    showAlertDialog(context);
 
-
-     uploadTask.events.listen((event) {
+    uploadTask.events.listen((event) {
       setState(() {
         _progress = event.snapshot.bytesTransferred.toDouble() /
             event.snapshot.totalByteCount.toDouble();
-            Text('Uploading ${(_progress * 100).toStringAsFixed(2)} %');
-            CircularProgressIndicator(value: _progress);
+        Text('Uploading ${(_progress * 100).toStringAsFixed(2)} %');
+        CircularProgressIndicator(value: _progress);
       });
     }).onError((error) {
       // do something to handle error
     });
 
-    
-
     print(_imageURL);
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,162 +122,162 @@ class _CreateCCAState extends State<CreateCCA> {
         ),
         body: Center(
             child: Form(
-          autovalidate: true,
-          key: _key,
-          child: ListView(children: <Widget>[
-            SizedBox(height: 10),
-            Container(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                    'Complete and submit the form below to create a new CCA',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ))),
-            SizedBox(height: 30),
-            Container(
-              padding: EdgeInsets.all(8),
-              child: DropDownFormField(
                 autovalidate: true,
-                titleText: 'CCA Category',
-                hintText: 'Category',
-                value: _cat,
-                validator: (input) {
-                  if (input == null) {
-                    return "Select a category";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  setState(() {
-                    _cat = value;
-                  });
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _cat = value;
-                  });
-                },
-                dataSource: [
-                  {
-                    "display": "Academic",
-                    "value": "Academic",
-                  },
-                  {
-                    "display": "Adventure",
-                    "value": "Adventure",
-                  },
-                  {
-                    "display": "Arts",
-                    "value": "Arts",
-                  },
-                  {
-                    "display": "Cultural",
-                    "value": "Cultural",
-                  },
-                  {
-                    "display": "Health",
-                    "value": "Health",
-                  },
-                  {
-                    "display": "Social Cause",
-                    "value": "Social Cause",
-                  },
-                  {
-                    "display": "Specialist",
-                    "value": "Specialist",
-                  },
-                  {
-                    "display": "Sports",
-                    "value": "Sports",
-                  },
-                  {
-                    "display": "Technology",
-                    "value": "Technology",
-                  },
-                ],
-                textField: 'display',
-                valueField: 'value',
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-                padding: EdgeInsets.all(8),
-                child: TextFormField(
-                  autovalidate: true,
-                  validator: (input) {
-                    if (input.isEmpty || input == null) {
-                      return 'Provide a CCA name';
-                    }
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Name',
-                    hintText: 'My CCA',
-                  ),
-                  onSaved: (input) => _name = input,
-                )),
-            SizedBox(height: 30),
-            Container(
-                padding: EdgeInsets.all(8),
-                child: TextFormField(
-                  maxLines: null,
-                  autovalidate: true,
-                  validator: (input) {
-                    if (input.isEmpty || input == null) {
-                      return 'Provide a CCA Description';
-                    }
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'What we do',
-                  ),
-                  onSaved: (input) => _description = input,
-                )),
-            SizedBox(height: 30),
-            Container(
-                padding: EdgeInsets.all(8),
-                child: TextFormField(
-                  autovalidate: true,
-                  maxLines: null,
-                  validator: (input) {
-                    if (input.isEmpty || input == null) {
-                      return 'Users will see this. Enter each form of contact on a new line.';
-                    }
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Contact details',
-                    hintText: 'Email: cca@nus.com\nWhatsapp: 8888 8888',
-                  ),
-                  onSaved: (input) => _contact = input,
-                )),
-            SizedBox(height: 30),
-            Container(
-              padding: EdgeInsets.all(8),
-              child: CupertinoButton.filled(
-                child: Text('Upload Display picture'),
-                onPressed: () {
-                  getImage(context);
-                }
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(8),
-              child: CupertinoButton.filled(
-                child: Text('Reset form'),
-                onPressed: () {
-                  _key.currentState.reset();
-                },
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(8),
-              child: CupertinoButton.filled(
-                child: Text('Submit Application'),
-                onPressed: _submitApplication,
-              ),
-            )
-          ]),
-        )));
+                key: _key,
+                child: SingleChildScrollView(
+                  child: Column(children: <Widget>[
+                    SizedBox(height: 10),
+                    Container(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                            'Complete and submit the form below to create a new CCA',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ))),
+                    SizedBox(height: 30),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: DropDownFormField(
+                        autovalidate: true,
+                        titleText: 'CCA Category',
+                        hintText: 'Category',
+                        value: _cat,
+                        validator: (input) {
+                          if (input == null) {
+                            return "Select a category";
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          setState(() {
+                            _cat = value;
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _cat = value;
+                          });
+                        },
+                        dataSource: [
+                          {
+                            "display": "Academic",
+                            "value": "Academic",
+                          },
+                          {
+                            "display": "Adventure",
+                            "value": "Adventure",
+                          },
+                          {
+                            "display": "Arts",
+                            "value": "Arts",
+                          },
+                          {
+                            "display": "Cultural",
+                            "value": "Cultural",
+                          },
+                          {
+                            "display": "Health",
+                            "value": "Health",
+                          },
+                          {
+                            "display": "Social Cause",
+                            "value": "Social Cause",
+                          },
+                          {
+                            "display": "Specialist",
+                            "value": "Specialist",
+                          },
+                          {
+                            "display": "Sports",
+                            "value": "Sports",
+                          },
+                          {
+                            "display": "Technology",
+                            "value": "Technology",
+                          },
+                        ],
+                        textField: 'display',
+                        valueField: 'value',
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        padding: EdgeInsets.all(8),
+                        child: TextFormField(
+                          autovalidate: true,
+                          validator: (input) {
+                            if (input.isEmpty || input == null) {
+                              return 'Provide a CCA name';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                            hintText: 'My CCA',
+                          ),
+                          onSaved: (input) => _name = input,
+                        )),
+                    SizedBox(height: 30),
+                    Container(
+                        padding: EdgeInsets.all(8),
+                        child: TextFormField(
+                          maxLines: null,
+                          autovalidate: true,
+                          validator: (input) {
+                            if (input.isEmpty || input == null) {
+                              return 'Provide a CCA Description';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Description',
+                            hintText: 'What we do',
+                          ),
+                          onSaved: (input) => _description = input,
+                        )),
+                    SizedBox(height: 30),
+                    Container(
+                        padding: EdgeInsets.all(8),
+                        child: TextFormField(
+                          autovalidate: true,
+                          maxLines: null,
+                          validator: (input) {
+                            if (input.isEmpty || input == null) {
+                              return 'Users will see this. Enter each form of contact on a new line.';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Contact details',
+                            hintText: 'Email: cca@nus.com\nWhatsapp: 8888 8888',
+                          ),
+                          onSaved: (input) => _contact = input,
+                        )),
+                    SizedBox(height: 30),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: CupertinoButton.filled(
+                          child: Text('Upload Display picture'),
+                          onPressed: () {
+                            getImage(context);
+                          }),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: CupertinoButton.filled(
+                        child: Text('Reset form'),
+                        onPressed: () {
+                          _key.currentState.reset();
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: CupertinoButton.filled(
+                        child: Text('Submit Application'),
+                        onPressed: _submitApplication,
+                      ),
+                    )
+                  ]),
+                ))));
   }
 
   void _successDialog(DocumentSnapshot doc) {
@@ -352,7 +351,7 @@ class _CreateCCAState extends State<CreateCCA> {
           'Name': _name,
           'Category': _cat,
           'Description': _description,
-          'image' : _imageURL,
+          'image': _imageURL,
           'Contact': _contact,
           'DateJoined': DateTime.now()
         });
@@ -361,6 +360,4 @@ class _CreateCCAState extends State<CreateCCA> {
       }
     }
   }
-
-  
 }
