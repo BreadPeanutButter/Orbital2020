@@ -6,21 +6,31 @@ import 'package:orbital/services/auth.dart';
 
 class ExploreCategory extends StatelessWidget {
   final database = Firestore.instance;
-  final Auth auth;
+  final Auth auth = new Auth();
   final String category;
 
-  ExploreCategory({@required this.auth, @required this.category});
+  ExploreCategory({@required this.category});
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return StreamBuilder<QuerySnapshot>(
-      stream: database.collection('CCA').where("Category", isEqualTo: category).orderBy('Name').snapshots(),
+      stream: database
+          .collection('CCA')
+          .where("Category", isEqualTo: category)
+          .orderBy('Name')
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
+        if (!snapshot.hasData)
+          return new Center(
+              child: Text(
+            'No CCAs available ☹️',
+            style: TextStyle(fontSize: 20),
+          ));
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return new Text('Loading...');
+            return Center(child: CircularProgressIndicator());
           default:
             return new ListView(
               children:
@@ -43,7 +53,6 @@ class ExploreCategory extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (context) => CCANormalView(
                                             document: document,
-                                            auth: auth,
                                           )));
                             },
                             child: ListTile(

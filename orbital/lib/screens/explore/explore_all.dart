@@ -42,7 +42,6 @@ class ExploreAll extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (context) => CCANormalView(
                                             document: document,
-                                            auth: auth,
                                           )));
                             },
                             child: ListTile(

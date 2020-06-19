@@ -6,11 +6,11 @@ import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class CCANormalView extends StatefulWidget {
-  Auth auth;
+  Auth auth = new Auth();
   DocumentSnapshot document;
   bool favCCA;
 
-  CCANormalView({@required this.document, @required this.auth});
+  CCANormalView({@required this.document});
 
   @override
   _CCANormalViewState createState() => _CCANormalViewState();
