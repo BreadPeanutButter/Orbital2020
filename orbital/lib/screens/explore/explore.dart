@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orbital/screens/explore/explore_favourites.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -133,17 +134,17 @@ class Explore extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              categories[0],
+              ExploreFavourites(),
               ExploreAll(auth: auth),
-              ExploreCategory(auth: auth, category: "Academic"),
-              ExploreCategory(auth: auth, category: "Adventure"),
-              ExploreCategory(auth: auth, category: "Arts"),
-              ExploreCategory(auth: auth, category: "Cultural"),
-              ExploreCategory(auth: auth, category: "Health"),
-              ExploreCategory(auth: auth, category: "Social Cause"),
-              ExploreCategory(auth: auth, category: "Specialist"),
-              ExploreCategory(auth: auth, category: "Sports"),
-              ExploreCategory(auth: auth, category: "Technology"),
+              ExploreCategory(category: "Academic"),
+              ExploreCategory(category: "Adventure"),
+              ExploreCategory(category: "Arts"),
+              ExploreCategory(category: "Cultural"),
+              ExploreCategory(category: "Health"),
+              ExploreCategory(category: "Social Cause"),
+              ExploreCategory(category: "Specialist"),
+              ExploreCategory(category: "Sports"),
+              ExploreCategory(category: "Technology"),
             ],
           ),
           drawer: AppDrawer(drawer: Drawers.explore),
