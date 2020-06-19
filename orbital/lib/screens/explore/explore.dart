@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../app_drawer.dart';
 import 'explore_all.dart';
+import 'explore_category.dart';
 
 class Explore extends StatelessWidget {
   Auth auth = new Auth();
@@ -13,9 +14,10 @@ class Explore extends StatelessWidget {
     Text('Academic'),
     Text('Adventure'),
     Text('Arts'),
-    Text('Social Cause'),
     Text('Cultural'),
     Text('Health'),
+    Text('Social Cause'),
+    Text('Specialist'),
     Text('Sports'),
     Text('Technology')
   ];
@@ -52,7 +54,7 @@ class Explore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 10,
+        length: 11,
         child: Scaffold(
           appBar: new AppBar(
             title: Text('Explore CCAs', style: TextStyle(color: Colors.black)),
@@ -107,20 +109,24 @@ class Explore extends StatelessWidget {
                   child: categories[5],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(Icons.fitness_center),
                   child: categories[6],
                 ),
                 Tab(
-                  icon: Icon(Icons.fitness_center),
+                  icon: Icon(Icons.star),
                   child: categories[7],
                 ),
                 Tab(
-                  icon: Icon(Icons.directions_bike),
+                  icon: Icon(Icons.star),
                   child: categories[8],
                 ),
                 Tab(
-                  icon: Icon(Icons.laptop_chromebook),
+                  icon: Icon(Icons.directions_bike),
                   child: categories[9],
+                ),
+                Tab(
+                  icon: Icon(Icons.laptop_chromebook),
+                  child: categories[10],
                 ),
               ],
             ),
@@ -129,14 +135,15 @@ class Explore extends StatelessWidget {
             children: [
               categories[0],
               ExploreAll(auth: auth),
-              categories[2],
-              categories[3],
-              categories[4],
-              categories[5],
-              categories[6],
-              categories[7],
-              categories[8],
-              categories[9]
+              ExploreCategory(auth: auth, category: "Academic"),
+              ExploreCategory(auth: auth, category: "Adventure"),
+              ExploreCategory(auth: auth, category: "Arts"),
+              ExploreCategory(auth: auth, category: "Cultural"),
+              ExploreCategory(auth: auth, category: "Health"),
+              ExploreCategory(auth: auth, category: "Social Cause"),
+              ExploreCategory(auth: auth, category: "Specialist"),
+              ExploreCategory(auth: auth, category: "Sports"),
+              ExploreCategory(auth: auth, category: "Technology"),
             ],
           ),
           drawer: AppDrawer(drawer: Drawers.explore),
