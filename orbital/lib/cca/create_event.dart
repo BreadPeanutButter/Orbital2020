@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:orbital/cca/event_admin_view.dart';
+import 'package:orbital/services/auth.dart';
 
 class CreateEvent extends StatefulWidget {
+  Auth auth = new Auth();
+  String ccaName;
+
+  CreateEvent({@required this.ccaName});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -12,13 +19,49 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  String _name, _time, _details, _location;
+  String _name, _time, _details, _location, _register;
   final GlobalKey<FormState> _key = GlobalKey();
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Close this page"),
+          content: new Text(
+              "The event will not be saved. Do you still want to close this page?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            FlatButton(
+                child: new Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            FlatButton(
+                child: new Text("Yes"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            highlightColor: Colors.blue[900],
+            icon: Icon(Icons.cancel),
+            iconSize: 45,
+            onPressed: _showDialog,
+            color: Colors.white,
+          ),
           title: Text('Create Event'),
           centerTitle: true,
         ),
@@ -41,9 +84,10 @@ class _CreateEventState extends State<CreateEvent> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: TextFormField(
+                          autovalidate: true,
                           validator: (input) {
                             if (input.isEmpty) {
-                              return 'Provide an Event name';
+                              return 'Provide event name';
                             }
                           },
                           decoration: InputDecoration(
@@ -57,6 +101,7 @@ class _CreateEventState extends State<CreateEvent> {
                         padding: EdgeInsets.all(8),
                         child: TextFormField(
                           maxLines: null,
+                          autovalidate: true,
                           validator: (input) {
                             if (input.isEmpty) {
                               return 'Provide event details';
@@ -73,6 +118,7 @@ class _CreateEventState extends State<CreateEvent> {
                         padding: EdgeInsets.all(8),
                         child: TextFormField(
                           maxLines: null,
+                          autovalidate: true,
                           validator: (input) {
                             if (input.isEmpty) {
                               return 'Provide date/time of event';
@@ -89,21 +135,100 @@ class _CreateEventState extends State<CreateEvent> {
                         padding: EdgeInsets.all(8),
                         child: TextFormField(
                           maxLines: null,
+                          autovalidate: true,
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Provide location of event';
+                            }
+                          },
                           decoration: InputDecoration(
                             labelText: 'Location',
-                            hintText: 'Leave empty if not applicable.',
+                            hintText: 'Where event is held',
                           ),
                           onSaved: (input) => _location = input,
+                        )),
+                    SizedBox(height: 30),
+                    Container(
+                        padding: EdgeInsets.all(8),
+                        child: TextFormField(
+                          maxLines: null,
+                          autovalidate: true,
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Provide sign up instructions';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Sign Up',
+                            hintText: 'How to sign up',
+                          ),
+                          onSaved: (input) => _register = input,
                         )),
                     SizedBox(height: 30),
                     Container(
                       padding: EdgeInsets.all(8),
                       child: CupertinoButton.filled(
                         child: Text('Publish'),
-                        onPressed: null,
+                        onPressed: _publishEvent,
                       ),
                     )
                   ]),
                 ))));
+  }
+
+  void _successDialog(DocumentSnapshot doc) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Success!"),
+          content: new Text(
+              "Congratulations, you have published a new event! You can now view ${doc['Name']}."),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            OutlineButton(
+                highlightedBorderColor: Colors.blue,
+                borderSide: BorderSide(color: Colors.blue),
+                child: new Text("Hurray!"),
+                onPressed: () {
+                  Navigator.pop(ctx);
+                  Navigator.pop(ctx);
+                  Navigator.push(
+                      ctx,
+                      MaterialPageRoute(
+                          builder: (c) => EventAdminView(
+                                document: doc,
+                              )));
+                }),
+
+            SizedBox(width: 110),
+          ],
+        );
+      },
+    );
+  }
+
+  void _publishEvent() async {
+    if (_key.currentState.validate()) {
+      _key.currentState.save();
+      CollectionReference collectionRef =
+          Firestore.instance.collection('Event');
+      DocumentReference documentRef = await collectionRef.add({
+        'Name': _name,
+        'Details': _details,
+        'CCA': widget.ccaName,
+        'Location': _location,
+        'DateCreated': DateTime.now(),
+        'RegisterInstructions': _register,
+        'BookmarkCount': 0,
+        'EventTime': _time,
+        'CreatedBy': widget.auth.uid,
+        'Closed': false
+      });
+      DocumentSnapshot snapShot = await documentRef.get();
+       _successDialog(snapShot);
+    }
   }
 }
