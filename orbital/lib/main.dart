@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
         '/explore': (BuildContext ctx) => Explore(),
         '/signUp' : (BuildContext ctx) => SignUpPage(),
         '/createcca' : (BuildContext ctx) => CreateCCA(),
-        '/createevent': (BuildContext ctx) => CreateEvent()
       
       },
       
