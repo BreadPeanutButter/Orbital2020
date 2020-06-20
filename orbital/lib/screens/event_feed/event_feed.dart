@@ -43,7 +43,7 @@ class EventFeed extends StatelessWidget {
                                 child: ListTile(
                                   title: new Text(document['Name'],
                                       style: TextStyle(fontSize: 24)),
-                                  subtitle: new Text(document['CCA'],
+                                  subtitle: new Text(document['CCA'] + '\n' + document['EventTime'],
                                       style: TextStyle(fontSize: 20)),
                                 ))));
                   }).toList(),
