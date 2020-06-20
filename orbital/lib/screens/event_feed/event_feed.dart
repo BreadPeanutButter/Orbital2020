@@ -9,7 +9,7 @@ class EventFeed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-          title: Text('Activity Feed', style: TextStyle(color: Colors.black)),
+          title: Text('Event Feed', style: TextStyle(color: Colors.black)),
           centerTitle: true),
       drawer: AppDrawer(drawer: Drawers.eventfeed),
     );
