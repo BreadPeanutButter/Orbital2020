@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:orbital/cca/cca_normal_about.dart';
+import 'package:orbital/cca/cca_admin_about.dart';
 import 'package:orbital/cca/cca_admin_eventlist.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -112,7 +112,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
           ),
           body: TabBarView(
             children: [
-              CCANormalAbout(
+              CCAAdminAbout(
                 document: widget.document,
               ),
               CCAAdminEventlist(
