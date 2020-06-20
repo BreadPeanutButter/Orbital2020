@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/cca/cca_normal_view.dart';
+import 'package:orbital/cca/cca_admin_view.dart';
 import 'package:orbital/services/auth.dart';
 
 class ExploreCategory extends StatelessWidget {
@@ -47,14 +48,7 @@ class ExploreCategory extends StatelessWidget {
                         shadowColor: Colors.blue,
                         child: InkWell(
                             highlightColor: Colors.blueAccent,
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CCANormalView(
-                                            document: document,
-                                          )));
-                            },
+                            onTap: () => goToCCAViewPage(context, document),
                             child: ListTile(
                               title: new Text(document['Name'],
                                   style: TextStyle(fontSize: 24)),
@@ -66,5 +60,24 @@ class ExploreCategory extends StatelessWidget {
         }
       },
     );
+  }
+
+  void goToCCAViewPage(BuildContext context, DocumentSnapshot document) async {
+    bool userIsAdmin = await auth.isAdmin(document['Name']);
+    if (userIsAdmin) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CCAAdminView(
+                    document: document,
+                  )));
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CCANormalView(
+                    document: document,
+                  )));
+    }
   }
 }
