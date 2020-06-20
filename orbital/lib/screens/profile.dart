@@ -80,7 +80,7 @@ class _ProfileState extends State<Profile> {
         ),
         centerTitle: true,
       ),
-      drawer: AppDrawer(drawer: Drawers.activity),
+      drawer: AppDrawer(drawer: Drawers.profile),
       body: new Center(
         child : Column(
         children: <Widget>[

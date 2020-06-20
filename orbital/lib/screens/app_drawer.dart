@@ -3,7 +3,7 @@ import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
 
-enum Drawers { activity, explore, event, profile }
+enum Drawers { eventfeed, explore, event, profile }
 
 class AppDrawer extends StatelessWidget {
   Drawers drawer;
@@ -21,11 +21,11 @@ class AppDrawer extends StatelessWidget {
         child: Image.asset("images/logo.png"),
       ),
       Ink(
-          color: drawer == Drawers.activity ? Colors.blue : Colors.transparent,
+          color: drawer == Drawers.eventfeed ? Colors.blue : Colors.transparent,
           child: ListTile(
             leading: Icon(Icons.looks_one),
-            title: Text('Activity Feed'),
-            onTap: () => Navigator.pushNamed(context, '/activity'),
+            title: Text('Event Feed'),
+            onTap: () => Navigator.pushNamed(context, '/eventfeed'),
           )),
       Ink(
           color: drawer == Drawers.explore ? Colors.blue : Colors.transparent,

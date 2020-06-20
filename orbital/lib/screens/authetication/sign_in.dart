@@ -88,7 +88,7 @@ class _SignInState extends State<SignIn> {
       try {
         await FirebaseAuth.instance
                 .signInWithEmailAndPassword(email: _email, password: _password);
-          Navigator.pushNamed(context, '/activity');
+          Navigator.pushNamed(context, '/eventfeed');
       } catch (e) {
         showDialog(
             context: context,
