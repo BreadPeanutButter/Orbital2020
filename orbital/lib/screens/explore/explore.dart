@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/screens/explore/explore_favourites.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -94,19 +95,19 @@ class Explore extends StatelessWidget {
                   child: categories[1],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(FontAwesomeIcons.book),
                   child: categories[2],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(FontAwesomeIcons.campground),
                   child: categories[3],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(FontAwesomeIcons.penSquare),
                   child: categories[4],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(FontAwesomeIcons.peopleCarry),
                   child: categories[5],
                 ),
                 Tab(
@@ -114,7 +115,7 @@ class Explore extends StatelessWidget {
                   child: categories[6],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(FontAwesomeIcons.handsHelping),
                   child: categories[7],
                 ),
                 Tab(

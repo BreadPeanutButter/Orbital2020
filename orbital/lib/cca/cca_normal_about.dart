@@ -18,28 +18,36 @@ class CCANormalAbout extends StatelessWidget {
     final String email = document['Contact'];
     final String imageURL = document['image'];
 
-    return ListView(children: [
-      Image.network(
+    Widget getWidget(){
+      if(imageURL == null){
+        return SizedBox(height: 20);
+      }
+      else{
+        return Image.network(
           imageURL,
           height: 200,
           width: 200,
-          ),
-      
+          );
+      }
+    }
+
+    return ListView(children: [
+      getWidget(),
       Container(height: 50, child:Card(
           margin: EdgeInsets.all(5),
           elevation: 1.0,
           shadowColor: Colors.blue,
-          child: Text(category, style: TextStyle(fontSize: 20)))), //category
+          child: Text('Category: ' + category, style: TextStyle(fontSize: 20)))), //category
       Card(
           margin: EdgeInsets.all(5),
           elevation: 1.0,
           shadowColor: Colors.blue,
-          child: Text(description, style: TextStyle(fontSize: 20))), //description
+          child: Text('Description: ' + description, style: TextStyle(fontSize: 20))), //description
       Container(height: 50, child: Card(
           margin: EdgeInsets.all(5),
           elevation: 1.0,
           shadowColor: Colors.blue,
-          child: Text(email, style: TextStyle(fontSize: 20)))), //email
+          child: Text('Email and contact: ' + email, style: TextStyle(fontSize: 20)))), //email
       Card(), //external sites
     ]);
   }

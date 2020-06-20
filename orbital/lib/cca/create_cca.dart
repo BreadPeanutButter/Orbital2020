@@ -2,6 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/cca/cca_categories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
@@ -251,15 +252,18 @@ class _CreateCCAState extends State<CreateCCA> {
                           ),
                           onSaved: (input) => _contact = input,
                         )),
-                    SizedBox(height: 30),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: CupertinoButton.filled(
-                          child: Text('Upload Display picture'),
-                          onPressed: () {
-                            getImage(context);
-                          }),
-                    ),
+                    SizedBox(height: 20),
+                    Padding( padding: EdgeInsets.only(top: 0),
+                    child: IconButton(
+                       icon: Icon(
+                          FontAwesomeIcons.camera,
+                           size: 50.0,
+                       ),
+                       onPressed: () =>  getImage(context),
+                    )),
+                    SizedBox(height: 10),
+                    Text("Upload display image"),
+                    SizedBox(height: 10),
                     Container(
                       padding: EdgeInsets.all(8),
                       child: CupertinoButton.filled(
