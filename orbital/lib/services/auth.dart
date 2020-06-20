@@ -39,20 +39,34 @@ class Auth {
     return (await getFavourites()).contains(ccaName);
   }
 
+  Future<bool> isAdmin(String ccaName) async {
+    getCurrentUser();
+    return List.from((await firestoreInstance
+            .collection('CCA')
+            .document(ccaName)
+            .get())['Admin'])
+        .contains(uid);
+  }
+
   void addFavouriteCCA(String ccaName) {
     getCurrentUser();
-    DocumentReference document =
-        firestoreInstance.collection('User').document(uid);
-    document.updateData({
+
+    firestoreInstance.collection('User').document(uid).updateData({
       "Favourite": FieldValue.arrayUnion([ccaName])
     });
+    firestoreInstance
+        .collection('CCA')
+        .document(ccaName)
+        .updateData({"FavouriteCount": FieldValue.increment(1)});
   }
 
   void removeFavouriteCCA(String ccaName) {
-    DocumentReference document =
-        firestoreInstance.collection('User').document(uid);
-    document.updateData({
+    firestoreInstance.collection('User').document(uid).updateData({
       "Favourite": FieldValue.arrayRemove([ccaName])
     });
+    firestoreInstance
+        .collection('CCA')
+        .document(ccaName)
+        .updateData({"FavouriteCount": FieldValue.increment(-1)});
   }
 }
