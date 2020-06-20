@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/cca/cca_categories.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:orbital/services/auth.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:orbital/cca/cca_admin_view.dart';
 import 'dart:io';
@@ -12,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 
 class CreateCCA extends StatefulWidget {
+  Auth auth = new Auth();
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -357,7 +359,9 @@ class _CreateCCAState extends State<CreateCCA> {
           'Description': _description,
           'image': _imageURL,
           'Contact': _contact,
-          'DateJoined': DateTime.now()
+          'DateJoined': DateTime.now(),
+          'Admin': <String>[widget.auth.uid],
+          'FavouriteCount': 0
         });
         DocumentSnapshot _newSnapShot = await docRef.get();
         _successDialog(_newSnapShot);
