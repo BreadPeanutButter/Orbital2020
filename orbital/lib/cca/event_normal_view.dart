@@ -29,7 +29,7 @@ class EventNormalView extends StatelessWidget {
               elevation: 1.0,
               shadowColor: Colors.blue,
               child:
-                  Text(document['DateTime'], style: TextStyle(fontSize: 20))),
+                  Text(document['EventTime'], style: TextStyle(fontSize: 20))),
           Container(
               height: 50,
               child: Card(
@@ -39,7 +39,7 @@ class EventNormalView extends StatelessWidget {
                   child: Text(document['Location'],
                       style: TextStyle(fontSize: 20)))),
           SizedBox(height: 50),
-          CupertinoButton.filled(onPressed: null, child: Text('Sign Up')),
+          CupertinoButton.filled(onPressed: null, child: Text('Bookmark')),
         ]));
   }
 }
