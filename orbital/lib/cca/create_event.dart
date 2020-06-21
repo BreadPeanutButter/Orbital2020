@@ -1,9 +1,15 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:orbital/cca/event_admin_view.dart';
 import 'package:orbital/services/auth.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as Path;
 
 class CreateEvent extends StatefulWidget {
   Auth auth = new Auth();
@@ -19,7 +25,8 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  String _name, _time, _details, _location, _register;
+  String _name, _time, _details, _location, _register, _imageURL;
+  File _image;
   final GlobalKey<FormState> _key = GlobalKey();
 
   void _showDialog() {
@@ -164,14 +171,24 @@ class _CreateEventState extends State<CreateEvent> {
                           ),
                           onSaved: (input) => _register = input,
                         )),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
+                    Padding( padding: EdgeInsets.only(top: 0),
+                    child: IconButton(
+                       icon: Icon(
+                          FontAwesomeIcons.camera,
+                           size: 30.0,
+                       ),
+                       onPressed: () => uploadImage(context),
+                    )),
+                    Text("Upload display image"),
+                    SizedBox(height: 10),
                     Container(
                       padding: EdgeInsets.all(8),
                       child: CupertinoButton.filled(
                         child: Text('Publish'),
                         onPressed: _publishEvent,
                       ),
-                    )
+                    ),
                   ]),
                 ))));
   }
@@ -210,6 +227,46 @@ class _CreateEventState extends State<CreateEvent> {
     );
   }
 
+  showAlertDialog(BuildContext context) {
+    Widget OkayButton = FlatButton(
+      child: Text("Okay"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Uploading image"),
+      content: Text("Image uploaded"),
+      actions: [
+        OkayButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+    Future uploadImage(BuildContext context) async {
+      final picker = ImagePicker();
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+      StorageReference firebaseStorageRef = FirebaseStorage.instance
+          .ref()
+          .child('event_profile/${Path.basename(_image.path)}}');
+      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+      var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      setState(() {
+        _imageURL = dowurl.toString();
+      });
+      showAlertDialog(context);
+      print(_imageURL);
+  }
+
   void _publishEvent() async {
     if (_key.currentState.validate()) {
       _key.currentState.save();
@@ -217,6 +274,7 @@ class _CreateEventState extends State<CreateEvent> {
           Firestore.instance.collection('Event');
       DocumentReference documentRef = await collectionRef.add({
         'Name': _name,
+        'Image': _imageURL,
         'Details': _details,
         'CCA': widget.ccaName,
         'Location': _location,
