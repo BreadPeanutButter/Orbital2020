@@ -34,8 +34,8 @@ class CCANormalAbout extends StatelessWidget {
       }
     }
 
-  BoxDecoration myBoxDecoration() {
-    return BoxDecoration(
+BoxDecoration myBoxDecoration() {
+  return BoxDecoration(
     border: Border.all(
       color: Colors.blue,
       width: 3.0,

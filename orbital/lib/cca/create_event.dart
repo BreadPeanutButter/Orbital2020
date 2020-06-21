@@ -26,7 +26,6 @@ class CreateEvent extends StatefulWidget {
 
 class _CreateEventState extends State<CreateEvent> {
   String _name, _date, _time, _details, _location, _register, _imageURL;
-  DateTime _d;
   File _image;
   final GlobalKey<FormState> _key = GlobalKey();
 
@@ -62,7 +61,7 @@ class _CreateEventState extends State<CreateEvent> {
   pickTime() async{
     TimeOfDay t = await showTimePicker(context: context, initialTime: TimeOfDay.now());
     setState(() {
-      _time = t.toString();
+      _time = t.toString().substring(10,15);
     });
   }
 
@@ -133,13 +132,13 @@ class _CreateEventState extends State<CreateEvent> {
                     width: double.infinity,
                     child: Container(
                       child: Text(
-                      _date == null ? 'Nothing has been picked yet' : _date.toString(),
+                      _date == null ? 'Nothing has been picked yet' : _date,
                       textAlign: TextAlign.left,
                         ),
                       ),
                     ),
                     Container(
-                      alignment: Alignment(-0.8,-0.8),
+                      alignment: Alignment(-0.9,-0.8),
                       child: RaisedButton(
                         child: Text('Pick a date'),
                         onPressed: () {
@@ -149,8 +148,7 @@ class _CreateEventState extends State<CreateEvent> {
                           lastDate:  DateTime(2100)
                           ).then((date){
                             setState(() {
-                              _d = date;
-                              _date = date.toString();
+                              _date = date.toString().substring(0,10);
                             });
                           });
                         },
@@ -168,7 +166,7 @@ class _CreateEventState extends State<CreateEvent> {
                       ),
                     ),
                                         Container(
-                      alignment: Alignment(-0.8,-0.8),
+                      alignment: Alignment(-0.9,-0.8),
                       child: RaisedButton(
                         child: Text('Pick a time'),
                         onPressed: () {
