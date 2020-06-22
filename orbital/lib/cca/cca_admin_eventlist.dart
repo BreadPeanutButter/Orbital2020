@@ -7,9 +7,9 @@ import 'package:orbital/cca/create_event.dart';
 
 class CCAAdminEventlist extends StatelessWidget {
   final database = Firestore.instance;
-  String ccaName;
+  DocumentSnapshot ccaDocument;
 
-  CCAAdminEventlist({@required this.ccaName});
+  CCAAdminEventlist({@required this.ccaDocument});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class CCAAdminEventlist extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => CreateEvent(
-                      ccaName: ccaName,
+                      ccaDocument: ccaDocument,
                     ))),
       ),
     );
@@ -45,7 +45,7 @@ class CCAAdminEventlist extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: database
           .collection('Event')
-          .where("CCA", isEqualTo: ccaName)
+          .where("CCA", isEqualTo: ccaDocument['Name'])
           .orderBy('DateCreated', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

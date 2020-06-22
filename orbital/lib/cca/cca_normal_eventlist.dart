@@ -5,9 +5,9 @@ import 'package:orbital/cca/event_normal_view.dart';
 
 class CCANormalEventlist extends StatelessWidget {
   final database = Firestore.instance;
-  String ccaName;
+  DocumentSnapshot ccaDocument;
 
-  CCANormalEventlist({@required this.ccaName});
+  CCANormalEventlist({@required this.ccaDocument});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class CCANormalEventlist extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: database
           .collection('Event')
-          .where("CCA", isEqualTo: ccaName)
+          .where("CCA", isEqualTo: ccaDocument['Name'])
           .orderBy('DateCreated', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

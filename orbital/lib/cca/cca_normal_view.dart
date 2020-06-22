@@ -109,7 +109,7 @@ class _CCANormalViewState extends State<CCANormalView> {
                 document: widget.document,
               ),
               CCANormalEventlist(
-                ccaName: widget.document['Name'],
+                ccaDocument: widget.document,
               )
             ],
           ),

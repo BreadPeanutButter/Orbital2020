@@ -116,7 +116,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
                 document: widget.document,
               ),
               CCAAdminEventlist(
-                ccaName: widget.document['Name']
+                ccaDocument: widget.document
               ),
               Text('Admin Panel')
             ],
