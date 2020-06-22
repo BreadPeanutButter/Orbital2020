@@ -255,17 +255,18 @@ class _CreateCCAState extends State<CreateCCA> {
                           onSaved: (input) => _contact = input,
                         )),
                     SizedBox(height: 20),
-                    Padding( padding: EdgeInsets.only(top: 0),
-                    child: IconButton(
-                       icon: Icon(
-                          FontAwesomeIcons.camera,
-                           size: 50.0,
-                       ),
-                       onPressed: () =>  getImage(context),
-                    )),
-                    SizedBox(height: 10),
-                    Text("Upload display image"),
-                    SizedBox(height: 10),
+                    Padding(
+                        padding: EdgeInsets.only(top: 0),
+                        child: IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.camera,
+                            size: 50.0,
+                          ),
+                          onPressed: () => getImage(context),
+                        )),
+                    SizedBox(height: 15),
+                    Text("Upload display picture"),
+                    SizedBox(height: 30),
                     Container(
                       padding: EdgeInsets.all(8),
                       child: CupertinoButton.filled(
