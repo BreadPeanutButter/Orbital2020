@@ -1,24 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/cca/event_normal_view.dart';
 
 class CCANormalEventlist extends StatelessWidget {
-  final CollectionReference eventSubCollection;
+  final database = Firestore.instance;
+  String ccaName;
 
-  CCANormalEventlist({@required this.eventSubCollection});
+  CCANormalEventlist({@required this.ccaName});
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return StreamBuilder<QuerySnapshot>(
-      stream: eventSubCollection.snapshots(),
+      stream: database
+          .collection('Event')
+          .where("CCA", isEqualTo: ccaName)
+          .orderBy('DateCreated', descending: true)
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return new Text('Loading...');
+            return new Text(
+              'No events available ☹️',
+              style: TextStyle(fontSize: 20),
+            );
           default:
             return new ListView(
               children:
@@ -43,9 +50,10 @@ class CCANormalEventlist extends StatelessWidget {
                                           EventNormalView(document: document)));
                             },
                             child: ListTile(
-                              title: new Text(document['Name'],
+                              title: new Text(
+                                  document['CCA'] + ': ' + document['Name'],
                                   style: TextStyle(fontSize: 24)),
-                              subtitle: new Text(document['DateTime'],
+                              subtitle: new Text(document['EventTime'],
                                   style: TextStyle(fontSize: 20)),
                             ))));
               }).toList(),
