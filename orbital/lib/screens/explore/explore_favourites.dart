@@ -7,11 +7,11 @@ import 'package:orbital/services/auth.dart';
 
 class ExploreFavourites extends StatelessWidget {
   final collectionRef = Firestore.instance.collection('CCA');
-  Auth auth = new Auth();
+  Auth auth;
   Future<List> favourites;
   List favList;
 
-  ExploreFavourites() {
+  ExploreFavourites({@required this.auth}) {
     favourites = auth.getFavourites();
   }
 

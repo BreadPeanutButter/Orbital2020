@@ -135,7 +135,7 @@ class Explore extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              ExploreFavourites(),
+              ExploreFavourites(auth: auth,),
               ExploreAll(auth: auth),
               ExploreCategory(category: "Academic"),
               ExploreCategory(category: "Adventure"),
