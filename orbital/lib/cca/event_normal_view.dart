@@ -14,7 +14,6 @@ class EventNormalView extends StatelessWidget {
   Widget build(BuildContext context) {
     final String name = document['Name'];
     final String details = document['Details'];
-    final String eventDate = document['EventDate'];
     final String eventTime = document['EventTime'];
     final String location = document['Location'];
     final String imageURL = document['Image'];
@@ -35,7 +34,7 @@ class EventNormalView extends StatelessWidget {
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       border: Border.all(
-        color: Colors.red,
+        color: Colors.blue,
         width: 3.0,
       ),
       borderRadius: BorderRadius.all(
@@ -52,7 +51,7 @@ class EventNormalView extends StatelessWidget {
       decoration: myBoxDecoration(), 
       child: Text(
         info,
-        style: GoogleFonts.ptSans()
+        style: GoogleFonts.ptSans(fontSize: 20)
       ),
     );
   }
@@ -67,15 +66,15 @@ class EventNormalView extends StatelessWidget {
           children: <Widget>[
             imageWidget(),
             SizedBox(height: 5,),
-            Text("Details", style:  TextStyle(fontSize: 20, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            Text("Details", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),
             myWidget(details),
-            SizedBox(height: 6.0),
-            Text("Date and time", style:  TextStyle(fontSize: 20, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            SizedBox(height: 20.0),
+            Text("Date and time", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),
-            myWidget(eventDate + eventTime),
-            SizedBox(height: 6.0),
-            Text("Location:", style:  TextStyle(fontSize: 20, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            myWidget(eventTime),
+            SizedBox(height: 20.0),
+            Text("Location:", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),
             myWidget(location),
             SizedBox(height: 50),

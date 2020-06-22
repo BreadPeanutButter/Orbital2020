@@ -25,7 +25,7 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  String _name, _date, _time, _details, _location, _register, _imageURL;
+  String _name, _time, _details, _location, _register, _imageURL;
   File _image;
   final GlobalKey<FormState> _key = GlobalKey();
 
@@ -58,12 +58,6 @@ class _CreateEventState extends State<CreateEvent> {
     );
   }
 
-  pickTime() async{
-    TimeOfDay t = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-    setState(() {
-      _time = t.toString().substring(10,15);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,54 +122,22 @@ class _CreateEventState extends State<CreateEvent> {
                           onSaved: (input) => _details = input,
                         )),
                     SizedBox(height: 30),
-                    SizedBox(
-                    width: double.infinity,
-                    child: Container(
-                      child: Text(
-                      _date == null ? 'Nothing has been picked yet' : _date,
-                      textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ),
                     Container(
-                      alignment: Alignment(-0.9,-0.8),
-                      child: RaisedButton(
-                        child: Text('Pick a date'),
-                        onPressed: () {
-                          showDatePicker(context: context,
-                          initialDate: DateTime.now(), 
-                          firstDate: DateTime(1998), 
-                          lastDate:  DateTime(2100)
-                          ).then((date){
-                            setState(() {
-                              _date = date.toString().substring(0,10);
-                            });
-                          });
-                        },
-                        shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                        color: Colors.blue,
-                        ),
-                    ),
-                    SizedBox(
-                    width: double.infinity,
-                    child: Container(
-                      child: Text(
-                      _time == null ? 'Nothing has been picked yet' : _time.toString(),
-                      textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ),
-                                        Container(
-                      alignment: Alignment(-0.9,-0.8),
-                      child: RaisedButton(
-                        child: Text('Pick a time'),
-                        onPressed: () {
-                          pickTime();
-                        },
-                        shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                        color: Colors.blue,
-                        ),
-                    ),
+                        padding: EdgeInsets.all(8),
+                        child: TextFormField(
+                          maxLines: null,
+                          autovalidate: true,
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Provide event date and time';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Date and Time, DD/MM/YY HH:MM',
+                            hintText: 'When is the event held',
+                          ),
+                          onSaved: (input) => _time = input,
+                        )),
                     SizedBox(height: 30),
                     Container(
                         padding: EdgeInsets.all(8),
@@ -320,8 +282,7 @@ class _CreateEventState extends State<CreateEvent> {
         'DateCreated': DateTime.now(),
         'RegisterInstructions': _register,
         'BookmarkCount': 0,
-        'EventDate': _date,
-        'EventTime':_time,
+        'EventTime': _time,
         'CreatedBy': widget.auth.uid,
         'Closed': false
       });
