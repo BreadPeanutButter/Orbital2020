@@ -72,7 +72,7 @@ class EventFeed extends StatelessWidget {
                   child: categories[7],
                 ),
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(FontAwesomeIcons.rainbow),
                   child: categories[8],
                 ),
                 Tab(
