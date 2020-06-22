@@ -1,78 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:orbital/cca/event_admin_view.dart';
-import 'package:orbital/cca/event_normal_view.dart';
+import 'event_feed_all.dart';
+import 'event_feed_category.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../app_drawer.dart';
 
 class EventFeed extends StatelessWidget {
   final database = Firestore.instance;
   Auth auth = new Auth();
+
+  static const categories = <Text>[
+    Text('Favourites'),
+    Text('All'),
+    Text('Academic'),
+    Text('Adventure'),
+    Text('Arts'),
+    Text('Cultural'),
+    Text('Health'),
+    Text('Social Cause'),
+    Text('Specialist'),
+    Text('Sports'),
+    Text('Technology')
+  ];
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: new AppBar(
+    return DefaultTabController(
+        length: 10,
+        child: Scaffold(
+          appBar: new AppBar(
             title: Text('Event Feed', style: TextStyle(color: Colors.black)),
-            centerTitle: true),
-        drawer: AppDrawer(drawer: Drawers.eventfeed),
-        body: StreamBuilder<QuerySnapshot>(
-          stream:
-              database.collection('Event').orderBy('DateCreated', descending: true).snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return new Text('No Events Available ☹️');
-              default:
-                return new ListView(
-                  children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
-                    return new SizedBox(
-                        height: 100,
-                        child: Card(
-                            shape: RoundedRectangleBorder(
-                                side: new BorderSide(
-                                    color: Colors.grey, width: 1.0),
-                                borderRadius: BorderRadius.circular(4.0)),
-                            margin: EdgeInsets.all(3),
-                            elevation: 3.0,
-                            shadowColor: Colors.blue,
-                            child: InkWell(
-                                highlightColor: Colors.blueAccent,
-                                onTap: () => goToEventPage(context, document),
-                                child: ListTile(
-                                  title: new Text(document['CCA']  + ': ' + document['Name'],
-                                      style: TextStyle(fontSize: 24)),
-                                  subtitle: new Text(document['EventTime'],
-                                      style: TextStyle(fontSize: 20)),
-                                ))));
-                  }).toList(),
-                );
-            }
-          },
+            centerTitle: true,
+            bottom: TabBar(
+              isScrollable: true,
+              labelStyle: TextStyle(fontSize: 22.0),
+              indicatorColor: Colors.amber[700],
+              indicatorWeight: 4.0,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey[50],
+              tabs: <Widget>[
+                
+                Tab(
+                  icon: Icon(Icons.whatshot),
+                  child: categories[1],
+                ),
+                Tab(
+                  icon: Icon(FontAwesomeIcons.book),
+                  child: categories[2],
+                ),
+                Tab(
+                  icon: Icon(FontAwesomeIcons.campground),
+                  child: categories[3],
+                ),
+                Tab(
+                  icon: Icon(FontAwesomeIcons.penSquare),
+                  child: categories[4],
+                ),
+                Tab(
+                  icon: Icon(FontAwesomeIcons.peopleCarry),
+                  child: categories[5],
+                ),
+                Tab(
+                  icon: Icon(Icons.fitness_center),
+                  child: categories[6],
+                ),
+                Tab(
+                  icon: Icon(FontAwesomeIcons.handsHelping),
+                  child: categories[7],
+                ),
+                Tab(
+                  icon: Icon(Icons.star),
+                  child: categories[8],
+                ),
+                Tab(
+                  icon: Icon(Icons.directions_bike),
+                  child: categories[9],
+                ),
+                Tab(
+                  icon: Icon(Icons.laptop_chromebook),
+                  child: categories[10],
+                ),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              EventFeedAll(auth: auth),
+              EventFeedCategory(auth: auth, category: "Academic"),
+              EventFeedCategory(auth: auth, category: "Adventure"),
+              EventFeedCategory(auth: auth, category: "Arts"),
+              EventFeedCategory(auth: auth, category: "Cultural"),
+              EventFeedCategory(auth: auth, category: "Health"),
+              EventFeedCategory(auth: auth, category: "Social Cause"),
+              EventFeedCategory(auth: auth, category: "Specialist"),
+              EventFeedCategory(auth: auth, category: "Sports"),
+              EventFeedCategory(auth: auth, category: "Technology"),
+            ],
+          ),
+          drawer: AppDrawer(drawer: Drawers.eventfeed),
         ));
   }
 
-  void goToEventPage(BuildContext context, DocumentSnapshot document) async {
-    bool userIsAdmin = await auth.isAdmin(document['CCA']);
-    if (userIsAdmin) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => EventAdminView(
-                    document: document,
-                  )));
-    } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => EventNormalView(
-                    document: document,
-                  )));
-    }
-  }
 }
