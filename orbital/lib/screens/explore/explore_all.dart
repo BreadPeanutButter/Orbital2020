@@ -20,7 +20,11 @@ class ExploreAll extends StatelessWidget {
         if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return new Text('Loading...');
+            return new Center(
+                child: Text(
+              'No CCAs available ☹️',
+              style: TextStyle(fontSize: 20),
+            ));
           default:
             return new ListView(
               children:
