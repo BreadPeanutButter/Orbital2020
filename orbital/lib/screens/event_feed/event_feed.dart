@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:orbital/cca/event_admin_view.dart';
+import 'package:orbital/cca/event_normal_view.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +9,8 @@ import '../app_drawer.dart';
 
 class EventFeed extends StatelessWidget {
   final database = Firestore.instance;
+  Auth auth = new Auth();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,11 +43,11 @@ class EventFeed extends StatelessWidget {
                             shadowColor: Colors.blue,
                             child: InkWell(
                                 highlightColor: Colors.blueAccent,
-                                onTap: () => null,
+                                onTap: () => goToEventPage(context, document),
                                 child: ListTile(
-                                  title: new Text(document['Name'],
+                                  title: new Text(document['CCA']  + ': ' + document['Name'],
                                       style: TextStyle(fontSize: 24)),
-                                  subtitle: new Text(document['CCA'] + '\n' + document['EventTime'],
+                                  subtitle: new Text(document['EventTime'],
                                       style: TextStyle(fontSize: 20)),
                                 ))));
                   }).toList(),
@@ -51,5 +55,24 @@ class EventFeed extends StatelessWidget {
             }
           },
         ));
+  }
+
+  void goToEventPage(BuildContext context, DocumentSnapshot document) async {
+    bool userIsAdmin = await auth.isAdmin(document['CCA']);
+    if (userIsAdmin) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EventAdminView(
+                    document: document,
+                  )));
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EventNormalView(
+                    document: document,
+                  )));
+    }
   }
 }
