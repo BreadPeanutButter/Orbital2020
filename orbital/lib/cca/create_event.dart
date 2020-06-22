@@ -13,9 +13,9 @@ import 'package:path/path.dart' as Path;
 
 class CreateEvent extends StatefulWidget {
   Auth auth = new Auth();
-  String ccaName;
+  DocumentSnapshot ccaDocument;
 
-  CreateEvent({@required this.ccaName});
+  CreateEvent({@required this.ccaDocument});
 
   @override
   State<StatefulWidget> createState() {
@@ -275,9 +275,10 @@ class _CreateEventState extends State<CreateEvent> {
           Firestore.instance.collection('Event');
       DocumentReference documentRef = await collectionRef.add({
         'Name': _name,
+        'Category': widget.ccaDocument['Category'],
         'Image': _imageURL,
         'Details': _details,
-        'CCA': widget.ccaName,
+        'CCA': widget.ccaDocument['Name'],
         'Location': _location,
         'DateCreated': DateTime.now(),
         'RegisterInstructions': _register,
