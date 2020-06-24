@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital/cca/cca_admin_about.dart';
 import 'package:orbital/cca/cca_admin_eventlist.dart';
+import 'package:orbital/cca/cca_admin_panel.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -118,7 +119,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
               CCAAdminEventlist(
                 ccaDocument: widget.document
               ),
-              Text('Admin Panel')
+              CCAAdminPanel(ccaName: widget.document['Name'])
             ],
           ),
         ));
