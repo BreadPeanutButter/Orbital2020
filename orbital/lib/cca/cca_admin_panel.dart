@@ -76,13 +76,13 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
             return SizedBox();
           } else {
             return Slidable(
-              actionPane: SlidableDrawerActionPane(),
+              actionPane: SlidableScrollActionPane(),
               actionExtentRatio: 0.25,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(
-                    color: Colors.redAccent,
+                    color: Colors.red[200],
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(4),
