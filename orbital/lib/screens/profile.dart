@@ -136,9 +136,9 @@ class _ProfileState extends State<Profile> {
                 width: 250,
               ),
           SizedBox(height: 40),
-          Text('Name: ' + widget.auth.name, style: GoogleFonts.sriracha( textStyle: TextStyle(color: Colors.blue, letterSpacing: .5,fontSize: 25))),
+          Text('Name: ' + widget.auth.name, style: TextStyle(color: Colors.blue, letterSpacing: .5,fontSize: 25)),
           SizedBox(height: 20),
-          Text('Email: ' + widget.auth.email, style: GoogleFonts.sriracha( textStyle: TextStyle(color: Colors.blue, letterSpacing: .5,fontSize: 30))),
+          Text('Email: ' + widget.auth.email, style: TextStyle(color: Colors.blue, letterSpacing: .5,fontSize: 30)),
           SizedBox(height: 20),
           actionButtons()
         ],

@@ -37,7 +37,7 @@ class CCAAdminAbout extends StatelessWidget {
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
     border: Border.all(
-      color: Colors.blue,
+      color: Colors.red,
       width: 3.0,
     ),
     borderRadius: BorderRadius.all(

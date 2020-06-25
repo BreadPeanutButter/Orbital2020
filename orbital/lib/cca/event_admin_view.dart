@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:orbital/cca/event_admin_edit.dart';
+import 'package:intl/intl.dart';
 
 class EventAdminView extends StatelessWidget {
   final DocumentSnapshot document;
 
   EventAdminView({@required this.document});
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +20,11 @@ class EventAdminView extends StatelessWidget {
     final String eventTime = document['EventTime'];
     final String location = document['Location'];
     final String imageURL = document['Image'];
+    final String registrationInstructions = document['RegisterInstructions'];
+    final String bookmarkCount = document['BookmarkCount'].toString();
 
-        Widget imageWidget(){
+
+    Widget imageWidget(){
       if(imageURL == null){
         return SizedBox(height: 20);
       }
@@ -55,7 +62,7 @@ class EventAdminView extends StatelessWidget {
     );
   }
 
-    Widget helper() {
+    Widget helper(DocumentSnapshot document) {
     return Card(
       margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
       child: Padding(
@@ -64,6 +71,10 @@ class EventAdminView extends StatelessWidget {
           children: <Widget>[
             imageWidget(),
             SizedBox(height: 5,),
+            Text("Name:", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            SizedBox(height: 7,),
+            myWidget(name),
+            SizedBox(height: 20.0),
             Text("Details", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),
             myWidget(details),
@@ -75,7 +86,16 @@ class EventAdminView extends StatelessWidget {
             Text("Location:", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),
             myWidget(location),
+            SizedBox(height: 20.0),
+            Text("Sign up details", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            SizedBox(height: 7,),
+            myWidget(registrationInstructions),
+            SizedBox(height: 20.0),
+            Text("BookmarkCount", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            SizedBox(height: 7,),
+            myWidget(bookmarkCount),
             SizedBox(height: 50),
+            CupertinoButton.filled(onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (c) => EventAdminEdit(ccaDocument : document))), child: Text('Edit')),
             CupertinoButton.filled(onPressed: null, child: Text('Bookmark')),
             
           ],
@@ -93,7 +113,7 @@ class EventAdminView extends StatelessWidget {
           centerTitle: true,
         ),
         body: 
-        helper()
+        helper(document)
         );
   }
 }
