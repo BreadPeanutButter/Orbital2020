@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/cca/cca_admin_about.dart';
 import 'package:orbital/cca/cca_admin_eventlist.dart';
 import 'package:orbital/cca/cca_admin_panel.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flushbar/flushbar.dart';
 
 class CCAAdminView extends StatefulWidget {
   Auth auth = new Auth();
@@ -18,25 +20,20 @@ class CCAAdminView extends StatefulWidget {
 }
 
 class _CCAAdminViewState extends State<CCAAdminView> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  void _snackBar() {
+  void _flushBar(BuildContext context) {
     String ccaName = widget.document['Name'];
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      backgroundColor: Colors.blueAccent,
-      duration: Duration(seconds: 2),
-      content: Text(
-        !widget.favCCA
+    Flushbar(
+        icon: !widget.favCCA  ? Icon(FontAwesomeIcons.smileBeam) : Icon(FontAwesomeIcons.frown),
+        title: !widget.favCCA ? "Hooray!" : "Aww :(",
+        message: !widget.favCCA
             ? "You have added $ccaName to your Favourites"
             : "You have removed $ccaName from your Favourites",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-          fontSize: 16,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    ));
+        duration: Duration(seconds: 2),
+        dismissDirection: FlushbarDismissDirection.HORIZONTAL, margin: EdgeInsets.all(8),
+      borderRadius: 8,
+      backgroundColor: Colors.red[400])
+      ..show(context);
   }
 
   @override
@@ -44,7 +41,6 @@ class _CCAAdminViewState extends State<CCAAdminView> {
     return DefaultTabController(
         length: 3,
         child: Scaffold(
-          key: _scaffoldKey,
           appBar: new AppBar(
             backgroundColor: Colors.redAccent,
             title: Text(widget.document['Name'],
@@ -72,7 +68,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
                             icon: Icon(Icons.star),
                             iconSize: 35,
                             onPressed: () {
-                              _snackBar();
+                              _flushBar(context);
                               if (widget.favCCA) {
                                 widget.auth.removeFavouriteCCA(
                                     widget.document['Name']);

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/cca/cca_normal_about.dart';
 import 'package:orbital/cca/cca_normal_eventlist.dart';
 import 'package:orbital/services/auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 
 class CCANormalView extends StatefulWidget {
@@ -17,23 +19,20 @@ class CCANormalView extends StatefulWidget {
 }
 
 class _CCANormalViewState extends State<CCANormalView> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
-  void _snackBar() {
+  
+  void _flushBar(BuildContext context) {
     String ccaName = widget.document['Name'];
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      backgroundColor: Colors.blueAccent,
-      duration: Duration(seconds: 2),
-      content: Text(!widget.favCCA
-          ? "You have added $ccaName to your Favourites"
-          : "You have removed $ccaName from your Favourites",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 16,
-          ),
-          textAlign: TextAlign.center,),
-    ));
+    Flushbar(
+        icon: !widget.favCCA  ? Icon(FontAwesomeIcons.smileBeam) : Icon(FontAwesomeIcons.frown),
+        title: !widget.favCCA ? "Hooray!" : "Aww :(",
+        message: !widget.favCCA
+            ? "You have added $ccaName to your Favourites"
+            : "You have removed $ccaName from your Favourites",
+        duration: Duration(seconds: 2),
+        dismissDirection: FlushbarDismissDirection.HORIZONTAL, margin: EdgeInsets.all(8),
+      borderRadius: 8,
+      backgroundColor: Colors.blue[500])
+      ..show(context);
   }
 
   @override
@@ -41,7 +40,6 @@ class _CCANormalViewState extends State<CCANormalView> {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-          key: _scaffoldKey,
           appBar: new AppBar(
             title: Text(widget.document['Name'],
                 style: TextStyle(color: Colors.black)),
@@ -68,7 +66,7 @@ class _CCANormalViewState extends State<CCANormalView> {
                             icon: Icon(Icons.star),
                             iconSize: 35,
                             onPressed: () {
-                              _snackBar();
+                              _flushBar(context);
                               if (widget.favCCA) {
                                 widget.auth.removeFavouriteCCA(
                                     widget.document['Name']);
