@@ -64,7 +64,7 @@ class _CreateEventState extends State<CreateEvent> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            highlightColor: Colors.blue[900],
+            highlightColor: Colors.blue[700],
             icon: Icon(FontAwesomeIcons.times),
             iconSize: 35,
             onPressed: _showDialog,
