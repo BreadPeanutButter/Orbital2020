@@ -25,7 +25,7 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
   void _flushBar(BuildContext context) {
     Flushbar(
         icon: Icon(FontAwesomeIcons.times),
-        title: 'Prohibited Action',
+        title: 'Oops! Prohibited Action',
         message: 'You cannot remove yourself as admin.',
         duration: Duration(seconds: 2),
         dismissDirection: FlushbarDismissDirection.HORIZONTAL,
