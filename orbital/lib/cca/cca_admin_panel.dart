@@ -2,15 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:orbital/services/auth.dart';
 
 class CCAAdminPanel extends StatefulWidget {
   final database = Firestore.instance;
   final String ccaName;
+  Auth auth;
   DocumentReference docRef;
   DocumentSnapshot docSnapshot;
 
-  CCAAdminPanel({@required this.ccaName}) {
+  CCAAdminPanel(
+      {@required this.ccaName, @required this.auth}) {
     docRef = database.collection('CCA').document(ccaName);
   }
 
@@ -19,6 +21,8 @@ class CCAAdminPanel extends StatefulWidget {
 }
 
 class _CCAAdminPanelState extends State<CCAAdminPanel> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -79,13 +83,14 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
               actionPane: SlidableScrollActionPane(),
               actionExtentRatio: 0.25,
               child: Container(
+                margin: EdgeInsets.all(3),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(
                     color: Colors.red[200],
                     width: 1.5,
                   ),
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4.0),
                 ),
                 height: 90,
                 child: ListTile(
@@ -106,23 +111,75 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
               secondaryActions: <Widget>[
                 IconSlideAction(
                     caption: 'Delete',
-                    color: Colors.red,
+                    color:
+                        widget.auth.uid != adminID ? Colors.red : Colors.grey,
                     icon: Icons.delete,
-                    onTap: () async {
-                      widget.database
-                          .collection('CCA')
-                          .document(widget.ccaName)
-                          .updateData({
-                        "Admin": FieldValue.arrayRemove([adminID])
-                      });
-                      DocumentSnapshot snap = await widget.docRef.get();
-                      setState(() {
-                        widget.docSnapshot = snap;
-                      });
+                    onTap: () {
+                      _deleteDialog(snapshot.data['Name'], adminID);
                     }),
               ],
             );
           }
         });
+  }
+
+  void _deleteDialog(String name, String adminID) {
+    // flutter defined function
+    if (adminID == widget.auth.uid) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Restricted Action"),
+            content: new Text("You cannot delete yourself as Admin."),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              FlatButton(
+                  child: new Text("Okay"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Confirmation: Delete Admin"),
+            content: new Text(
+                "Would you like to remove $name as Admin of ${widget.ccaName}?"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              FlatButton(
+                  child: new Text("No"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              FlatButton(
+                child: new Text("Yes"),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  widget.database
+                      .collection('CCA')
+                      .document(widget.ccaName)
+                      .updateData({
+                    "Admin": FieldValue.arrayRemove([adminID])
+                  });
+                  DocumentSnapshot snap = await widget.docRef.get();
+                  setState(() {
+                    widget.docSnapshot = snap;
+                  });
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

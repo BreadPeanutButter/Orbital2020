@@ -116,10 +116,11 @@ class _CCAAdminViewState extends State<CCAAdminView> {
               CCAAdminAbout(
                 document: widget.document,
               ),
-              CCAAdminEventlist(
-                ccaDocument: widget.document
-              ),
-              CCAAdminPanel(ccaName: widget.document['Name'])
+              CCAAdminEventlist(ccaDocument: widget.document),
+              CCAAdminPanel(
+                ccaName: widget.document['Name'],
+                auth: widget.auth,
+              )
             ],
           ),
         ));
