@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:orbital/services/auth.dart';
+import 'package:flushbar/flushbar.dart';
 
 class CCAAdminPanel extends StatefulWidget {
   final database = Firestore.instance;
@@ -11,8 +13,7 @@ class CCAAdminPanel extends StatefulWidget {
   DocumentReference docRef;
   DocumentSnapshot docSnapshot;
 
-  CCAAdminPanel(
-      {@required this.ccaName, @required this.auth}) {
+  CCAAdminPanel({@required this.ccaName, @required this.auth}) {
     docRef = database.collection('CCA').document(ccaName);
   }
 
@@ -21,7 +22,18 @@ class CCAAdminPanel extends StatefulWidget {
 }
 
 class _CCAAdminPanelState extends State<CCAAdminPanel> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  void _flushBar(BuildContext context) {
+    Flushbar(
+        icon: Icon(FontAwesomeIcons.times),
+        title: 'Prohibited Action',
+        message: 'You cannot remove yourself as admin.',
+        duration: Duration(seconds: 2),
+        dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+        margin: EdgeInsets.all(8),
+        borderRadius: 8,
+        backgroundColor: Colors.red[400])
+      ..show(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +127,11 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
                         widget.auth.uid != adminID ? Colors.red : Colors.grey,
                     icon: Icons.delete,
                     onTap: () {
-                      _deleteDialog(snapshot.data['Name'], adminID);
+                      if (adminID == widget.auth.uid) {
+                        _flushBar(context);
+                      } else {
+                        _deleteDialog(snapshot.data['Name'], adminID);
+                      }
                     }),
               ],
             );
@@ -125,61 +141,40 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
 
   void _deleteDialog(String name, String adminID) {
     // flutter defined function
-    if (adminID == widget.auth.uid) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: new Text("Restricted Action"),
-            content: new Text("You cannot delete yourself as Admin."),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              FlatButton(
-                  child: new Text("Okay"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-            ],
-          );
-        },
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: new Text("Confirmation: Delete Admin"),
-            content: new Text(
-                "Would you like to remove $name as Admin of ${widget.ccaName}?"),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              FlatButton(
-                  child: new Text("No"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-              FlatButton(
-                child: new Text("Yes"),
-                onPressed: () async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Confirmation: Delete Admin"),
+          content: new Text(
+              "Would you like to remove $name as Admin of ${widget.ccaName}?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            FlatButton(
+                child: new Text("No"),
+                onPressed: () {
                   Navigator.of(context).pop();
-                  widget.database
-                      .collection('CCA')
-                      .document(widget.ccaName)
-                      .updateData({
-                    "Admin": FieldValue.arrayRemove([adminID])
-                  });
-                  DocumentSnapshot snap = await widget.docRef.get();
-                  setState(() {
-                    widget.docSnapshot = snap;
-                  });
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
+                }),
+            FlatButton(
+              child: new Text("Yes"),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                widget.database
+                    .collection('CCA')
+                    .document(widget.ccaName)
+                    .updateData({
+                  "Admin": FieldValue.arrayRemove([adminID])
+                });
+                DocumentSnapshot snap = await widget.docRef.get();
+                setState(() {
+                  widget.docSnapshot = snap;
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
