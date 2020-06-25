@@ -65,8 +65,8 @@ class _CreateEventState extends State<CreateEvent> {
         appBar: AppBar(
           leading: IconButton(
             highlightColor: Colors.blue[900],
-            icon: Icon(Icons.cancel),
-            iconSize: 45,
+            icon: Icon(FontAwesomeIcons.times),
+            iconSize: 35,
             onPressed: _showDialog,
             color: Colors.white,
           ),
