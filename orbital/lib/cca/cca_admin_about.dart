@@ -81,6 +81,17 @@ class CCAAdminAbout extends StatelessWidget {
             Text("Email and contact:", style:  TextStyle(fontSize: 20, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),
             myWidget(email),
+            SizedBox(height: 50,),
+            RaisedButton.icon(
+                onPressed: (){ null; },
+                shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                label: Text('Edit', 
+                style: TextStyle(color: Colors.white, fontSize: 20),),
+                icon: Icon(Icons.edit, color: Colors.white,), 
+                textColor: Colors.red,
+                splashColor: Colors.red,
+                color: Colors.green,),
             
           ],
         ),

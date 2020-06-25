@@ -23,7 +23,13 @@ class EventAdminEdit extends StatefulWidget {
 
 class _EventAdminEditState extends State<EventAdminEdit> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  String name, details, eventTime, location, registrationInstructions;
+  File _image;
+  String name, details, eventTime, location, registrationInstructions, imageURL;
+
+  void initState() {
+    super.initState();
+    imageURL = widget.ccaDocument['Image'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,6 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     details = widget.ccaDocument['Details'];
     eventTime = widget.ccaDocument['EventTime'];
     location = widget.ccaDocument['Location'];
-    String imageURL = widget.ccaDocument['Image'];
     registrationInstructions = widget.ccaDocument['RegisterInstructions'];
     final GlobalKey<FormState> _key = GlobalKey();
     final TextEditingController nameController = new TextEditingController();
@@ -47,8 +52,30 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     imageURLController.text = imageURL;
     RIController.text = registrationInstructions;
     
-
-    
+    showAlertDialog(BuildContext context) {
+      Widget OkayButton = FlatButton(
+        child: Text("Okay"),
+        onPressed: () {
+          Navigator.of(context).pop();
+          setState(() {
+            
+          });
+        },
+      );
+      AlertDialog alert = AlertDialog(
+        title: Text("Uploading image"),
+        content: Text("Image uploaded"),
+        actions: [
+          OkayButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
 
     
   void _successDialog(DocumentSnapshot doc) {
@@ -99,6 +126,27 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     }
   
 
+    Future uploadImage(BuildContext context) async {
+      final picker = ImagePicker();
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+      StorageReference firebaseStorageRef = FirebaseStorage.instance
+          .ref()
+          .child('event_profile/${Path.basename(_image.path)}}');
+      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+      var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      print(dowurl.toString());
+      setState(() {
+        imageURL = dowurl.toString();
+
+      });
+      print(imageURL);
+      showAlertDialog(context);
+
+  }
+
     Widget imageWidget(){
       if(imageURL == null){
         return SizedBox(height: 50);
@@ -128,6 +176,17 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                   child: Column(children: <Widget>[
                     SizedBox(height: 30),
                     imageWidget(),
+                    SizedBox(height: 20),
+                    RaisedButton.icon(
+                        onPressed: (){ uploadImage(context);},
+                        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                        label: Text('Change', 
+                        style: TextStyle(color: Colors.white, fontSize: 15),),
+                        icon: Icon(Icons.edit, color: Colors.white,), 
+                        textColor: Colors.red,
+                        splashColor: Colors.red,
+                        color: Colors.green,),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
@@ -138,7 +197,6 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             name = value;
                           }
                       )),
-                    SizedBox(height: 30),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
@@ -149,7 +207,6 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             details = value;
                           }
                     )),
-                    SizedBox(height: 30),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
@@ -170,7 +227,6 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             location = value;
                         }
                     )),
-                    SizedBox(height: 30),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
@@ -182,11 +238,9 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                         }
                     )),
                     SizedBox(height: 20),
-                    SizedBox(height: 10),
                     Container(
                       padding: EdgeInsets.all(8),
-                      child: 
-                      CupertinoButton.filled(
+                      child: CupertinoButton.filled(
                         child: Text('Done'),
                         onPressed: () {
                             _publishEvent();
@@ -200,4 +254,3 @@ class _EventAdminEditState extends State<EventAdminEdit> {
   }
   
 }
-
