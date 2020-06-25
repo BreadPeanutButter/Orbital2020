@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orbital/cca/cca_admin_edit.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,7 +20,7 @@ class CCAAdminAbout extends StatelessWidget {
     final String category = document['Category'];
     final String description = document['Description'];
     final String email = document['Contact'];
-    final String imageURL = document['image'];
+    final String imageURL = document['Image'];
 
     Widget getWidget(){
       if(imageURL == null){
@@ -83,7 +84,7 @@ class CCAAdminAbout extends StatelessWidget {
             myWidget(email),
             SizedBox(height: 50,),
             RaisedButton.icon(
-                onPressed: (){ null; },
+                onPressed: (){ Navigator.push(context,MaterialPageRoute(builder: (c) => CCAAdminEdit(ccaDocument : document))); },
                 shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 label: Text('Edit', 
