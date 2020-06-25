@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,7 +96,16 @@ class EventAdminView extends StatelessWidget {
             SizedBox(height: 7,),
             myWidget(bookmarkCount),
             SizedBox(height: 50),
-            CupertinoButton.filled(onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (c) => EventAdminEdit(ccaDocument : document))), child: Text('Edit')),
+            RaisedButton.icon(
+                onPressed: (){ Navigator.push(context,MaterialPageRoute(builder: (c) => EventAdminEdit(ccaDocument : document)));},
+                shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                label: Text('Edit', 
+                style: TextStyle(color: Colors.white, fontSize: 20),),
+                icon: Icon(Icons.edit, color: Colors.white,), 
+                textColor: Colors.red,
+                splashColor: Colors.red,
+                color: Colors.green,),
             CupertinoButton.filled(onPressed: null, child: Text('Bookmark')),
             
           ],

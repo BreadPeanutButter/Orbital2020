@@ -185,8 +185,9 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     SizedBox(height: 10),
                     Container(
                       padding: EdgeInsets.all(8),
-                      child: CupertinoButton.filled(
-                        child: Text('Publish'),
+                      child: 
+                      CupertinoButton.filled(
+                        child: Text('Done'),
                         onPressed: () {
                             _publishEvent();
 
