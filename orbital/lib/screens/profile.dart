@@ -76,7 +76,7 @@ class _ProfileState extends State<Profile> {
       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 30.0),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
             child: Padding(
@@ -116,8 +116,39 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-   @override
+
+
+  BoxDecoration myBoxDecoration() {
+    return BoxDecoration(
+      border: Border.all(
+        color: Colors.blue[500],
+        width: 3.0,
+      ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(7.0)
+      ),
+
+    );
+  }
+
+  Widget myWidget(String info) {
+    return Container(
+      margin: const EdgeInsets.all(1.0),
+      padding: const EdgeInsets.all(10.0),
+      decoration: myBoxDecoration(), 
+      child: Text(
+        info,
+        style: GoogleFonts.ptSans(fontSize: 25, color: Colors.blue[1000])
+      ),
+    );
+  }
+
+  
+  @override
+  
   Widget build(BuildContext context) {
+    String name = 'Name: ' + widget.auth.name;
+    String email = 'Email: ' + widget.auth.email;
     return new Scaffold(
       appBar: new AppBar(
         title: Text(
@@ -130,17 +161,19 @@ class _ProfileState extends State<Profile> {
       body: new Center(
         child : Column(
         children: <Widget>[
+          SizedBox(height: 30),
           Image.asset(
                 "images/logo.png",
                 height: 250,
                 width: 250,
               ),
-          SizedBox(height: 40),
-          Text('Name: ' + widget.auth.name, style: TextStyle(color: Colors.blue, letterSpacing: .5,fontSize: 25)),
           SizedBox(height: 20),
-          Text('Email: ' + widget.auth.email, style: TextStyle(color: Colors.blue, letterSpacing: .5,fontSize: 30)),
+          myWidget(name),
+          SizedBox(height: 40),
+          myWidget(email),
           SizedBox(height: 20),
           actionButtons()
+          
         ],
           
     )));
