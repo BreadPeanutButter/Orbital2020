@@ -20,20 +20,21 @@ class CCAAdminView extends StatefulWidget {
 }
 
 class _CCAAdminViewState extends State<CCAAdminView> {
-
   void _flushBar(BuildContext context) {
     String ccaName = widget.document['Name'];
     Flushbar(
-        icon: !widget.favCCA  ? Icon(FontAwesomeIcons.smileBeam) : Icon(FontAwesomeIcons.frown),
-        title: !widget.favCCA ? "Hooray!" : "Aww :(",
-        message: !widget.favCCA
-            ? "You have added $ccaName to your Favourites"
-            : "You have removed $ccaName from your Favourites",
-        duration: Duration(seconds: 2),
-        dismissDirection: FlushbarDismissDirection.HORIZONTAL, margin: EdgeInsets.all(8),
+      icon: !widget.favCCA
+          ? Icon(FontAwesomeIcons.smileBeam, color: Colors.white,)
+          : Icon(FontAwesomeIcons.frown, color: Colors.white),
+      title: !widget.favCCA ? "Hooray!" : "Awww",
+      message: !widget.favCCA
+          ? "You have added $ccaName to your Favourites"
+          : "You have removed $ccaName from your Favourites",
+      duration: Duration(seconds: 2),
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      margin: EdgeInsets.all(8),
       borderRadius: 8,
-      backgroundColor: Colors.red[400])
-      ..show(context);
+    )..show(context);
   }
 
   @override

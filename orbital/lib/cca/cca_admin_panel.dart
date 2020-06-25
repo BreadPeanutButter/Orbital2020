@@ -24,15 +24,14 @@ class CCAAdminPanel extends StatefulWidget {
 class _CCAAdminPanelState extends State<CCAAdminPanel> {
   void _flushBar(BuildContext context) {
     Flushbar(
-        icon: Icon(FontAwesomeIcons.times),
-        title: 'Oops! Prohibited Action',
-        message: 'You cannot remove yourself as admin.',
-        duration: Duration(seconds: 2),
-        dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-        margin: EdgeInsets.all(8),
-        borderRadius: 8,
-        backgroundColor: Colors.red[400])
-      ..show(context);
+      icon: Icon(FontAwesomeIcons.times, color: Colors.white),
+      title: 'Oops! Prohibited Action',
+      message: 'You cannot remove yourself as admin.',
+      duration: Duration(seconds: 2),
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      margin: EdgeInsets.all(8),
+      borderRadius: 8,
+    )..show(context);
   }
 
   @override
