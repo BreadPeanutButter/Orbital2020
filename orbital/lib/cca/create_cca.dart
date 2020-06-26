@@ -254,31 +254,45 @@ class _CreateCCAState extends State<CreateCCA> {
                           onSaved: (input) => _contact = input,
                         )),
                     SizedBox(height: 20),
-                    Padding(
-                        padding: EdgeInsets.only(top: 0),
+                    Ink(
+                        decoration: ShapeDecoration(
+                            shape: CircleBorder(
+                                side: BorderSide(
+                          width: 2,
+                          color: Colors.black,
+                        ))),
                         child: IconButton(
-                          icon: Icon(
-                            FontAwesomeIcons.camera,
-                            size: 50.0,
-                          ),
+                          highlightColor: Colors.blue[500],
+                          icon: Icon(Icons.add_a_photo),
+                          iconSize: 50,
                           onPressed: () => getImage(context),
+                          color: Colors.black,
                         )),
                     SizedBox(height: 15),
                     Text("Upload display picture"),
                     SizedBox(height: 30),
                     Container(
+                      width: 270,
                       padding: EdgeInsets.all(8),
-                      child: CupertinoButton.filled(
-                        child: Text('Reset form'),
+                      child: CupertinoButton(
+                        color: Colors.red[500],
+                        child: Row(children: [
+                          Icon(FontAwesomeIcons.redo),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text('Reset Form'),
+                        ]),
                         onPressed: () {
                           _key.currentState.reset();
                         },
                       ),
                     ),
+                    SizedBox(height: 15),
                     Container(
                       padding: EdgeInsets.all(8),
                       child: CupertinoButton.filled(
-                        child: Text('Submit Application'),
+                        child: Text('Submit Application', style: TextStyle(fontSize: 20),),
                         onPressed: _submitApplication,
                       ),
                     )
