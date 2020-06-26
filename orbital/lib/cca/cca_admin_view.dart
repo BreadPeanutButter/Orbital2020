@@ -12,8 +12,10 @@ class CCAAdminView extends StatefulWidget {
   Auth auth = new Auth();
   DocumentSnapshot document;
   bool favCCA;
+  int index;
 
-  CCAAdminView({@required this.document});
+  CCAAdminView({@required this.document}) {index = 0;}
+  CCAAdminView.tab({@required this.document, @required this.index});
 
   @override
   _CCAAdminViewState createState() => _CCAAdminViewState();
@@ -40,6 +42,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+        initialIndex: widget.index,
         length: 3,
         child: Scaffold(
           appBar: new AppBar(

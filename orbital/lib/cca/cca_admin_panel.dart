@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flushbar/flushbar.dart';
+import 'cca_admin_add.dart';
 
 class CCAAdminPanel extends StatefulWidget {
   final database = Firestore.instance;
@@ -68,7 +69,15 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
             ),
             Text('Add Admin'),
           ]),
-          onPressed: () => null,
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CCAAdminAdd(
+                          ccaName: widget.ccaName,
+                          docRef: widget.docRef,
+                        )));
+          },
         ));
   }
 
