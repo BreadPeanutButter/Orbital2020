@@ -110,6 +110,9 @@ class _CreateCCAState extends State<CreateCCA> {
 
   @override
   Widget build(BuildContext context) {
+    String message = "Cannot find the CCA you were looking for?" +
+        " Create it yourself! Upon submission and approval, your CCA page will be created on NUS WhatToDo." +
+        " You will be made an Admin of the page and will be able to add other Admins.";
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -128,6 +131,13 @@ class _CreateCCAState extends State<CreateCCA> {
                 key: _key,
                 child: SingleChildScrollView(
                   child: Column(children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(8),
+                    child: Text(message,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ))),
                     SizedBox(height: 10),
                     Container(
                         padding: EdgeInsets.all(8),
@@ -292,7 +302,10 @@ class _CreateCCAState extends State<CreateCCA> {
                     Container(
                       padding: EdgeInsets.all(8),
                       child: CupertinoButton.filled(
-                        child: Text('Submit Application', style: TextStyle(fontSize: 20),),
+                        child: Text(
+                          'Submit Application',
+                          style: TextStyle(fontSize: 20),
+                        ),
                         onPressed: _submitApplication,
                       ),
                     )
