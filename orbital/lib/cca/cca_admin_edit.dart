@@ -28,7 +28,8 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
 
   void initState() {
     super.initState();
-    imageURL = widget.ccaDocument['Image'];
+    imageURL = widget.ccaDocument['image'];
+
   }
 
   @override
@@ -38,7 +39,6 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
     final GlobalKey<FormState> _key = GlobalKey();
     final TextEditingController descriptionController = new TextEditingController();
     final TextEditingController contactController = new TextEditingController();
-    final TextEditingController imageURLController = new TextEditingController();
     descriptionController.text = description;
     contactController.text = contact;
     
@@ -104,7 +104,7 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
       widget.ccaDocument.reference.updateData({
         'Description' : description,
         'Contact': contact,
-        'Image' : imageURL
+        'image' : imageURL
         
                           
       });

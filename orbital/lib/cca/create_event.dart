@@ -276,7 +276,7 @@ class _CreateEventState extends State<CreateEvent> {
       DocumentReference documentRef = await collectionRef.add({
         'Name': _name,
         'Category': widget.ccaDocument['Category'],
-        'Image': _imageURL,
+        'image': _imageURL,
         'Details': _details,
         'CCA': widget.ccaDocument['Name'],
         'Location': _location,

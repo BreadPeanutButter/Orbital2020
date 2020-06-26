@@ -12,17 +12,16 @@ class EventAdminView extends StatelessWidget {
 
   EventAdminView({@required this.document});
 
-  
-
   @override
   Widget build(BuildContext context) {
     final String name = document['Name'];
     final String details = document['Details'];
     final String eventTime = document['EventTime'];
     final String location = document['Location'];
-    final String imageURL = document['Image'];
+    final String imageURL = document['image'];
     final String registrationInstructions = document['RegisterInstructions'];
     final String bookmarkCount = document['BookmarkCount'].toString();
+
 
 
     Widget imageWidget(){
@@ -106,6 +105,7 @@ class EventAdminView extends StatelessWidget {
                 textColor: Colors.red,
                 splashColor: Colors.red,
                 color: Colors.green,),
+              
             CupertinoButton.filled(onPressed: null, child: Text('Bookmark')),
             
           ],

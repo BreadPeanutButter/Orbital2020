@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:orbital/cca/event_admin_view.dart';
+import 'package:orbital/screens/event_feed/event_feed_all.dart';
 import 'package:orbital/services/auth.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -25,10 +26,12 @@ class _EventAdminEditState extends State<EventAdminEdit> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   File _image;
   String name, details, eventTime, location, registrationInstructions, imageURL;
+  bool closed;
 
   void initState() {
     super.initState();
-    imageURL = widget.ccaDocument['Image'];
+    imageURL = widget.ccaDocument['image'];
+    closed =  widget.ccaDocument['Closed'];
   }
 
   @override
@@ -78,7 +81,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     }
 
     
-  void _successDialog(DocumentSnapshot doc) {
+  void _successDialogEdit(DocumentSnapshot doc) {
     showDialog(
       context: context,
       builder: (BuildContext ctx) {
@@ -107,6 +110,36 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       },
     );
   }
+
+    void _successDialogClosed(DocumentSnapshot doc) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Success!"),
+          content: new Text(
+              "Congratulations, you have closed the event!"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            OutlineButton(
+                highlightedBorderColor: Colors.blue,
+                borderSide: BorderSide(color: Colors.blue),
+                child: new Text("Event is now closed!"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.push(context,MaterialPageRoute(builder: (c) => EventAdminView(document : doc)));
+                  
+                }),
+
+            SizedBox(width: 110),
+          ],
+        );
+      },
+    );
+  }
     
 
     void _publishEvent() async {
@@ -117,12 +150,20 @@ class _EventAdminEditState extends State<EventAdminEdit> {
         'Location': location,
         'RegisterInstructions': registrationInstructions,
         'EventTime': eventTime,
-        'Image' : imageURL
+        'image' : imageURL
         
                           
       });
       DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
-       _successDialog(snapShot);
+       _successDialogEdit(snapShot);
+    }
+
+    void _closedEvent() async{
+      widget.ccaDocument.reference.updateData({
+        'Closed' : true
+      });
+      DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
+      _successDialogClosed(snapShot);
     }
   
 
@@ -245,6 +286,16 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                         onPressed: () {
                             _publishEvent();
 
+                        } 
+                      ),
+                      
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: CupertinoButton.filled(
+                        child: Text('Closed Event'),
+                        onPressed: () {
+                            _closedEvent();
                         } 
                       ),
                     ),

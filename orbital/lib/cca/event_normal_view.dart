@@ -16,7 +16,7 @@ class EventNormalView extends StatelessWidget {
     final String details = document['Details'];
     final String eventTime = document['EventTime'];
     final String location = document['Location'];
-    final String imageURL = document['Image'];
+    final String imageURL = document['image'];
 
     Widget imageWidget(){
       if(imageURL == null){

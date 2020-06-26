@@ -11,6 +11,18 @@ class EventFeedAll extends StatelessWidget {
 
   EventFeedAll({@required this.auth});
 
+  Widget closedEvent(DocumentSnapshot doc){
+    if(doc['Closed'] == true){
+      return Image.network(
+        'https://firebasestorage.googleapis.com/v0/b/nus-whattodo.appspot.com/o/closed_event_image%2Fclosed-stamp-png.png?alt=media&token=c945c36e-b975-442a-94b6-5d91a39623b8'
+      );
+    }
+    else{
+      return null;
+    }
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -33,8 +45,8 @@ class EventFeedAll extends StatelessWidget {
                   snapshot.data.documents.map((DocumentSnapshot document) {
                 return new SizedBox(
                     height: 100,
-                    child: Card(
-                        shape: RoundedRectangleBorder(
+                    child: 
+                    Card(shape: RoundedRectangleBorder(
                             side:
                                 new BorderSide(color: Colors.grey, width: 1.0),
                             borderRadius: BorderRadius.circular(4.0)),
@@ -50,6 +62,7 @@ class EventFeedAll extends StatelessWidget {
                                   style: TextStyle(fontSize: 24)),
                               subtitle: new Text(document['EventTime'],
                                   style: TextStyle(fontSize: 20)),
+                              leading: closedEvent(document),
                             ))));
               }).toList(),
             );
