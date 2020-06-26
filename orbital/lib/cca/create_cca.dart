@@ -48,7 +48,6 @@ class _CreateCCAState extends State<CreateCCA> {
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  Navigator.pop(context);
                 }),
           ],
         );
