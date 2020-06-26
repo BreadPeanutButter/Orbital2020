@@ -42,7 +42,7 @@ class Explore extends StatelessWidget {
                         color: Colors.black,
                       ))),
                   child: IconButton(
-                    highlightColor: Colors.blue[900],
+                    highlightColor: Colors.blue[700],
                     icon: Icon(Icons.add),
                     iconSize: 35,
                     onPressed: () => Navigator.pushNamed(context, '/createcca'),
@@ -94,7 +94,7 @@ class Explore extends StatelessWidget {
                   child: categories[8],
                 ),
                 Tab(
-                  icon: Icon(Icons.directions_bike),
+                  icon: Icon(FontAwesomeIcons.footballBall),
                   child: categories[9],
                 ),
                 Tab(

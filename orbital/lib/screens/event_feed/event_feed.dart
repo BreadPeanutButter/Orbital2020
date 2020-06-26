@@ -76,7 +76,7 @@ class EventFeed extends StatelessWidget {
                   child: categories[8],
                 ),
                 Tab(
-                  icon: Icon(Icons.directions_bike),
+                  icon: Icon(FontAwesomeIcons.footballBall),
                   child: categories[9],
                 ),
                 Tab(
