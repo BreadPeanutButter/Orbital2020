@@ -74,6 +74,7 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
               Container(
                   padding: EdgeInsets.all(8),
                   child: TextFormField(
+                    autofocus: false,
                     maxLines: 1,
                     autovalidate: true,
                     validator: (input) {
@@ -96,6 +97,7 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
                     color: Colors.black,
                   ))),
                   child: IconButton(
+                    autofocus: false,
                     highlightColor: Colors.blue[500],
                     icon: Icon(Icons.add),
                     iconSize: 50,
@@ -103,6 +105,7 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
                       if (_key.currentState.validate()) {
                         _key.currentState.save();
                         _addDialog(context);
+                        FocusScope.of(context).unfocus();
                       }
                     },
                     color: Colors.black,
