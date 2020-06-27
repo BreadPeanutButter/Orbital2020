@@ -177,7 +177,7 @@ class _ProfileState extends State<Profile> {
           future: widget.auth.getCurrentUser(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             } else {
               return profileWidget();
             }
