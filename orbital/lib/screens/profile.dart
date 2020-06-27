@@ -2,13 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/services/auth.dart';
 import 'app_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class Profile extends StatefulWidget {
-
   Auth auth;
   Profile({@required this.auth});
 
@@ -16,62 +15,57 @@ class Profile extends StatefulWidget {
   _ProfileState createState() => new _ProfileState();
 }
 
-
 class _ProfileState extends State<Profile> {
-  
-  signOut() async{
+  signOut() async {
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     await firebaseAuth.signOut();
     SchedulerBinding.instance.addPostFrameCallback((_) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/', (Route<dynamic> route) => false);
-                      });
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+    });
+  }
 
-  } 
-
-    showAlertDialog(BuildContext context) {
-      Widget cancelButton = FlatButton(
-        child: Text("Cancel"),
-        onPressed:  () {Navigator.of(context).pop();},
-      );
-      Widget continueButton = FlatButton(
-        child: Text("Continue"),
-        onPressed:  () {
-          resetEmail(widget.auth.email);
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue"),
+      onPressed: () {
+        resetEmail(widget.auth.email);
         SchedulerBinding.instance.addPostFrameCallback((_) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/', (Route<dynamic> route) => false);
-                      });
-        },
-      );
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+        });
+      },
+    );
 
-      // set up the AlertDialog
-      AlertDialog alert = AlertDialog(
-        title: Text("Reset password"),
-        content: Text("Would you like to reset your password? An email will be sent to you after you press continue."),
-        actions: [
-          cancelButton,
-          continueButton,
-        ],
-      );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Reset password"),
+      content: Text(
+          "Would you like to reset your password? An email will be sent to you after you press continue."),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
-  Future resetEmail(String email) async{
+  Future resetEmail(String email) async {
     return FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-    Widget actionButtons() {
+  Widget actionButtons() {
     return Padding(
       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 30.0),
       child: new Row(
@@ -117,17 +111,13 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       border: Border.all(
         color: Colors.blue[500],
         width: 3.0,
       ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(7.0)
-      ),
-
+      borderRadius: BorderRadius.all(Radius.circular(7.0)),
     );
   }
 
@@ -135,54 +125,65 @@ class _ProfileState extends State<Profile> {
     return Container(
       margin: const EdgeInsets.all(1.0),
       padding: const EdgeInsets.all(10.0),
-      decoration: myBoxDecoration(), 
-      child: Text(
-        info,
-        style: GoogleFonts.ptSans(fontSize: 25, color: Colors.blue[1000])
-      ),
+      decoration: myBoxDecoration(),
+      child: Text(info,
+          style: GoogleFonts.ptSans(fontSize: 25, color: Colors.blue[1000])),
     );
   }
 
-  
-  @override
-  
-  Widget build(BuildContext context) {
+  Widget profileWidget() {
     String name = 'Name: ' + widget.auth.name;
     String email = 'Email: ' + widget.auth.email;
     return new Scaffold(
-      appBar: new AppBar(
-        title: Text(
-          'Profile',
-          style: TextStyle(color: Colors.black),
+        appBar: new AppBar(
+          title: Text(
+            'Profile',
+            style: TextStyle(color: Colors.black),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      drawer: AppDrawer(drawer: Drawers.profile),
-      body: new Center(
-        child : Column(
-        children: <Widget>[
-          SizedBox(height: 30),
-          Image.asset(
-                "images/logo.png",
-                height: 250,
-                width: 250,
+        drawer: AppDrawer(drawer: Drawers.profile),
+        body: new Center(
+            child: Column(
+          children: <Widget>[
+            SizedBox(height: 15),
+            Row(children: [
+              SizedBox(
+                width: 70,
               ),
-          SizedBox(height: 20),
-          myWidget(name),
-          SizedBox(height: 40),
-          myWidget(email),
-          SizedBox(height: 20),
-          actionButtons()
-          
-        ],
-          
-    )));
-    
+              Icon(
+                FontAwesomeIcons.solidIdCard,
+                color: Colors.black,
+                size: 230,
+              ),
+              SizedBox(
+                width: 1,
+              )
+            ]),
+            SizedBox(height: 30),
+            myWidget(name),
+            SizedBox(height: 20),
+            myWidget(email),
+            SizedBox(height: 20),
+            actionButtons()
+          ],
+        )));
   }
 
-  
-  
-
-  
- 
+  @override
+  Widget build(BuildContext context) {
+    if (widget.auth.name.isEmpty || widget.auth.email.isEmpty) {
+      return FutureBuilder(
+          future: widget.auth.getCurrentUser(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator();
+            } else {
+              return profileWidget();
+            }
+          });
+    } else {
+      return profileWidget();
+    }
+  }
 }
