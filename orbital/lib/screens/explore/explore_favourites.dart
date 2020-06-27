@@ -28,7 +28,7 @@ class ExploreFavourites extends StatelessWidget {
               return Center(
                   child: Text(
                 'No favourite CCAs ☹️',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 30),
               ));
             } else {
               return ListView.builder(

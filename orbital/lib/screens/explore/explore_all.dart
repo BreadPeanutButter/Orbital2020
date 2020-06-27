@@ -17,39 +17,39 @@ class ExploreAll extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: database.collection('CCA').orderBy('Name').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return new Center(
-                child: Text(
-              'No CCAs available ☹️',
-              style: TextStyle(fontSize: 20),
-            ));
-          default:
-            return new ListView(
-              children:
-                  snapshot.data.documents.map((DocumentSnapshot document) {
-                return new SizedBox(
-                    height: 100,
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                            side:
-                                new BorderSide(color: Colors.grey, width: 1.0),
-                            borderRadius: BorderRadius.circular(4.0)),
-                        margin: EdgeInsets.all(3),
-                        elevation: 3.0,
-                        shadowColor: Colors.blue,
-                        child: InkWell(
-                            highlightColor: Colors.blueAccent,
-                            onTap: () => goToCCAViewPage(context, document),
-                            child: ListTile(
-                              title: new Text(document['Name'],
-                                  style: TextStyle(fontSize: 24)),
-                              subtitle: new Text(document['Category'],
-                                  style: TextStyle(fontSize: 20)),
-                            ))));
-              }).toList(),
-            );
+        if (snapshot.hasError) {
+          return new Text('Error: ${snapshot.error}');
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.data.documents.isEmpty) {
+          return new Center(
+              child: Text(
+            'No CCAs available ☹️',
+            style: TextStyle(fontSize: 30),
+          ));
+        } else {
+          return new ListView(
+            children: snapshot.data.documents.map((DocumentSnapshot document) {
+              return new SizedBox(
+                  height: 100,
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: new BorderSide(color: Colors.grey, width: 1.0),
+                          borderRadius: BorderRadius.circular(4.0)),
+                      margin: EdgeInsets.all(3),
+                      elevation: 3.0,
+                      shadowColor: Colors.blue,
+                      child: InkWell(
+                          highlightColor: Colors.blueAccent,
+                          onTap: () => goToCCAViewPage(context, document),
+                          child: ListTile(
+                            title: new Text(document['Name'],
+                                style: TextStyle(fontSize: 24)),
+                            subtitle: new Text(document['Category'],
+                                style: TextStyle(fontSize: 20)),
+                          ))));
+            }).toList(),
+          );
         }
       },
     );

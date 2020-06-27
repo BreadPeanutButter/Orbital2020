@@ -27,21 +27,23 @@ class EventFeedCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: database
-          .collection('Event')
-          .where("Category", isEqualTo: category)
-          .orderBy('DateCreated', descending: true)
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
+        stream: database
+            .collection('Event')
+            .where("Category", isEqualTo: category)
+            .orderBy('DateCreated', descending: true)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return new Text('Error: ${snapshot.error}');
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.data.documents.isEmpty) {
             return new Center(
                 child: Text(
               'No events available ☹️',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 30),
             ));
-          default:
+          } else {
             return new ListView(
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
@@ -68,9 +70,8 @@ class EventFeedCategory extends StatelessWidget {
                             ))));
               }).toList(),
             );
-        }
-      },
-    );
+          }
+        });
   }
 
   void goToEventPage(BuildContext context, DocumentSnapshot document) async {
