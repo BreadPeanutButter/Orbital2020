@@ -25,7 +25,7 @@ class EventFeed extends StatelessWidget {
     Text('Sports'),
     Text('Technology')
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -42,7 +42,6 @@ class EventFeed extends StatelessWidget {
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey[50],
               tabs: <Widget>[
-                
                 Tab(
                   icon: Icon(Icons.whatshot),
                   child: categories[1],
@@ -103,5 +102,4 @@ class EventFeed extends StatelessWidget {
           drawer: AppDrawer(drawer: Drawers.eventfeed),
         ));
   }
-
 }

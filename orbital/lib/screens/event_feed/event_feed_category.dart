@@ -12,16 +12,13 @@ class EventFeedCategory extends StatelessWidget {
 
   EventFeedCategory({@required this.auth, @required this.category});
 
-  Widget closedEvent(DocumentSnapshot doc){
-    if(doc['Closed'] == true){
+  Widget closedEvent(DocumentSnapshot doc) {
+    if (doc['Closed'] == true) {
       return Image.network(
-        'https://firebasestorage.googleapis.com/v0/b/nus-whattodo.appspot.com/o/closed_event_image%2Fclosed-stamp-png.png?alt=media&token=c945c36e-b975-442a-94b6-5d91a39623b8'
-      );
-    }
-    else{
+          'https://firebasestorage.googleapis.com/v0/b/nus-whattodo.appspot.com/o/closed_event_image%2Fclosed-stamp-png.png?alt=media&token=c945c36e-b975-442a-94b6-5d91a39623b8');
+    } else {
       return SizedBox();
     }
-    
   }
 
   @override
@@ -37,10 +34,10 @@ class EventFeedCategory extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return new Center(
-              child: Text(
-            'No events available ☹️',
-            style: TextStyle(fontSize: 20),
-          ));
+                child: Text(
+              'No events available ☹️',
+              style: TextStyle(fontSize: 20),
+            ));
           default:
             return new ListView(
               children:
@@ -64,7 +61,7 @@ class EventFeedCategory extends StatelessWidget {
                                   style: TextStyle(fontSize: 24)),
                               subtitle: new Text(document['EventTime'],
                                   style: TextStyle(fontSize: 20)),
-                                  trailing: closedEvent(document),
+                              trailing: closedEvent(document),
                             ))));
               }).toList(),
             );
