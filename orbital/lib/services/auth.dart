@@ -14,17 +14,14 @@ class Auth {
     getCurrentUser();
   }
 
-  void getCurrentUser() async {
+  Future<bool> getCurrentUser() async {
     mCurrentUser = await FirebaseAuth.instance.currentUser();
     uid = mCurrentUser.uid;
-    getName();
-  }
-
-  void getName() async {
     DocumentSnapshot document =
         await firestoreInstance.collection('User').document(uid).get();
     name = document.data["Name"];
     email = document.data["Email"];
+    return true;
   }
 
   Future<List<String>> getFavourites() async {
