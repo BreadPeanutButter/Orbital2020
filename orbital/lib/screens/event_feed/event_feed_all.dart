@@ -18,7 +18,7 @@ class EventFeedAll extends StatelessWidget {
       );
     }
     else{
-      return null;
+      return SizedBox();
     }
     
   }

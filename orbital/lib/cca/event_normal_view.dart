@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +20,8 @@ class EventNormalView extends StatelessWidget {
     final String location = document['Location'];
     final String imageURL = document['image'];
     final bool closed = document['Closed'];
-
+    final String createdBy = document['CreatedBy'];
+    final Timestamp dateCreated = document['DateCreated'];
     Widget imageWidget(){
       if(imageURL == null){
         return SizedBox(height: 20);
@@ -35,10 +37,10 @@ class EventNormalView extends StatelessWidget {
 
     
 
-  BoxDecoration myBoxDecoration(Color colour) {
+  BoxDecoration myBoxDecoration(Color color) {
     return BoxDecoration(
       border: Border.all(
-        color: colour,
+        color: color,
         width: 3.0,
       ),
       borderRadius: BorderRadius.all(
@@ -48,16 +50,23 @@ class EventNormalView extends StatelessWidget {
     );
  }
 
+
   Widget myWidgetClosing() {
     return Container(
       margin: const EdgeInsets.all(1.0),
       padding: const EdgeInsets.all(8.0),
-      decoration: myBoxDecoration(Colors.green), 
-      child: Text(
-        "This Event is now closed",
+      decoration: myBoxDecoration(Colors.red), 
+      child: 
+      Row(
+      children: <Widget>[
+        Icon(FontAwesomeIcons.times, color: Colors.red, size : 28),
+         Text(
+        "  This Event is now closed",
         textAlign: TextAlign.center,
-        style: GoogleFonts.ptSans(fontSize: 25, color: Colors.green)
+        style: GoogleFonts.ptSans(fontSize: 25, color: Colors.red)
       ),
+      ]
+      )
     );
   }
 
@@ -66,9 +75,12 @@ class EventNormalView extends StatelessWidget {
       return myWidgetClosing();
     }
     else{
-      return SizedBox(height: 0,);
+      return SizedBox(height: 0);
     }
   }
+
+
+
 
   Widget myWidget(String info) {
     return Container(
@@ -104,6 +116,10 @@ class EventNormalView extends StatelessWidget {
             Text("Location:", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),
             myWidget(location),
+            SizedBox(height: 20.0), 
+            Text("Created by and date created", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            SizedBox(height: 7,),
+            myWidget(createdBy + "\n" + dateCreated.toDate().toString()),
             SizedBox(height: 50),
             CupertinoButton.filled(onPressed: null, child: Text('Bookmark')),
             

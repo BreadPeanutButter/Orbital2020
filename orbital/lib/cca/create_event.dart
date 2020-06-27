@@ -25,7 +25,7 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  String _name, _time, _details, _location, _register, _imageURL;
+  String _name, _time, _details, _location, _register, _imageURL, _createdBy;
   File _image;
   final GlobalKey<FormState> _key = GlobalKey();
 
@@ -172,6 +172,22 @@ class _CreateEventState extends State<CreateEvent> {
                           ),
                           onSaved: (input) => _register = input,
                         )),
+                        Container(
+                        padding: EdgeInsets.all(8),
+                        child: TextFormField(
+                          maxLines: null,
+                          autovalidate: true,
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'please provide your name';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Created by who',
+                            hintText: 'Who created this event',
+                          ),
+                          onSaved: (input) => _createdBy = input,
+                        )),
                     SizedBox(height: 20),
                     Padding( padding: EdgeInsets.only(top: 0),
                     child: IconButton(
@@ -284,7 +300,7 @@ class _CreateEventState extends State<CreateEvent> {
         'RegisterInstructions': _register,
         'BookmarkCount': 0,
         'EventTime': _time,
-        'CreatedBy': widget.auth.uid,
+        'CreatedBy': _createdBy,
         'Closed': false
       });
       DocumentSnapshot snapShot = await documentRef.get();

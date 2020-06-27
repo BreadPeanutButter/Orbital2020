@@ -278,6 +278,15 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             registrationInstructions = value;
                         }
                     )),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: CupertinoButton.filled(
+                        child: Text('Closed Event'),
+                        onPressed: () {
+                            _closedEvent();
+                        } 
+                      ),
+                    ),
                     SizedBox(height: 20),
                     Container(
                       padding: EdgeInsets.all(8),
@@ -290,15 +299,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                       ),
                       
                     ),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: CupertinoButton.filled(
-                        child: Text('Closed Event'),
-                        onPressed: () {
-                            _closedEvent();
-                        } 
-                      ),
-                    ),
+ 
                   ]),
                 ))));
     

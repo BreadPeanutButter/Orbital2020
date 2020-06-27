@@ -11,6 +11,9 @@ class EventAdminView extends StatelessWidget {
   final DocumentSnapshot document;
 
   EventAdminView({@required this.document});
+  
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +24,9 @@ class EventAdminView extends StatelessWidget {
     final String imageURL = document['image'];
     final String registrationInstructions = document['RegisterInstructions'];
     final String bookmarkCount = document['BookmarkCount'].toString();
-
-
-
+    final String createdBy = document['CreatedBy'];
+    final Timestamp dateCreated = document['DateCreated'];
+  
     Widget imageWidget(){
       if(imageURL == null){
         return SizedBox(height: 20);
@@ -55,12 +58,18 @@ class EventAdminView extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(1.0),
       padding: const EdgeInsets.all(8.0),
-      decoration: myBoxDecoration(Colors.green), 
-      child: Text(
-        "This Event is now closed",
+      decoration: myBoxDecoration(Colors.red), 
+      child: 
+      Row(
+      children: <Widget>[
+        Icon(FontAwesomeIcons.times, color: Colors.red, size : 28),
+         Text(
+        "  This Event is now closed",
         textAlign: TextAlign.center,
-        style: GoogleFonts.ptSans(fontSize: 25, color: Colors.green)
+        style: GoogleFonts.ptSans(fontSize: 25, color: Colors.red)
       ),
+      ]
+      )
     );
   }
 
@@ -117,9 +126,13 @@ class EventAdminView extends StatelessWidget {
             SizedBox(height: 7,),
             myWidget(registrationInstructions),
             SizedBox(height: 20.0),
-            Text("BookmarkCount", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            Text("Bookmark Count", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),
             myWidget(bookmarkCount),
+            SizedBox(height: 20.0),
+            Text("Created by and date created", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
+            SizedBox(height: 7,),
+            myWidget(createdBy + "\n" + dateCreated.toDate().toString()),
             SizedBox(height: 50),
             RaisedButton.icon(
                 onPressed: (){ Navigator.push(context,MaterialPageRoute(builder: (c) => EventAdminEdit(ccaDocument : document)));},
