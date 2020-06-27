@@ -84,7 +84,9 @@ class _SignUpPageState extends State<SignUpPage> {
         .setData({
           'Email': _email,
           'Name': _name,
-          'Favourite': <String>[]
+          'Favourite': <String>[],
+          'BookmarkedEvent': <String>[],
+          'DateJoined': DateTime.now()
         });
   }
 
