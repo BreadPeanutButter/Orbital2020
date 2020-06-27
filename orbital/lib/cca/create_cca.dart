@@ -287,7 +287,7 @@ class _CreateCCAState extends State<CreateCCA> {
                       child: CupertinoButton(
                         color: Colors.red[500],
                         child: Row(children: [
-                          Icon(FontAwesomeIcons.redo),
+                          Icon(FontAwesomeIcons.undoAlt),
                           SizedBox(
                             width: 10,
                           ),
