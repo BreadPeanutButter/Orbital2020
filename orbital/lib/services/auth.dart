@@ -25,19 +25,35 @@ class Auth {
   }
 
   Future<List<String>> getFavourites() async {
-    await getCurrentUser();
+    if (uid.isEmpty) {
+      getCurrentUser();
+    }
     DocumentSnapshot snapshot =
         await Firestore.instance.collection('User').document(uid).get();
     return List.from(snapshot['Favourite']);
   }
 
   Future<bool> isFavouriteCCA(String ccaName) async {
-    getCurrentUser();
     return (await getFavourites()).contains(ccaName);
   }
 
+  Future<List<String>> getBookmarks() async {
+    if (uid.isEmpty) {
+      getCurrentUser();
+    }
+    DocumentSnapshot snapshot =
+        await Firestore.instance.collection('User').document(uid).get();
+    return List.from(snapshot['BookmarkedEvent']);
+  }
+
+  Future<bool> isBookmarkedEvent(String id) async {
+    return (await getBookmarks()).contains(id);
+  }
+
   Future<bool> isAdmin(String ccaName) async {
-    getCurrentUser();
+    if (uid.isEmpty) {
+      getCurrentUser();
+    }
     return List.from((await firestoreInstance
             .collection('CCA')
             .document(ccaName)
@@ -46,8 +62,9 @@ class Auth {
   }
 
   void addFavouriteCCA(String ccaName) {
-    getCurrentUser();
-
+    if (uid.isEmpty) {
+      getCurrentUser();
+    }
     firestoreInstance.collection('User').document(uid).updateData({
       "Favourite": FieldValue.arrayUnion([ccaName])
     });
@@ -58,6 +75,9 @@ class Auth {
   }
 
   void removeFavouriteCCA(String ccaName) {
+    if (uid.isEmpty) {
+      getCurrentUser();
+    }
     firestoreInstance.collection('User').document(uid).updateData({
       "Favourite": FieldValue.arrayRemove([ccaName])
     });
@@ -65,5 +85,31 @@ class Auth {
         .collection('CCA')
         .document(ccaName)
         .updateData({"FavouriteCount": FieldValue.increment(-1)});
+  }
+
+  void bookmarkEvent(String id) {
+    if (uid.isEmpty) {
+      getCurrentUser();
+    }
+    firestoreInstance.collection('User').document(uid).updateData({
+      "BookmarkedEvent": FieldValue.arrayUnion([id])
+    });
+    firestoreInstance
+        .collection('Event')
+        .document(id)
+        .updateData({"BookmarkCount": FieldValue.increment(1)});
+  }
+
+  void unbookmarkEvent(String id) {
+    if (uid.isEmpty) {
+      getCurrentUser();
+    }
+    firestoreInstance.collection('User').document(uid).updateData({
+      "BookmarkedEvent": FieldValue.arrayRemove([id])
+    });
+    firestoreInstance
+        .collection('Event')
+        .document(id)
+        .updateData({"BookmarkCount": FieldValue.increment(-1)});
   }
 }
