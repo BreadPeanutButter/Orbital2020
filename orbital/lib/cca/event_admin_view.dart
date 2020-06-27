@@ -37,10 +37,10 @@ class EventAdminView extends StatelessWidget {
       }
     }
 
-  BoxDecoration myBoxDecoration() {
+  BoxDecoration myBoxDecoration(Color color) {
     return BoxDecoration(
       border: Border.all(
-        color: Colors.red,
+        color: color,
         width: 3.0,
       ),
       borderRadius: BorderRadius.all(
@@ -50,14 +50,39 @@ class EventAdminView extends StatelessWidget {
     );
  }
 
+
+  Widget myWidgetClosing() {
+    return Container(
+      margin: const EdgeInsets.all(1.0),
+      padding: const EdgeInsets.all(8.0),
+      decoration: myBoxDecoration(Colors.green), 
+      child: Text(
+        "This Event is now closed",
+        textAlign: TextAlign.center,
+        style: GoogleFonts.ptSans(fontSize: 25, color: Colors.green)
+      ),
+    );
+  }
+
+  Widget closedEvent(DocumentSnapshot doc){
+    if(doc['Closed'] == true){
+      return myWidgetClosing();
+    }
+    else{
+      return SizedBox(height: 0);
+    }
+  }
+
+
+
    Widget myWidget(String info) {
     return Container(
       margin: const EdgeInsets.all(1.0),
       padding: const EdgeInsets.all(10.0),
-      decoration: myBoxDecoration(), 
+      decoration: myBoxDecoration(Colors.red), 
       child: Text(
         info,
-        style: GoogleFonts.ptSans(fontSize: 20)
+        style: GoogleFonts.ptSans(fontSize: 20,)
       ),
     );
   }
@@ -70,6 +95,7 @@ class EventAdminView extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             imageWidget(),
+            closedEvent(document),
             SizedBox(height: 5,),
             Text("Name:", style:  TextStyle(fontSize: 18, fontStyle:  FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 7,),

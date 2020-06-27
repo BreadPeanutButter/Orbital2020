@@ -62,7 +62,7 @@ class EventFeedAll extends StatelessWidget {
                                   style: TextStyle(fontSize: 24)),
                               subtitle: new Text(document['EventTime'],
                                   style: TextStyle(fontSize: 20)),
-                              leading: closedEvent(document),
+                              trailing: closedEvent(document),
                             ))));
               }).toList(),
             );

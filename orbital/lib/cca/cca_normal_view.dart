@@ -36,6 +36,15 @@ class _CCANormalViewState extends State<CCANormalView> {
     )..show(context);
   }
 
+  Widget closedEvent(DocumentSnapshot doc){
+    if(doc['Closed'] == true){
+      return new Text("This Event is now closed", style: TextStyle(color : Colors.red, fontSize: 30));
+    }
+    else{
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
