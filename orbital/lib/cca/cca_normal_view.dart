@@ -23,7 +23,7 @@ class _CCANormalViewState extends State<CCANormalView> {
     String ccaName = widget.document['Name'];
     Flushbar(
       icon: !widget.favCCA
-          ? Icon(FontAwesomeIcons.smileBeam, color: Colors.white)
+          ? Icon(FontAwesomeIcons.grinAlt, color: Colors.white)
           : Icon(FontAwesomeIcons.frown, color: Colors.white),
       title: !widget.favCCA ? "Hooray!" : "Awww",
       message: !widget.favCCA

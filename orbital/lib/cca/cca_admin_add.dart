@@ -215,7 +215,7 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
 
   void _successFlushBar(BuildContext context, String name) {
     Flushbar(
-      icon: Icon(FontAwesomeIcons.grinBeam, color: Colors.white),
+      icon: Icon(FontAwesomeIcons.grinAlt, color: Colors.white),
       title: 'Hurray!',
       message: '$name is now an Admin of ${widget.ccaName}!',
       duration: Duration(seconds: 3),
