@@ -26,7 +26,7 @@ class Auth {
 
   Future<List<String>> getFavourites() async {
     if (uid.isEmpty) {
-      getCurrentUser();
+      await getCurrentUser();
     }
     DocumentSnapshot snapshot =
         await Firestore.instance.collection('User').document(uid).get();
@@ -39,7 +39,7 @@ class Auth {
 
   Future<List<String>> getBookmarks() async {
     if (uid.isEmpty) {
-      getCurrentUser();
+      await getCurrentUser();
     }
     DocumentSnapshot snapshot =
         await Firestore.instance.collection('User').document(uid).get();
@@ -52,7 +52,7 @@ class Auth {
 
   Future<bool> isAdmin(String ccaName) async {
     if (uid.isEmpty) {
-      getCurrentUser();
+      await getCurrentUser();
     }
     return List.from((await firestoreInstance
             .collection('CCA')
@@ -61,10 +61,11 @@ class Auth {
         .contains(uid);
   }
 
-  void addFavouriteCCA(String ccaName) {
+  void addFavouriteCCA(String ccaName) async {
     if (uid.isEmpty) {
-      getCurrentUser();
+      await getCurrentUser();
     }
+
     firestoreInstance.collection('User').document(uid).updateData({
       "Favourite": FieldValue.arrayUnion([ccaName])
     });
@@ -74,9 +75,9 @@ class Auth {
         .updateData({"FavouriteCount": FieldValue.increment(1)});
   }
 
-  void removeFavouriteCCA(String ccaName) {
+  void removeFavouriteCCA(String ccaName) async {
     if (uid.isEmpty) {
-      getCurrentUser();
+      await getCurrentUser();
     }
     firestoreInstance.collection('User').document(uid).updateData({
       "Favourite": FieldValue.arrayRemove([ccaName])
@@ -87,9 +88,9 @@ class Auth {
         .updateData({"FavouriteCount": FieldValue.increment(-1)});
   }
 
-  void bookmarkEvent(String id) {
+  void bookmarkEvent(String id) async {
     if (uid.isEmpty) {
-      getCurrentUser();
+      await getCurrentUser();
     }
     firestoreInstance.collection('User').document(uid).updateData({
       "BookmarkedEvent": FieldValue.arrayUnion([id])
@@ -100,9 +101,9 @@ class Auth {
         .updateData({"BookmarkCount": FieldValue.increment(1)});
   }
 
-  void unbookmarkEvent(String id) {
+  void unbookmarkEvent(String id) async {
     if (uid.isEmpty) {
-      getCurrentUser();
+      await getCurrentUser();
     }
     firestoreInstance.collection('User').document(uid).updateData({
       "BookmarkedEvent": FieldValue.arrayRemove([id])
