@@ -45,8 +45,10 @@ class CCAAdminEventlist extends StatelessWidget {
 
   Widget closedEvent(DocumentSnapshot doc){
     if(doc['Closed'] == true){
-      return Image.network(
-        'https://firebasestorage.googleapis.com/v0/b/nus-whattodo.appspot.com/o/closed_event_image%2Fclosed-stamp-png.png?alt=media&token=c945c36e-b975-442a-94b6-5d91a39623b8'
+      return Image.asset(
+        "images/closed.png",
+        height: 100,
+        width: 100,
       );
     }
     else{

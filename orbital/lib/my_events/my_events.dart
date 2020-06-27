@@ -15,6 +15,18 @@ class MyEvents extends StatelessWidget {
     bookmarks = auth.getBookmarks();
   }
 
+  Widget closedEvent(AsyncSnapshot<dynamic>  snapshot) {
+    if (snapshot.data['Closed'] == true) {
+      return Image.asset(
+        "images/closed.png",
+        height: 100,
+        width: 100,
+      );
+    } else {
+      return SizedBox();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -75,6 +87,7 @@ class MyEvents extends StatelessWidget {
                               style: TextStyle(fontSize: 24)),
                           subtitle: new Text(snapshot.data['EventTime'],
                               style: TextStyle(fontSize: 20)),
+                              trailing: closedEvent(snapshot),
                         ))));
           }
         });
