@@ -44,16 +44,21 @@ class EventNormalView extends StatelessWidget {
     }
 
     Widget myWidgetClosing() {
-      return Container(
-          margin: const EdgeInsets.all(1.0),
-          padding: const EdgeInsets.all(8.0),
-          decoration: myBoxDecoration(Colors.red),
-          child: Row(children: <Widget>[
-            Icon(FontAwesomeIcons.times, color: Colors.red, size: 28),
-            Text("  This Event is now closed",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.ptSans(fontSize: 25, color: Colors.red)),
-          ]));
+      return Column(children: [
+        SizedBox(height: 8),
+        Container(
+            margin: const EdgeInsets.all(1.0),
+            padding: const EdgeInsets.all(8.0),
+            decoration: myBoxDecoration(Colors.red[900]),
+            child: Row(children: <Widget>[
+              Icon(FontAwesomeIcons.times, color: Colors.red[900], size: 28),
+              Text("  This Event is now closed",
+                  textAlign: TextAlign.center,
+                  style:
+                      GoogleFonts.ptSans(fontSize: 25, color: Colors.red[900])),
+            ])),
+        SizedBox(height: 15),
+      ]);
     }
 
     Widget closedEvent(DocumentSnapshot doc) {
