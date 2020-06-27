@@ -24,10 +24,18 @@ class ExploreFavourites extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else {
             favList = snapshot.data.reversed.toList();
-            return ListView.builder(
-                itemCount: favList.length,
-                itemBuilder: (BuildContext ctxt, int index) =>
-                    buildBody(ctxt, index));
+            if (favList.isEmpty) {
+              return Center(
+                  child: Text(
+                'No favourite CCAs ☹️',
+                style: TextStyle(fontSize: 20),
+              ));
+            } else {
+              return ListView.builder(
+                  itemCount: favList.length,
+                  itemBuilder: (BuildContext ctxt, int index) =>
+                      buildBody(ctxt, index));
+            }
           }
         });
   }
