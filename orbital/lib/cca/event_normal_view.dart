@@ -51,11 +51,13 @@ class EventNormalView extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             decoration: myBoxDecoration(Colors.red[900]),
             child: Row(children: <Widget>[
-              Icon(FontAwesomeIcons.times, color: Colors.red[900], size: 28),
+              Icon(FontAwesomeIcons.bullhorn, color: Colors.red[900], size: 28),
               Text("  This Event is now closed",
                   textAlign: TextAlign.center,
-                  style:
-                      GoogleFonts.ptSans(fontSize: 25, color: Colors.red[900])),
+                  style: GoogleFonts.ptSans(
+                      fontSize: 25,
+                      color: Colors.red[900],
+                      fontWeight: FontWeight.bold)),
             ])),
         SizedBox(height: 15),
       ]);
