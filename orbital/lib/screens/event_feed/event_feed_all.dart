@@ -86,9 +86,8 @@ class EventFeedAll extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EventNormalView.fromFeed(
+              builder: (context) => EventNormalView(
                     document: document,
-                    index: index,
                   )));
     }
   }

@@ -13,17 +13,9 @@ class EventNormalView extends StatefulWidget {
   final DocumentSnapshot document;
   bool bookmarked;
   bool fromMyEvents = false;
-  bool fromCCA = false;
-  bool fromFeed = false;
-  int index;
 
   EventNormalView({@required this.document});
-  EventNormalView.fromCCA({@required this.document}) {
-    fromCCA = true;
-  }
-  EventNormalView.fromFeed({@required this.document, @required this.index}) {
-    fromFeed = true;
-  }
+
   EventNormalView.fromMyEvents({@required this.document}) {
     fromMyEvents = true;
   }
@@ -187,15 +179,8 @@ class _EventNormalViewState extends State<EventNormalView> {
             context,
             MaterialPageRoute(
                 builder: (context) => MyEvents(auth: widget.auth)));
-      } else if (widget.fromCCA) {
+      } else {
         Navigator.pop(context);
-      } else if (widget.fromFeed) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => EventFeed.tab(index: widget.index)));
       }
     }
 
