@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/cca/event_admin_edit.dart';
-import 'package:intl/intl.dart';
 
 class EventAdminView extends StatelessWidget {
   final DocumentSnapshot document;
