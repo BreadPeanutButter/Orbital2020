@@ -15,7 +15,7 @@ class MyEvents extends StatelessWidget {
     bookmarks = auth.getBookmarks();
   }
 
-  Widget closedEvent(AsyncSnapshot<dynamic>  snapshot) {
+  Widget closedEvent(AsyncSnapshot<dynamic> snapshot) {
     if (snapshot.data['Closed'] == true) {
       return Image.asset(
         "images/closed.png",
@@ -50,7 +50,7 @@ class MyEvents extends StatelessWidget {
               return Center(
                   child: Text(
                 'No bookmarked events ☹️',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 30),
               ));
             } else {
               return ListView.builder(
@@ -87,7 +87,7 @@ class MyEvents extends StatelessWidget {
                               style: TextStyle(fontSize: 24)),
                           subtitle: new Text(snapshot.data['EventTime'],
                               style: TextStyle(fontSize: 20)),
-                              trailing: closedEvent(snapshot),
+                          trailing: closedEvent(snapshot),
                         ))));
           }
         });
