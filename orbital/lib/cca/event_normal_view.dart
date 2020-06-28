@@ -50,6 +50,8 @@ class _EventNormalViewState extends State<EventNormalView> {
     final String name = widget.document['Name'];
     final String details = widget.document['Details'];
     final String eventTime = widget.document['EventTime'];
+    final String registrationInstructions =
+        widget.document['RegisterInstructions'];
     final String location = widget.document['Location'];
     final String imageURL = widget.document['image'];
     final bool closed = widget.document['Closed'];
@@ -124,7 +126,7 @@ class _EventNormalViewState extends State<EventNormalView> {
               children: <Widget>[
                 imageWidget(),
                 closedEvent(widget.document),
-                Text("Name: ",
+                Text("Event",
                     style: TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,
@@ -156,7 +158,7 @@ class _EventNormalViewState extends State<EventNormalView> {
                 ),
                 myWidget(eventTime),
                 SizedBox(height: 20.0),
-                Text("Location:",
+                Text("Location",
                     style: TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,
@@ -165,6 +167,17 @@ class _EventNormalViewState extends State<EventNormalView> {
                   height: 7,
                 ),
                 myWidget(location),
+                SizedBox(height: 20.0),
+                Text("Sign up",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 7,
+                ),
+                myWidget(registrationInstructions),
+                SizedBox(height: 20.0),
                 SizedBox(height: 50),
               ],
             ),

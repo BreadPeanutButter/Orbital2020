@@ -143,7 +143,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(
                   height: 5,
                 ),
-                Text("Name:",
+                Text("Event",
                     style: TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,
@@ -173,7 +173,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                 ),
                 myWidget(eventTime),
                 SizedBox(height: 20.0),
-                Text("Location:",
+                Text("Location",
                     style: TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,
@@ -183,7 +183,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                 ),
                 myWidget(location),
                 SizedBox(height: 20.0),
-                Text("Sign up details",
+                Text("Sign up",
                     style: TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,
@@ -203,7 +203,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                 ),
                 myWidget(bookmarkCount),
                 SizedBox(height: 20.0),
-                Text("Created by and date created",
+                Text("Created",
                     style: TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,
@@ -211,8 +211,10 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(
                   height: 7,
                 ),
-                myWidget(createdBy +
+                myWidget("By: " +
+                    createdBy +
                     '\n' +
+                    "On: " +
                     dateCreated.toDate().toString().substring(0, 10)),
                 SizedBox(height: 50),
                 RaisedButton.icon(
