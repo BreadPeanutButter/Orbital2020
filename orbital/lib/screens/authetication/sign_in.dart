@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/screens/authetication/sign_up.dart';
 
-
 class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
@@ -70,25 +69,27 @@ class _SignInState extends State<SignIn> {
                 child: Text('Log in'),
               ),
               SizedBox(height: 30),
-            CupertinoButton.filled(onPressed: navigateToSignUp , child: Text('Sign Up')),
+              CupertinoButton.filled(
+                  onPressed: navigateToSignUp, child: Text('Sign Up')),
             ],
           )),
     );
   }
 
-  void navigateToSignUp(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage(), fullscreenDialog: true));
+  void navigateToSignUp() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SignUpPage(), fullscreenDialog: true));
   }
-
-  
 
   void _signIn() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       try {
         await FirebaseAuth.instance
-                .signInWithEmailAndPassword(email: _email, password: _password);
-          Navigator.pushNamed(context, '/eventfeed');
+            .signInWithEmailAndPassword(email: _email, password: _password);
+        Navigator.pushNamed(context, '/explore');
       } catch (e) {
         showDialog(
             context: context,
@@ -97,12 +98,12 @@ class _SignInState extends State<SignIn> {
                   content: Text('Incorrect email or password. \nTry again.'),
                   actions: <Widget>[
                     FlatButton(
-                      child: Text('OK'),
-                      onPressed: () => SchedulerBinding.instance.addPostFrameCallback((_) {
-                         Navigator.of(context).pushNamedAndRemoveUntil(
-                           '/', (Route<dynamic> route) => false);
-                      })
-                    )
+                        child: Text('OK'),
+                        onPressed: () =>
+                            SchedulerBinding.instance.addPostFrameCallback((_) {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/', (Route<dynamic> route) => false);
+                            }))
                   ]);
             });
       }
