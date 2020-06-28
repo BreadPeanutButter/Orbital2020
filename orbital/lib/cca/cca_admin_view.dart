@@ -87,7 +87,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
                           widget.auth.isFavouriteCCA(widget.document['Name']),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
+                          return SizedBox();
                         } else {
                           widget.favCCA = snapshot.data;
                           return IconButton(
