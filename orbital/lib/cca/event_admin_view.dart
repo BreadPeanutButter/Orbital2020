@@ -1,26 +1,56 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/cca/event_admin_edit.dart';
+import 'package:flushbar/flushbar.dart';
 
-class EventAdminView extends StatelessWidget {
+class EventAdminView extends StatefulWidget {
+  Auth auth = new Auth();
   final DocumentSnapshot document;
+  bool bookmarked;
 
   EventAdminView({@required this.document});
 
   @override
+  _EventAdminViewState createState() => _EventAdminViewState();
+}
+
+class _EventAdminViewState extends State<EventAdminView> {
+  void _flushBar(BuildContext context) {
+    String ccaName = widget.document['CCA'];
+    Flushbar(
+      icon: !widget.bookmarked
+          ? Icon(
+              FontAwesomeIcons.grinAlt,
+              color: Colors.white,
+            )
+          : Icon(FontAwesomeIcons.frown, color: Colors.white),
+      title: !widget.bookmarked ? "Hooray!" : "Awww",
+      message: !widget.bookmarked
+          ? "You have added $ccaName to your Bookmarks"
+          : "You have removed $ccaName from your Bookmarks",
+      duration: Duration(seconds: 2),
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      margin: EdgeInsets.all(8),
+      borderRadius: 8,
+    )..show(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final String name = document['Name'];
-    final String details = document['Details'];
-    final String eventTime = document['EventTime'];
-    final String location = document['Location'];
-    final String imageURL = document['image'];
-    final String registrationInstructions = document['RegisterInstructions'];
-    final String bookmarkCount = document['BookmarkCount'].toString();
-    final String createdBy = document['CreatedBy'];
-    final Timestamp dateCreated = document['DateCreated'];
+    final String name = widget.document['Name'];
+    final String details = widget.document['Details'];
+    final String eventTime = widget.document['EventTime'];
+    final String location = widget.document['Location'];
+    final String imageURL = widget.document['image'];
+    final String registrationInstructions =
+        widget.document['RegisterInstructions'];
+    final String bookmarkCount = widget.document['BookmarkCount'].toString();
+    final String createdBy = widget.document['CreatedBy'];
+    final Timestamp dateCreated = widget.document['DateCreated'];
 
     Widget imageWidget() {
       if (imageURL == null) {
@@ -90,6 +120,7 @@ class EventAdminView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: ListView(
+              shrinkWrap: true,
               children: <Widget>[
                 imageWidget(),
                 closedEvent(document),
@@ -188,8 +219,6 @@ class EventAdminView extends StatelessWidget {
                   splashColor: Colors.red,
                   color: Colors.green,
                 ),
-                CupertinoButton.filled(
-                    onPressed: null, child: Text('Bookmark')),
               ],
             ),
           ));
@@ -198,9 +227,49 @@ class EventAdminView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.redAccent,
-          title: Text(document['Name'], style: TextStyle(color: Colors.black)),
+          title: Text(name, style: TextStyle(color: Colors.black)),
           centerTitle: true,
+          actions: [
+            Ink(
+                decoration: ShapeDecoration(
+                    color: Colors.transparent,
+                    shape: CircleBorder(
+                        side: BorderSide(
+                      width: 2,
+                      color: Colors.black,
+                    ))),
+                child: FutureBuilder(
+                    future: widget.auth
+                        .isBookmarkedEvent(widget.document.documentID),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      } else {
+                        widget.bookmarked = snapshot.data;
+                        return IconButton(
+                          highlightColor: Colors.red[700],
+                          icon: Icon(Icons.bookmark),
+                          iconSize: 35,
+                          onPressed: () {
+                            _flushBar(context);
+                            if (widget.bookmarked) {
+                              widget.auth
+                                  .unbookmarkEvent(widget.document.documentID);
+                            } else {
+                              widget.auth
+                                  .bookmarkEvent(widget.document.documentID);
+                            }
+                            setState(() {
+                              widget.bookmarked = !widget.bookmarked;
+                            });
+                          },
+                          color:
+                              widget.bookmarked ? Colors.orange : Colors.white,
+                        );
+                      }
+                    }))
+          ],
         ),
-        body: helper(document));
+        body: helper(widget.document));
   }
 }
