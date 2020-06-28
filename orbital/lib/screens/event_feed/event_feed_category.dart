@@ -30,6 +30,7 @@ class EventFeedCategory extends StatelessWidget {
         stream: database
             .collection('Event')
             .where("Category", isEqualTo: category)
+            .orderBy('Closed')
             .orderBy('DateCreated', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

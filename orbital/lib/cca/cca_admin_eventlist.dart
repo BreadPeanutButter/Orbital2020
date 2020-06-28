@@ -30,7 +30,9 @@ class CCAAdminEventlist extends StatelessWidget {
       child: CupertinoButton.filled(
         child: Row(children: [
           Icon(Icons.add),
-          SizedBox(width: 10,),
+          SizedBox(
+            width: 10,
+          ),
           Text('Create Event'),
         ]),
         onPressed: () => Navigator.push(
@@ -43,18 +45,16 @@ class CCAAdminEventlist extends StatelessWidget {
     );
   }
 
-  Widget closedEvent(DocumentSnapshot doc){
-    if(doc['Closed'] == true){
+  Widget closedEvent(DocumentSnapshot doc) {
+    if (doc['Closed'] == true) {
       return Image.asset(
         "images/closed.png",
         height: 100,
         width: 100,
       );
-    }
-    else{
+    } else {
       return SizedBox();
     }
-    
   }
 
   Widget eventList() {
@@ -62,6 +62,7 @@ class CCAAdminEventlist extends StatelessWidget {
       stream: database
           .collection('Event')
           .where("CCA", isEqualTo: ccaDocument['Name'])
+          .orderBy('Closed')
           .orderBy('DateCreated', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -102,7 +103,7 @@ class CCAAdminEventlist extends StatelessWidget {
                                   style: TextStyle(fontSize: 24)),
                               subtitle: new Text(document['EventTime'],
                                   style: TextStyle(fontSize: 20)),
-                                  trailing: closedEvent(document),
+                              trailing: closedEvent(document),
                             ))));
               }).toList(),
             ));

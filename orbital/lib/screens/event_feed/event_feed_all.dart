@@ -28,6 +28,7 @@ class EventFeedAll extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: database
           .collection('Event')
+          .orderBy('Closed')
           .orderBy('DateCreated', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

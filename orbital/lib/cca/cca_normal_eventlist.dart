@@ -16,6 +16,7 @@ class CCANormalEventlist extends StatelessWidget {
       stream: database
           .collection('Event')
           .where("CCA", isEqualTo: ccaDocument['Name'])
+          .orderBy('Closed')
           .orderBy('DateCreated', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
