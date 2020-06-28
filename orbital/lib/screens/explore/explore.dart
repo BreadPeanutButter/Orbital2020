@@ -10,6 +10,13 @@ import 'explore_category.dart';
 
 class Explore extends StatelessWidget {
   Auth auth = new Auth();
+  int index;
+
+  Explore() {
+    index = 0;
+  }
+  Explore.tab({@required this.index});
+
   static const categories = <Text>[
     Text('Favourites'),
     Text('All'),
@@ -27,6 +34,7 @@ class Explore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+        initialIndex: index,
         length: 11,
         child: Scaffold(
           appBar: new AppBar(
@@ -36,7 +44,7 @@ class Explore extends StatelessWidget {
               Ink(
                   decoration: ShapeDecoration(
                       color: Colors.blue,
-                      shape: CircleBorder( 
+                      shape: CircleBorder(
                           side: BorderSide(
                         width: 2,
                         color: Colors.black,
@@ -106,7 +114,9 @@ class Explore extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              ExploreFavourites(auth: auth,),
+              ExploreFavourites(
+                auth: auth,
+              ),
               ExploreAll(auth: auth),
               ExploreCategory(category: "Academic"),
               ExploreCategory(category: "Adventure"),

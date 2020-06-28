@@ -10,8 +10,12 @@ class CCAAdminAdd extends StatefulWidget {
   final String ccaName;
   DocumentReference docRef;
   DocumentSnapshot docSnapshot;
+  int previousIndex;
 
-  CCAAdminAdd({@required this.ccaName, @required this.docRef});
+  CCAAdminAdd(
+      {@required this.ccaName,
+      @required this.docRef,
+      @required this.previousIndex});
 
   @override
   State<StatefulWidget> createState() {
@@ -47,6 +51,7 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
                       builder: (context) => CCAAdminView.tab(
                             document: document,
                             index: 2,
+                            previousIndex: widget.previousIndex,
                           )));
             },
             color: Colors.white,
@@ -224,5 +229,4 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
       borderRadius: 8,
     )..show(context);
   }
-
 }

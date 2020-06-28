@@ -9,6 +9,17 @@ class ExploreCategory extends StatelessWidget {
   final database = Firestore.instance;
   final Auth auth = new Auth();
   final String category;
+  static const index = {
+    "Academic": 2,
+    "Adventure": 3,
+    "Arts": 4,
+    "Cultural": 5,
+    "Health": 6,
+    "Social Cause": 7,
+    "Specialist": 8,
+    "Sports": 9,
+    "Technology": 10
+  };
 
   ExploreCategory({@required this.category});
 
@@ -67,15 +78,15 @@ class ExploreCategory extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => CCAAdminView(
-                    document: document,
-                  )));
+                  document: document,
+                  previousIndex: index[document['Category']])));
     } else {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => CCANormalView(
-                    document: document,
-                  )));
+              builder: (context) => CCANormalView.tab(
+                  document: document,
+                  previousIndex: index[document['Category']])));
     }
   }
 }

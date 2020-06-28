@@ -6,6 +6,7 @@ import 'package:orbital/cca/cca_admin_view.dart';
 import 'package:orbital/services/auth.dart';
 
 class ExploreFavourites extends StatelessWidget {
+  static const index = 0;
   final collectionRef = Firestore.instance.collection('CCA');
   Auth auth;
   Future<List> favourites;
@@ -75,16 +76,14 @@ class ExploreFavourites extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => CCAAdminView(
-                    document: document,
-                  )));
+              builder: (context) =>
+                  CCAAdminView(document: document, previousIndex: index)));
     } else {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => CCANormalView(
-                    document: document,
-                  )));
+              builder: (context) =>
+                  CCANormalView.tab(document: document, previousIndex: index)));
     }
   }
 }

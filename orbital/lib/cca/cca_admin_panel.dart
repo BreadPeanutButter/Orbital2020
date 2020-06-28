@@ -13,8 +13,12 @@ class CCAAdminPanel extends StatefulWidget {
   Auth auth;
   DocumentReference docRef;
   DocumentSnapshot docSnapshot;
+  int previousIndex;
 
-  CCAAdminPanel({@required this.ccaName, @required this.auth}) {
+  CCAAdminPanel(
+      {@required this.ccaName,
+      @required this.auth,
+      @required this.previousIndex}) {
     docRef = database.collection('CCA').document(ccaName);
   }
 
@@ -76,6 +80,7 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
                     builder: (context) => CCAAdminAdd(
                           ccaName: widget.ccaName,
                           docRef: widget.docRef,
+                          previousIndex: widget.previousIndex,
                         )));
           },
         ));

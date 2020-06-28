@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/cca/cca_admin_about.dart';
 import 'package:orbital/cca/cca_admin_eventlist.dart';
 import 'package:orbital/cca/cca_admin_panel.dart';
+import 'package:orbital/screens/explore/explore.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flushbar/flushbar.dart';
@@ -13,9 +14,15 @@ class CCAAdminView extends StatefulWidget {
   DocumentSnapshot document;
   bool favCCA;
   int index;
+  int previousIndex;
 
-  CCAAdminView({@required this.document}) {index = 0;}
-  CCAAdminView.tab({@required this.document, @required this.index});
+  CCAAdminView({@required this.document, @required this.previousIndex}) {
+    index = 0;
+  }
+  CCAAdminView.tab(
+      {@required this.document,
+      @required this.index,
+      @required this.previousIndex});
 
   @override
   _CCAAdminViewState createState() => _CCAAdminViewState();
@@ -26,7 +33,10 @@ class _CCAAdminViewState extends State<CCAAdminView> {
     String ccaName = widget.document['Name'];
     Flushbar(
       icon: !widget.favCCA
-          ? Icon(FontAwesomeIcons.grinAlt, color: Colors.white,)
+          ? Icon(
+              FontAwesomeIcons.grinAlt,
+              color: Colors.white,
+            )
           : Icon(FontAwesomeIcons.frown, color: Colors.white),
       title: !widget.favCCA ? "Hooray!" : "Awww",
       message: !widget.favCCA
@@ -50,6 +60,19 @@ class _CCAAdminViewState extends State<CCAAdminView> {
             title: Text(widget.document['Name'],
                 style: TextStyle(color: Colors.black)),
             centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Explore.tab(index: widget.previousIndex)));
+              },
+              color: Colors.white,
+            ),
             actions: [
               Ink(
                   decoration: ShapeDecoration(
@@ -120,6 +143,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
               CCAAdminPanel(
                 ccaName: widget.document['Name'],
                 auth: widget.auth,
+                previousIndex: widget.previousIndex,
               )
             ],
           ),
