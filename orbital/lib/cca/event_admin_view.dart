@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,8 +12,19 @@ class EventAdminView extends StatefulWidget {
   Auth auth = new Auth();
   final DocumentSnapshot document;
   bool bookmarked;
+  bool fromMyEvents;
+  int index;
+  int previousIndex;
 
-  EventAdminView({@required this.document});
+  EventAdminView({@required this.document}) {
+    fromMyEvents = false;
+  }
+  EventAdminView.fromCCA({@required this.document, @required this.index}) {
+    fromMyEvents = false;
+  }
+  EventAdminView.fromMyEvents({@required this.document}) {
+    fromMyEvents = true;
+  }
 
   @override
   _EventAdminViewState createState() => _EventAdminViewState();
@@ -227,11 +239,27 @@ class _EventAdminViewState extends State<EventAdminView> {
           ));
     }
 
+    void backButton() {
+      if (widget.fromMyEvents) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MyEvents(auth: widget.auth)));
+      }
+    }
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.redAccent,
           title: Text(name, style: TextStyle(color: Colors.black)),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: backButton,
+            color: Colors.white,
+          ),
           actions: [
             Ink(
                 decoration: ShapeDecoration(

@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class EventFeedAll extends StatelessWidget {
+  static const index = 1;
   final database = Firestore.instance;
   Auth auth;
 
@@ -85,8 +86,9 @@ class EventFeedAll extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EventNormalView(
+              builder: (context) => EventNormalView.fromFeed(
                     document: document,
+                    index: index,
                   )));
     }
   }

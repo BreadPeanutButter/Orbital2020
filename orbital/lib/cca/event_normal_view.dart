@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital/my_events/my_events.dart';
+import 'package:orbital/screens/event_feed/event_feed.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,8 +12,21 @@ class EventNormalView extends StatefulWidget {
   Auth auth = new Auth();
   final DocumentSnapshot document;
   bool bookmarked;
+  bool fromMyEvents = false;
+  bool fromCCA = false;
+  bool fromFeed = false;
+  int index;
 
   EventNormalView({@required this.document});
+  EventNormalView.fromCCA({@required this.document}) {
+    fromCCA = true;
+  }
+  EventNormalView.fromFeed({@required this.document, @required this.index}) {
+    fromFeed = true;
+  }
+  EventNormalView.fromMyEvents({@required this.document}) {
+    fromMyEvents = true;
+  }
 
   @override
   _EventNormalViewState createState() => _EventNormalViewState();
@@ -164,10 +179,35 @@ class _EventNormalViewState extends State<EventNormalView> {
           ));
     }
 
+    void backButton() {
+      if (widget.fromMyEvents) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MyEvents(auth: widget.auth)));
+      } else if (widget.fromCCA) {
+        Navigator.pop(context);
+      } else if (widget.fromFeed) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EventFeed.tab(index: widget.index)));
+      }
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Text(name, style: TextStyle(color: Colors.black)),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: backButton,
+            color: Colors.white,
+          ),
           actions: [
             Ink(
                 decoration: ShapeDecoration(

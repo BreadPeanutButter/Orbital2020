@@ -60,16 +60,16 @@ class CCANormalEventlist extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          EventNormalView(document: document)));
+                                          EventNormalView.fromCCA(
+                                              document: document)));
                             },
                             child: ListTile(
-                              title: new Text(
-                                  document['CCA'] + ': ' + document['Name'],
-                                  style: TextStyle(fontSize: 24)),
-                              subtitle: new Text(document['EventTime'],
-                                  style: TextStyle(fontSize: 20)),
-                                  trailing: closedEvent(document)
-                            ))));
+                                title: new Text(
+                                    document['CCA'] + ': ' + document['Name'],
+                                    style: TextStyle(fontSize: 24)),
+                                subtitle: new Text(document['EventTime'],
+                                    style: TextStyle(fontSize: 20)),
+                                trailing: closedEvent(document)))));
               }).toList(),
             );
         }

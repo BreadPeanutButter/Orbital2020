@@ -9,6 +9,17 @@ class EventFeedCategory extends StatelessWidget {
   final database = Firestore.instance;
   final String category;
   Auth auth;
+  static const index = {
+    "Academic": 1,
+    "Adventure": 2,
+    "Arts": 3,
+    "Cultural": 4,
+    "Health": 5,
+    "Social Cause": 6,
+    "Specialist": 7,
+    "Sports": 8,
+    "Technology": 9
+  };
 
   EventFeedCategory({@required this.auth, @required this.category});
 
@@ -88,8 +99,9 @@ class EventFeedCategory extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EventNormalView(
+              builder: (context) => EventNormalView.fromFeed(
                     document: document,
+                    index: index[document['Category']],
                   )));
     }
   }

@@ -11,6 +11,12 @@ import '../app_drawer.dart';
 class EventFeed extends StatelessWidget {
   final database = Firestore.instance;
   Auth auth = new Auth();
+  int index;
+
+  EventFeed() {
+    index = 0;
+  }
+  EventFeed.tab({this.index});
 
   static const categories = <Text>[
     Text('Favourites'),
@@ -29,6 +35,7 @@ class EventFeed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+        initialIndex: index,
         length: 10,
         child: Scaffold(
           appBar: new AppBar(
