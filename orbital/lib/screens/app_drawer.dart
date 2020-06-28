@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
@@ -39,7 +40,12 @@ class AppDrawer extends StatelessWidget {
           child: ListTile(
             leading: Icon(Icons.looks_3),
             title: Text('My Events'),
-            onTap: null,
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (c) => MyEvents(
+                          auth: auth,
+                        ))),
           )),
       Ink(
           color: drawer == Drawers.profile ? Colors.blue : Colors.transparent,
