@@ -17,15 +17,16 @@ class CCAAdminAbout extends StatelessWidget {
     final String email = document['Contact'];
     final String imageURL = document['image'];
 
-    Widget getWidget() {
+    Widget imageWidget() {
       if (imageURL == null) {
         return SizedBox(height: 20);
       } else {
-        return Image.network(
-          imageURL,
-          height: 200,
-          width: 200,
-        );
+        return ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.network(
+              imageURL,
+              fit: BoxFit.fill,
+            ));
       }
     }
 
@@ -55,7 +56,7 @@ class CCAAdminAbout extends StatelessWidget {
             padding: const EdgeInsets.all(12.0),
             child: ListView(
               children: <Widget>[
-                getWidget(),
+                imageWidget(),
                 SizedBox(
                   height: 5,
                 ),

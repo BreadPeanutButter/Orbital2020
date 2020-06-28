@@ -38,7 +38,6 @@ class _EventNormalViewState extends State<EventNormalView> {
     )..show(context);
   }
 
-
   @override
   Widget build(BuildContext context) {
     final String name = widget.document['Name'];
@@ -52,11 +51,12 @@ class _EventNormalViewState extends State<EventNormalView> {
       if (imageURL == null) {
         return SizedBox(height: 20);
       } else {
-        return Image.network(
-          imageURL,
-          height: 200,
-          width: 200,
-        );
+        return ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.network(
+              imageURL,
+              fit: BoxFit.fill,
+            ));
       }
     }
 

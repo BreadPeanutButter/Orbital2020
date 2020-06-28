@@ -56,11 +56,12 @@ class _EventAdminViewState extends State<EventAdminView> {
       if (imageURL == null) {
         return SizedBox(height: 20);
       } else {
-        return Image.network(
-          imageURL,
-          height: 200,
-          width: 200,
-        );
+        return ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.network(
+              imageURL,
+              fit: BoxFit.fill,
+            ));
       }
     }
 
@@ -195,7 +196,9 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(
                   height: 7,
                 ),
-                myWidget(createdBy + '\n' + dateCreated.toDate().toString().substring(0,10)),
+                myWidget(createdBy +
+                    '\n' +
+                    dateCreated.toDate().toString().substring(0, 10)),
                 SizedBox(height: 50),
                 RaisedButton.icon(
                   onPressed: () {

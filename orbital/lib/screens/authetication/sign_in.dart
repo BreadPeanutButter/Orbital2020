@@ -30,12 +30,10 @@ class _SignInState extends State<SignIn> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
-              SizedBox(height: 50),
-              Image.asset(
-                "images/logo.png",
-                height: 200,
-                width: 200,
-              ),
+              SizedBox(height: 10),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset("images/logo.png", fit: BoxFit.fill)),
               SizedBox(height: 30),
               TextFormField(
                 validator: (input) {
