@@ -38,6 +38,7 @@ class _EventNormalViewState extends State<EventNormalView> {
     )..show(context);
   }
 
+
   @override
   Widget build(BuildContext context) {
     final String name = widget.document['Name'];
@@ -46,8 +47,7 @@ class _EventNormalViewState extends State<EventNormalView> {
     final String location = widget.document['Location'];
     final String imageURL = widget.document['image'];
     final bool closed = widget.document['Closed'];
-    final String createdBy = widget.document['CreatedBy'];
-    final Timestamp dateCreated = widget.document['DateCreated'];
+
     Widget imageWidget() {
       if (imageURL == null) {
         return SizedBox(height: 20);
@@ -117,6 +117,15 @@ class _EventNormalViewState extends State<EventNormalView> {
               children: <Widget>[
                 imageWidget(),
                 closedEvent(widget.document),
+                Text("Name: ",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 7,
+                ),
+                myWidget(name),
                 SizedBox(
                   height: 5,
                 ),
@@ -149,16 +158,6 @@ class _EventNormalViewState extends State<EventNormalView> {
                   height: 7,
                 ),
                 myWidget(location),
-                SizedBox(height: 20.0),
-                Text("Created by and date created",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(
-                  height: 7,
-                ),
-                myWidget(createdBy + "\n" + dateCreated.toDate().toString()),
                 SizedBox(height: 50),
               ],
             ),
