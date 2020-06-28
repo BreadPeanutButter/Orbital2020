@@ -56,7 +56,7 @@ class _SignInState extends State<SignIn> {
                 },
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  icon: Icon(Icons.account_box),
+                  icon: Icon(Icons.vpn_key),
                 ),
                 onSaved: (input) => _password = input,
                 obscureText: true,

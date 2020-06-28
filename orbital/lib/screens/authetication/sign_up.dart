@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,8 @@ class _SignUpPageState extends State<SignUpPage> {
     return new Scaffold(
       appBar: new AppBar(
         title: Text(
-          'SignUp!',
-          style: TextStyle(color: Colors.red),
+          'Sign Up!',
+          style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
       ),
@@ -41,7 +42,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
               },
               decoration: InputDecoration(
-                labelText: 'Name'
+                labelText: 'Name',
+                icon: Icon(Icons.account_box),
               ),
               onSaved: (input) => _name = input,
             ),
@@ -52,7 +54,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
               },
               decoration: InputDecoration(
-                labelText: 'Email'
+                labelText: 'Email',
+                icon: Icon(Icons.email),
               ),
               onSaved: (input) => _email = input,
             ),
@@ -63,15 +66,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
               },
               decoration: InputDecoration(
-                labelText: 'Password'
+                labelText: 'Password',
+                icon: Icon(Icons.vpn_key),
               ),
               onSaved: (input) => _password = input,
               obscureText: true,
             ),
-            RaisedButton(
-              onPressed: signUp,
-              child: Text('Sign up'),
-            ),
+            SizedBox(height: 10),
+             CupertinoButton.filled(
+                  onPressed: signUp, child: Text('Sign Up')),
+            
           ],
         )
       ),
