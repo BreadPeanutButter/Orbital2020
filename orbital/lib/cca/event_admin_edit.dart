@@ -278,27 +278,37 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             registrationInstructions = value;
                         }
                     )),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: CupertinoButton.filled(
-                        child: Text('Closed Event'),
+                    SizedBox(height : 20),
+                    ButtonTheme(
+                      minWidth: 200,
+                      height: 50,
+                      buttonColor: Colors.red,
+                      child: RaisedButton(
+                        shape:  RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                           side: BorderSide(color: Colors.red)),
                         onPressed: () {
-                            _closedEvent();
-                        } 
+                          _closedEvent();
+                        },
+                        child: Text("Close Event", style: TextStyle(fontSize: 15)),
                       ),
                     ),
                     SizedBox(height: 20),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: CupertinoButton.filled(
-                        child: Text('Done'),
+                    ButtonTheme(
+                      minWidth: 200,
+                      height: 50,
+                      buttonColor: Colors.blue,
+                      child: RaisedButton(
+                        shape:  RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                           side: BorderSide(color: Colors.blue)),
                         onPressed: () {
-                            _publishEvent();
-
-                        } 
+                         _publishEvent();
+                        },
+                        child: Text("Done", style: TextStyle(fontSize: 15)),
                       ),
-                      
                     ),
+                    SizedBox(height: 20),
  
                   ]),
                 ))));

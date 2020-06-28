@@ -130,9 +130,23 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget myLayoutWidget(Widget widget) {
+    return Align(
+      alignment: Alignment(-0.8, -0.8),
+      child: widget,
+    );
+  }
+  Widget myLayoutName(Widget widget) {
+    return Align(
+      alignment: Alignment(-0.85, -0.85),
+      child: widget,
+    );
+  }
+
   Widget profileWidget() {
     String name = 'Name: ' + widget.auth.name;
     String email = 'Email: ' + widget.auth.email;
+    String dateJoined = 'Date joined: ' + widget.auth.dateJoined.substring(0,10);
     return new Scaffold(
         appBar: new AppBar(
           title: Text(
@@ -142,11 +156,13 @@ class _ProfileState extends State<Profile> {
           centerTitle: true,
         ),
         drawer: AppDrawer(drawer: Drawers.profile),
-        body: new Center(
+        body: new Align(
+          alignment: Alignment.center,
             child: Column(
           children: <Widget>[
             SizedBox(height: 15),
-            Row(children: [
+            Row(
+              children: [
               SizedBox(
                 width: 70,
               ),
@@ -160,10 +176,11 @@ class _ProfileState extends State<Profile> {
               )
             ]),
             SizedBox(height: 30),
-            myWidget(name),
+            myLayoutName(myWidget(name)),
             SizedBox(height: 20),
-            myWidget(email),
+            myLayoutWidget(myWidget(email)),
             SizedBox(height: 20),
+            myLayoutWidget(myWidget(dateJoined)),
             actionButtons()
           ],
         )));

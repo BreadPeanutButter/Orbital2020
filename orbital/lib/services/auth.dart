@@ -9,6 +9,7 @@ class Auth {
   String name = "";
   String email = "";
   String uid = "";
+  String dateJoined = "";
 
   Auth() {
     getCurrentUser();
@@ -21,6 +22,7 @@ class Auth {
         await firestoreInstance.collection('User').document(uid).get();
     name = document.data["Name"];
     email = document.data["Email"];
+    dateJoined = document.data["DateJoined"].toDate().toString();
     return true;
   }
 

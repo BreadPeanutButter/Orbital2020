@@ -164,7 +164,7 @@ class EventAdminView extends StatelessWidget {
                 SizedBox(
                   height: 7,
                 ),
-                myWidget(createdBy + "\n" + dateCreated.toDate().toString()),
+                myWidget(createdBy + '\n' + dateCreated.toDate().toString()),
                 SizedBox(height: 50),
                 RaisedButton.icon(
                   onPressed: () {
