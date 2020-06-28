@@ -63,6 +63,7 @@ class _CreateEventState extends State<CreateEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.redAccent,
           leading: IconButton(
             highlightColor: Colors.blue[700],
             icon: Icon(FontAwesomeIcons.times),

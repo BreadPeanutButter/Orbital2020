@@ -116,7 +116,7 @@ class _CreateCCAState extends State<CreateCCA> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            highlightColor: Colors.blue[700],
+            highlightColor: Colors.red[700],
             icon: Icon(FontAwesomeIcons.times),
             iconSize: 35,
             onPressed: _showDialog,
