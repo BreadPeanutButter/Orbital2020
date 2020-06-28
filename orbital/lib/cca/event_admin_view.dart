@@ -195,7 +195,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(
                   height: 7,
                 ),
-                myWidget(createdBy + '\n' + dateCreated.toDate().toString()),
+                myWidget(createdBy + '\n' + dateCreated.toDate().toString().substring(0,10)),
                 SizedBox(height: 50),
                 RaisedButton.icon(
                   onPressed: () {
