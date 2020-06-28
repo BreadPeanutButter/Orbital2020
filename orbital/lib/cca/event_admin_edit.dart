@@ -2,13 +2,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:orbital/cca/event_admin_view.dart';
-import 'package:orbital/screens/event_feed/event_feed_all.dart';
-import 'package:orbital/services/auth.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 
 class EventAdminEdit extends StatefulWidget {
@@ -21,7 +17,6 @@ class EventAdminEdit extends StatefulWidget {
   }
 }
 
-
 class _EventAdminEditState extends State<EventAdminEdit> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   File _image;
@@ -31,7 +26,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
   void initState() {
     super.initState();
     imageURL = widget.ccaDocument['image'];
-    closed =  widget.ccaDocument['Closed'];
+    closed = widget.ccaDocument['Closed'];
   }
 
   @override
@@ -44,9 +39,12 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     final GlobalKey<FormState> _key = GlobalKey();
     final TextEditingController nameController = new TextEditingController();
     final TextEditingController detailsController = new TextEditingController();
-    final TextEditingController eventTimeController = new TextEditingController();
-    final TextEditingController locationController = new TextEditingController();
-    final TextEditingController imageURLController = new TextEditingController();
+    final TextEditingController eventTimeController =
+        new TextEditingController();
+    final TextEditingController locationController =
+        new TextEditingController();
+    final TextEditingController imageURLController =
+        new TextEditingController();
     final TextEditingController RIController = new TextEditingController();
     nameController.text = name;
     detailsController.text = details;
@@ -54,15 +52,13 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     locationController.text = location;
     imageURLController.text = imageURL;
     RIController.text = registrationInstructions;
-    
+
     showAlertDialog(BuildContext context) {
       Widget OkayButton = FlatButton(
         child: Text("Okay"),
         onPressed: () {
           Navigator.of(context).pop();
-          setState(() {
-            
-          });
+          setState(() {});
         },
       );
       AlertDialog alert = AlertDialog(
@@ -80,92 +76,88 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       );
     }
 
-    
-  void _successDialogEdit(DocumentSnapshot doc) {
-    showDialog(
-      context: context,
-      builder: (BuildContext ctx) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Success!"),
-          content: new Text(
-              "Congratulations, you have edited the event! You can now view ${doc['Name']}."),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            OutlineButton(
-                highlightedBorderColor: Colors.blue,
-                borderSide: BorderSide(color: Colors.blue),
-                child: new Text("Hurray!"),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.push(context,MaterialPageRoute(builder: (c) => EventAdminView(document : doc)));
-                  
-                }),
+    void _successDialogEdit(DocumentSnapshot doc) {
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Success!"),
+            content: new Text(
+                "Congratulations, you have edited the event! You can now view ${doc['Name']}."),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              OutlineButton(
+                  highlightedBorderColor: Colors.blue,
+                  borderSide: BorderSide(color: Colors.blue),
+                  child: new Text("Hurray!"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => EventAdminView(document: doc)));
+                  }),
 
-            SizedBox(width: 110),
-          ],
-        );
-      },
-    );
-  }
+              SizedBox(width: 110),
+            ],
+          );
+        },
+      );
+    }
 
     void _successDialogClosed(DocumentSnapshot doc) {
-    showDialog(
-      context: context,
-      builder: (BuildContext ctx) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Success!"),
-          content: new Text(
-              "Congratulations, you have closed the event!"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            OutlineButton(
-                highlightedBorderColor: Colors.blue,
-                borderSide: BorderSide(color: Colors.blue),
-                child: new Text("Event is now closed!"),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.push(context,MaterialPageRoute(builder: (c) => EventAdminView(document : doc)));
-                  
-                }),
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Success!"),
+            content: new Text("Congratulations, you have closed the event!"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              OutlineButton(
+                  highlightedBorderColor: Colors.blue,
+                  borderSide: BorderSide(color: Colors.blue),
+                  child: new Text("Event is now closed!"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => EventAdminView(document: doc)));
+                  }),
 
-            SizedBox(width: 110),
-          ],
-        );
-      },
-    );
-  }
-    
+              SizedBox(width: 110),
+            ],
+          );
+        },
+      );
+    }
 
     void _publishEvent() async {
       print(imageURL);
       widget.ccaDocument.reference.updateData({
-        'Name' : name,
+        'Name': name,
         'Details': details,
         'Location': location,
         'RegisterInstructions': registrationInstructions,
         'EventTime': eventTime,
-        'image' : imageURL
-        
-                          
+        'image': imageURL
       });
       DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
-       _successDialogEdit(snapShot);
+      _successDialogEdit(snapShot);
     }
 
-    void _closedEvent() async{
-      widget.ccaDocument.reference.updateData({
-        'Closed' : true
-      });
+    void _closedEvent() async {
+      widget.ccaDocument.reference.updateData({'Closed': true});
       DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
       _successDialogClosed(snapShot);
     }
-  
 
     Future uploadImage(BuildContext context) async {
       final picker = ImagePicker();
@@ -181,29 +173,24 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       print(dowurl.toString());
       setState(() {
         imageURL = dowurl.toString();
-
       });
       print(imageURL);
       showAlertDialog(context);
+    }
 
-  }
-
-    Widget imageWidget(){
-      if(imageURL == null){
+    Widget imageWidget() {
+      if (imageURL == null) {
         return SizedBox(height: 50);
-      }
-      else{
-         return Image.network(
-           imageURL,
-           height: 200,
-           width: 200,
-         );
+      } else {
+        return Image.network(
+          imageURL,
+          height: 200,
+          width: 200,
+        );
       }
     }
-    
-    
-  
-  return Scaffold(
+
+    return Scaffold(
         appBar: AppBar(
           title: Text('Edit Event'),
           centerTitle: true,
@@ -219,78 +206,92 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     imageWidget(),
                     SizedBox(height: 20),
                     RaisedButton.icon(
-                        onPressed: (){ uploadImage(context);},
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                        label: Text('Change', 
-                        style: TextStyle(color: Colors.white, fontSize: 15),),
-                        icon: Icon(Icons.edit, color: Colors.white,), 
-                        textColor: Colors.red,
-                        splashColor: Colors.red,
-                        color: Colors.green,),
+                      onPressed: () {
+                        uploadImage(context);
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      label: Text(
+                        'Change',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                      ),
+                      textColor: Colors.red,
+                      splashColor: Colors.red,
+                      color: Colors.green,
+                    ),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
-                          decoration: const InputDecoration(labelText: "Name of event"),
-                          autocorrect: true,
-                          controller: nameController,
-                          onChanged: (String value) {
-                            name = value;
-                          }
-                      )),
+                            decoration: const InputDecoration(
+                                labelText: "Name of event"),
+                            autocorrect: true,
+                            controller: nameController,
+                            onChanged: (String value) {
+                              name = value;
+                            })),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
-                          decoration: const InputDecoration(labelText: "Provide events details", hintText: 'What the event is about'),
-                          autocorrect: true,
-                          controller: detailsController,
-                          onChanged: (String value) {
-                            details = value;
-                          }
-                    )),
+                            decoration: const InputDecoration(
+                                labelText: "Provide events details",
+                                hintText: 'What the event is about'),
+                            autocorrect: true,
+                            controller: detailsController,
+                            onChanged: (String value) {
+                              details = value;
+                            })),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
-                          decoration: const InputDecoration(labelText: "Provide event date and time", hintText: 'When is the event held'),
-                          autocorrect: true,
-                          controller: eventTimeController,
-                          onChanged: (String value) {
-                            eventTime = value;
-                        }
-                    )),
+                            decoration: const InputDecoration(
+                                labelText: "Provide event date and time",
+                                hintText: 'When is the event held'),
+                            autocorrect: true,
+                            controller: eventTimeController,
+                            onChanged: (String value) {
+                              eventTime = value;
+                            })),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
-                          decoration: const InputDecoration(labelText: "Provide event location", hintText: 'where is the event held'),
-                          autocorrect: true,
-                          controller: locationController,
-                          onChanged: (String value) {
-                            location = value;
-                        }
-                    )),
+                            decoration: const InputDecoration(
+                                labelText: "Provide event location",
+                                hintText: 'where is the event held'),
+                            autocorrect: true,
+                            controller: locationController,
+                            onChanged: (String value) {
+                              location = value;
+                            })),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
-                          decoration: const InputDecoration(labelText: "Provide sign up instructions", hintText: 'How to sign up'),
-                          autocorrect: true,
-                          controller: RIController,
-                          onChanged: (String value) {
-                            registrationInstructions = value;
-                        }
-                    )),
-                    SizedBox(height : 20),
+                            decoration: const InputDecoration(
+                                labelText: "Provide sign up instructions",
+                                hintText: 'How to sign up'),
+                            autocorrect: true,
+                            controller: RIController,
+                            onChanged: (String value) {
+                              registrationInstructions = value;
+                            })),
+                    SizedBox(height: 20),
                     ButtonTheme(
                       minWidth: 200,
                       height: 50,
                       buttonColor: Colors.red,
                       child: RaisedButton(
-                        shape:  RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                           side: BorderSide(color: Colors.red)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.red)),
                         onPressed: () {
                           _closedEvent();
                         },
-                        child: Text("Close Event", style: TextStyle(fontSize: 15)),
+                        child:
+                            Text("Close Event", style: TextStyle(fontSize: 15)),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -299,20 +300,17 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                       height: 50,
                       buttonColor: Colors.blue,
                       child: RaisedButton(
-                        shape:  RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                           side: BorderSide(color: Colors.blue)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.blue)),
                         onPressed: () {
-                         _publishEvent();
+                          _publishEvent();
                         },
                         child: Text("Done", style: TextStyle(fontSize: 15)),
                       ),
                     ),
                     SizedBox(height: 20),
- 
                   ]),
                 ))));
-    
   }
-  
 }
