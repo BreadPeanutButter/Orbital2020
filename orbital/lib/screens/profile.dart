@@ -127,7 +127,7 @@ class _ProfileState extends State<Profile> {
       padding: const EdgeInsets.all(10.0),
       decoration: myBoxDecoration(),
       child: Text(info,
-          style: GoogleFonts.ptSans(fontSize: 25, color: Colors.blue[1000])),
+          style: GoogleFonts.ptSans(fontSize: 25, color: Colors.black)),
     );
   }
 
@@ -137,6 +137,7 @@ class _ProfileState extends State<Profile> {
       child: widget,
     );
   }
+
   Widget myLayoutName(Widget widget) {
     return Align(
       alignment: Alignment(-0.85, -0.85),
@@ -147,7 +148,8 @@ class _ProfileState extends State<Profile> {
   Widget profileWidget() {
     String name = 'Name: ' + widget.auth.name;
     String email = 'Email: ' + widget.auth.email;
-    String dateJoined = 'Date joined: ' + widget.auth.dateJoined.substring(0,10);
+    String dateJoined =
+        'Date joined: ' + widget.auth.dateJoined.substring(0, 10);
     return new Scaffold(
         appBar: new AppBar(
           title: Text(
@@ -158,33 +160,32 @@ class _ProfileState extends State<Profile> {
         ),
         drawer: AppDrawer(drawer: Drawers.profile),
         body: new Align(
-          alignment: Alignment.center,
+            alignment: Alignment.center,
             child: Column(
-          children: <Widget>[
-            SizedBox(height: 15),
-            Row(
-              children: [
-              SizedBox(
-                width: 70,
-              ),
-              Icon(
-                FontAwesomeIcons.solidIdCard,
-                color: Colors.black,
-                size: 230,
-              ),
-              SizedBox(
-                width: 1,
-              )
-            ]),
-            SizedBox(height: 30),
-            myLayoutName(myWidget(name)),
-            SizedBox(height: 20),
-            myLayoutWidget(myWidget(email)),
-            SizedBox(height: 20),
-            myLayoutWidget(myWidget(dateJoined)),
-            actionButtons()
-          ],
-        )));
+              children: <Widget>[
+                SizedBox(height: 15),
+                Row(children: [
+                  SizedBox(
+                    width: 70,
+                  ),
+                  Icon(
+                    FontAwesomeIcons.solidIdCard,
+                    color: Colors.black,
+                    size: 230,
+                  ),
+                  SizedBox(
+                    width: 1,
+                  )
+                ]),
+                SizedBox(height: 30),
+                myLayoutName(myWidget(name)),
+                SizedBox(height: 20),
+                myLayoutWidget(myWidget(email)),
+                SizedBox(height: 20),
+                myLayoutWidget(myWidget(dateJoined)),
+                actionButtons()
+              ],
+            )));
   }
 
   @override
