@@ -12,7 +12,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email, _password, _name;
 
@@ -27,107 +26,109 @@ class _SignUpPageState extends State<SignUpPage> {
         centerTitle: true,
       ),
       body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            Image.asset(
-                "images/logo.png",
-                height: 200,
-                width: 200,
+          key: _formKey,
+          child: SingleChildScrollView(
+              child: Column(
+            children: <Widget>[
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset("images/logo.png", fit: BoxFit.fill)),
+              TextFormField(
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please provide a username';
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  icon: Icon(Icons.account_box),
+                ),
+                onSaved: (input) => _name = input,
               ),
               TextFormField(
-              validator: (input) {
-                if(input.isEmpty){
-                  return 'Please provide a username';
-                }
-              },
-              decoration: InputDecoration(
-                labelText: 'Name',
-                icon: Icon(Icons.account_box),
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Provide an email';
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  icon: Icon(Icons.email),
+                ),
+                onSaved: (input) => _email = input,
               ),
-              onSaved: (input) => _name = input,
-            ),
-            TextFormField(
-              validator: (input) {
-                if(input.isEmpty){
-                  return 'Provide an email';
-                }
-              },
-              decoration: InputDecoration(
-                labelText: 'Email',
-                icon: Icon(Icons.email),
+              TextFormField(
+                validator: (input) {
+                  if (input.length < 8) {
+                    return 'Longer password please';
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  icon: Icon(Icons.vpn_key),
+                ),
+                onSaved: (input) => _password = input,
+                obscureText: true,
               ),
-              onSaved: (input) => _email = input,
-            ),
-            TextFormField(
-              validator: (input) {
-                if(input.length < 8){
-                  return 'Longer password please';
-                }
-              },
-              decoration: InputDecoration(
-                labelText: 'Password',
-                icon: Icon(Icons.vpn_key),
-              ),
-              onSaved: (input) => _password = input,
-              obscureText: true,
-            ),
-            SizedBox(height: 10),
-             CupertinoButton.filled(
-                  onPressed: signUp, child: Text('Sign Up')),
-            
-          ],
-        )
-      ),
+              SizedBox(height: 10),
+              CupertinoButton.filled(onPressed: signUp, child: Text('Sign Up')),
+            ],
+          ))),
     );
   }
 
   void createRecord(Firestore databaseReference, FirebaseUser user) async {
-    await databaseReference.collection("User")
-        .document(user.uid)
-        .setData({
-          'Email': _email,
-          'Name': _name,
-          'Favourite': <String>[],
-          'BookmarkedEvent': <String>[],
-          'DateJoined': DateTime.now()
-        });
+    await databaseReference.collection("User").document(user.uid).setData({
+      'Email': _email,
+      'Name': _name,
+      'Favourite': <String>[],
+      'BookmarkedEvent': <String>[],
+      'DateJoined': DateTime.now()
+    });
   }
 
-   void navigateToSignUp(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage(), fullscreenDialog: true));
+  void navigateToSignUp() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SignUpPage(), fullscreenDialog: true));
   }
 
   void signUp() async {
-    if(_formKey.currentState.validate()){
+    if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      try{
-        FirebaseUser user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password)).user;
+      try {
+        FirebaseUser user = (await FirebaseAuth.instance
+                .createUserWithEmailAndPassword(
+                    email: _email, password: _password))
+            .user;
         final databaseReference = Firestore.instance;
         createRecord(databaseReference, user);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  SignIn()));
-      }catch(e){
-        showDialog( 
-          context: context,
-          builder: (context) {
-            Future.delayed(Duration(seconds: 5),(){
-               Navigator.of(context).pop(true);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => SignIn()));
+      } catch (e) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(Duration(seconds: 5), () {
+                Navigator.of(context).pop(true);
+              });
+              return AlertDialog(
+                title: Text('Sign in failed'),
+                content:
+                    Text("This email is being used! Please try another email."),
+                actions: [
+                  FlatButton(
+                    onPressed: () =>
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/signUp', (Route<dynamic> route) => false);
+                    }),
+                    child: Text('OK'),
+                  ),
+                ],
+              );
             });
-            return AlertDialog(
-              title: Text('Sign in failed'),
-              content: Text("This email is being used! Please try another email."),
-              actions: [
-                FlatButton(
-                  onPressed:  () => SchedulerBinding.instance.addPostFrameCallback((_) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/signUp', (Route<dynamic> route) => false);
-                      }),
-                  child: Text('OK'), 
-                  
-                ),
-              ],
-            );
-          });
       }
     }
   }
