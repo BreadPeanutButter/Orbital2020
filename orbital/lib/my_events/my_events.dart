@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital/screens/app_drawer.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/cca/event_admin_view.dart';
@@ -35,6 +36,7 @@ class MyEvents extends StatelessWidget {
           title: Text('My Events', style: TextStyle(color: Colors.black)),
           centerTitle: true,
         ),
+        drawer: AppDrawer(drawer: Drawers.event),
         body: getBookmarkFuture());
   }
 
@@ -101,7 +103,7 @@ class MyEvents extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EventAdminView(
+              builder: (context) => EventAdminView.fromMyEvents(
                     document: document,
                   )));
     } else {
