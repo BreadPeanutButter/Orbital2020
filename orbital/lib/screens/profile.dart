@@ -122,6 +122,7 @@ class _ProfileState extends State<Profile> {
 
   Widget myWidget(String info) {
     return Container(
+      width: 500,
       margin: const EdgeInsets.all(1.0),
       padding: const EdgeInsets.all(10.0),
       decoration: myBoxDecoration(),
