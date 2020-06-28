@@ -21,18 +21,18 @@ class AppDrawer extends StatelessWidget {
         child: Image.asset("images/logo.png"),
       ),
       Ink(
-          color: drawer == Drawers.eventfeed ? Colors.blue : Colors.transparent,
-          child: ListTile(
-            leading: Icon(Icons.looks_one),
-            title: Text('Event Feed'),
-            onTap: () => Navigator.pushNamed(context, '/eventfeed'),
-          )),
-      Ink(
           color: drawer == Drawers.explore ? Colors.blue : Colors.transparent,
           child: ListTile(
-            leading: Icon(Icons.looks_two),
+            leading: Icon(Icons.looks_one),
             title: Text('Explore CCAs'),
             onTap: () => Navigator.pushNamed(context, '/explore'),
+          )),
+      Ink(
+          color: drawer == Drawers.eventfeed ? Colors.blue : Colors.transparent,
+          child: ListTile(
+            leading: Icon(Icons.looks_two),
+            title: Text('Event Feed'),
+            onTap: () => Navigator.pushNamed(context, '/eventfeed'),
           )),
       Ink(
           color: drawer == Drawers.event ? Colors.blue : Colors.transparent,

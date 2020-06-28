@@ -23,13 +23,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (BuildContext ctx) => SignIn(),
-        '/eventfeed': (BuildContext ctx) => EventFeed(),
         '/explore': (BuildContext ctx) => Explore(),
-        '/signUp' : (BuildContext ctx) => SignUpPage(),
-        '/createcca' : (BuildContext ctx) => CreateCCA(),
-      
+        '/eventfeed': (BuildContext ctx) => EventFeed()
       },
-      
     );
   }
 }
