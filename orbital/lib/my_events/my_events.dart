@@ -71,6 +71,10 @@ class MyEvents extends StatelessWidget {
           if (!snapshot.hasData) {
             return SizedBox();
           } else {
+            String eventTime = snapshot.data['EventTime'];
+            if (eventTime.length > 28) {
+              eventTime = eventTime.substring(0, 24) + "...";
+            }
             return new SizedBox(
                 height: 100,
                 child: Card(

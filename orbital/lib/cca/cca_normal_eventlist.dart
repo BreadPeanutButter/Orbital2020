@@ -45,6 +45,10 @@ class CCANormalEventlist extends StatelessWidget {
         } else {
           return new ListView(
             children: snapshot.data.documents.map((DocumentSnapshot document) {
+              String eventTime = document['EventTime'];
+              if (eventTime.length > 28) {
+                eventTime = eventTime.substring(0, 24) + "...";
+              }
               return new SizedBox(
                   height: 100,
                   child: Card(
@@ -67,7 +71,7 @@ class CCANormalEventlist extends StatelessWidget {
                               title: new Text(
                                   document['CCA'] + ': ' + document['Name'],
                                   style: TextStyle(fontSize: 24)),
-                              subtitle: new Text(document['EventTime'],
+                              subtitle: new Text(eventTime,
                                   style: TextStyle(fontSize: 20)),
                               trailing: closedEvent(document)))));
             }).toList(),
