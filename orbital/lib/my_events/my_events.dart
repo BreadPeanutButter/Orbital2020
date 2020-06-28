@@ -83,7 +83,9 @@ class MyEvents extends StatelessWidget {
                         onTap: () => goToEventPage(context, snapshot.data),
                         child: ListTile(
                           title: new Text(
-                              snapshot.data['CCA'] + snapshot.data['Name'],
+                              snapshot.data['CCA'] +
+                                  ": " +
+                                  snapshot.data['Name'],
                               style: TextStyle(fontSize: 24)),
                           subtitle: new Text(snapshot.data['EventTime'],
                               style: TextStyle(fontSize: 20)),
