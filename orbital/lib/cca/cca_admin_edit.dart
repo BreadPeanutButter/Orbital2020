@@ -2,25 +2,24 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:orbital/cca/cca_admin_view.dart';
 import 'package:orbital/cca/event_admin_view.dart';
-import 'package:orbital/services/auth.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 
 class CCAAdminEdit extends StatefulWidget {
   DocumentSnapshot ccaDocument;
-  CCAAdminEdit({@required this.ccaDocument});
+  int index;
+
+  CCAAdminEdit({@required this.ccaDocument, this.index});
 
   @override
   State<StatefulWidget> createState() {
     return _CCAAdminEditState();
   }
 }
-
 
 class _CCAAdminEditState extends State<CCAAdminEdit> {
   File _image;
@@ -29,7 +28,6 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
   void initState() {
     super.initState();
     imageURL = widget.ccaDocument['image'];
-
   }
 
   @override
@@ -37,19 +35,18 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
     description = widget.ccaDocument['Description'];
     contact = widget.ccaDocument['Contact'];
     final GlobalKey<FormState> _key = GlobalKey();
-    final TextEditingController descriptionController = new TextEditingController();
+    final TextEditingController descriptionController =
+        new TextEditingController();
     final TextEditingController contactController = new TextEditingController();
     descriptionController.text = description;
     contactController.text = contact;
-    
+
     showAlertDialog(BuildContext context) {
       Widget OkayButton = FlatButton(
         child: Text("Okay"),
         onPressed: () {
           Navigator.of(context).pop();
-          setState(() {
-            
-          });
+          setState(() {});
         },
       );
       AlertDialog alert = AlertDialog(
@@ -67,51 +64,48 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
       );
     }
 
-    
-  void _successDialog(DocumentSnapshot doc) {
-    showDialog(
-      context: context,
-      builder: (BuildContext ctx) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Success!"),
-          content: new Text(
-              "Congratulations, you have edited your CCA! You can now view ${doc['Name']}."),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            OutlineButton(
-                highlightedBorderColor: Colors.blue,
-                borderSide: BorderSide(color: Colors.blue),
-                child: new Text("Hurray!"),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.push(context,MaterialPageRoute(builder: (c) => CCAAdminView(document : doc)));
-                  
-                }),
+    void _successDialog(DocumentSnapshot doc) {
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Success!"),
+            content: new Text(
+                "Congratulations, you have edited your CCA! You can now view ${doc['Name']}."),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              OutlineButton(
+                  highlightedBorderColor: Colors.blue,
+                  borderSide: BorderSide(color: Colors.blue),
+                  child: new Text("Hurray!"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => CCAAdminView(
+                                  document: doc,
+                                  exploreIndex: widget.index,
+                                )));
+                  }),
 
-            SizedBox(width: 110),
-          ],
-        );
-      },
-    );
-  }
-    
+              SizedBox(width: 110),
+            ],
+          );
+        },
+      );
+    }
 
     void _publishEvent() async {
       print(imageURL);
-      widget.ccaDocument.reference.updateData({
-        'Description' : description,
-        'Contact': contact,
-        'image' : imageURL
-        
-                          
-      });
+      widget.ccaDocument.reference.updateData(
+          {'Description': description, 'Contact': contact, 'image': imageURL});
       DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
-       _successDialog(snapShot);
+      _successDialog(snapShot);
     }
-  
 
     Future uploadImage(BuildContext context) async {
       final picker = ImagePicker();
@@ -127,29 +121,24 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
       print(dowurl.toString());
       setState(() {
         imageURL = dowurl.toString();
-
       });
       print(imageURL);
       showAlertDialog(context);
+    }
 
-  }
-
-    Widget imageWidget(){
-      if(imageURL == null){
+    Widget imageWidget() {
+      if (imageURL == null) {
         return SizedBox(height: 50);
-      }
-      else{
-         return Image.network(
-           imageURL,
-           height: 200,
-           width: 200,
-         );
+      } else {
+        return Image.network(
+          imageURL,
+          height: 200,
+          width: 200,
+        );
       }
     }
-    
-    
-  
-  return Scaffold(
+
+    return Scaffold(
         appBar: AppBar(
           title: Text('Edit Event'),
           centerTitle: true,
@@ -165,50 +154,55 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
                     imageWidget(),
                     SizedBox(height: 20),
                     RaisedButton.icon(
-                        onPressed: (){ uploadImage(context);},
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                        label: Text('Change', 
-                        style: TextStyle(color: Colors.white, fontSize: 15),),
-                        icon: Icon(Icons.edit, color: Colors.white,), 
-                        textColor: Colors.red,
-                        splashColor: Colors.red,
-                        color: Colors.green,),
+                      onPressed: () {
+                        uploadImage(context);
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      label: Text(
+                        'Change',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                      ),
+                      textColor: Colors.red,
+                      splashColor: Colors.red,
+                      color: Colors.green,
+                    ),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
-                          decoration: const InputDecoration(labelText: "Name of event"),
-                          autocorrect: true,
-                          controller: descriptionController,
-                          onChanged: (String value) {
-                            description = value;
-                          }
-                      )),
+                            decoration: const InputDecoration(
+                                labelText: "Name of event"),
+                            autocorrect: true,
+                            controller: descriptionController,
+                            onChanged: (String value) {
+                              description = value;
+                            })),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
-                          decoration: const InputDecoration(labelText: "Provide events details", hintText: 'What the event is about'),
-                          autocorrect: true,
-                          controller: contactController,
-                          onChanged: (String value) {
-                            contact = value;
-                          }
-                    )),
-                    
+                            decoration: const InputDecoration(
+                                labelText: "Provide events details",
+                                hintText: 'What the event is about'),
+                            autocorrect: true,
+                            controller: contactController,
+                            onChanged: (String value) {
+                              contact = value;
+                            })),
                     SizedBox(height: 20),
                     Container(
                       padding: EdgeInsets.all(8),
                       child: CupertinoButton.filled(
-                        child: Text('Done'),
-                        onPressed: () {
+                          child: Text('Done'),
+                          onPressed: () {
                             _publishEvent();
-
-                        } 
-                      ),
+                          }),
                     ),
                   ]),
                 ))));
-    
   }
-  
 }

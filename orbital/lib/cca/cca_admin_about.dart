@@ -6,8 +6,9 @@ import 'package:flutter/cupertino.dart';
 
 class CCAAdminAbout extends StatelessWidget {
   final DocumentSnapshot document;
+  int index;
 
-  CCAAdminAbout({this.document});
+  CCAAdminAbout({this.document, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +98,10 @@ class CCAAdminAbout extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (c) =>
-                                CCAAdminEdit(ccaDocument: document)));
+                            builder: (c) => CCAAdminEdit(
+                                  ccaDocument: document,
+                                  index: index,
+                                )));
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),

@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/cca/event_admin_view.dart';
 import 'package:orbital/cca/create_event.dart';
@@ -10,8 +7,9 @@ import 'package:orbital/cca/create_event.dart';
 class CCAAdminEventlist extends StatelessWidget {
   final database = Firestore.instance;
   DocumentSnapshot ccaDocument;
+  int index;
 
-  CCAAdminEventlist({@required this.ccaDocument});
+  CCAAdminEventlist({@required this.ccaDocument, @required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +93,9 @@ class CCAAdminEventlist extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          EventAdminView(document: document)));
+                                          EventAdminView.fromCCA(
+                                              document: document,
+                                              index: index)));
                             },
                             child: ListTile(
                               title: new Text(

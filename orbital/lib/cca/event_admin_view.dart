@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital/cca/cca_admin_view.dart';
 import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,18 +13,20 @@ class EventAdminView extends StatefulWidget {
   Auth auth = new Auth();
   final DocumentSnapshot document;
   bool bookmarked;
-  bool fromMyEvents;
+  bool fromMyEvents = false;
+  bool fromCCA = false;
+  bool fromEdit = false;
   int index;
-  int previousIndex;
 
-  EventAdminView({@required this.document}) {
-    fromMyEvents = false;
-  }
+  EventAdminView({@required this.document});
   EventAdminView.fromCCA({@required this.document, @required this.index}) {
-    fromMyEvents = false;
+    fromCCA = true;
   }
   EventAdminView.fromMyEvents({@required this.document}) {
     fromMyEvents = true;
+  }
+  EventAdminView.fromEdit({@required this.document, @required this.index}) {
+    fromEdit = true;
   }
 
   @override
@@ -214,11 +217,34 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(height: 50),
                 RaisedButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) =>
-                                EventAdminEdit(ccaDocument: document)));
+                    if (widget.fromCCA) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminEdit(
+                                    ccaDocument: document,
+                                    index: widget.index,
+                                  )));
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext ctx) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            title: new Text("Oops!"),
+                            content: new Text(
+                                "You can only edit pages as Admin through the CCA page."),
+                            actions: <Widget>[
+                              FlatButton(
+                                  child: new Text("Okay"),
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop();
+                                  }),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -232,21 +258,37 @@ class _EventAdminViewState extends State<EventAdminView> {
                   ),
                   textColor: Colors.red,
                   splashColor: Colors.red,
-                  color: Colors.green,
+                  color: widget.fromCCA ? Colors.green : Colors.grey,
                 ),
               ],
             ),
           ));
     }
 
-    void backButton() {
-      if (widget.fromMyEvents) {
+    void backButton() async {
+      if (widget.fromEdit) {
+        DocumentSnapshot ccaDoc = await Firestore.instance
+            .collection('CCA')
+            .document(widget.document['CCA'])
+            .get();
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CCAAdminView.tab(
+                    document: ccaDoc,
+                    exploreIndex: widget.index,
+                    currentIndex: 1)));
+      } else if (widget.fromMyEvents) {
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => MyEvents(auth: widget.auth)));
+      } else {
+        Navigator.pop(context);
       }
     }
 

@@ -13,7 +13,7 @@ class Explore extends StatelessWidget {
   int index;
 
   Explore() {
-    index = 0;
+    this.index = 0;
   }
   Explore.tab({@required this.index});
 

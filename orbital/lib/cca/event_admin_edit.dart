@@ -9,7 +9,8 @@ import 'package:path/path.dart' as Path;
 
 class EventAdminEdit extends StatefulWidget {
   DocumentSnapshot ccaDocument;
-  EventAdminEdit({@required this.ccaDocument});
+  int index;
+  EventAdminEdit({@required this.ccaDocument, @required this.index});
 
   @override
   State<StatefulWidget> createState() {
@@ -98,7 +99,10 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => EventAdminView(document: doc)));
+                            builder: (c) => EventAdminView.fromEdit(
+                                  document: doc,
+                                  index: widget.index,
+                                )));
                   }),
 
               SizedBox(width: 110),

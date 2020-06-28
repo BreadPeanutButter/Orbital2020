@@ -79,7 +79,7 @@ class ExploreCategory extends StatelessWidget {
           MaterialPageRoute(
               builder: (context) => CCAAdminView(
                   document: document,
-                  previousIndex: index[document['Category']])));
+                  exploreIndex: index[document['Category']])));
     } else {
       Navigator.push(
           context,

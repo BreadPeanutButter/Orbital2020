@@ -132,12 +132,12 @@ class _CreateCCAState extends State<CreateCCA> {
                 child: SingleChildScrollView(
                   child: Column(children: <Widget>[
                     Container(
-                      padding: EdgeInsets.all(8),
-                    child: Text(message,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ))),
+                        padding: EdgeInsets.all(8),
+                        child: Text(message,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ))),
                     SizedBox(height: 10),
                     Container(
                         padding: EdgeInsets.all(8),
@@ -336,6 +336,7 @@ class _CreateCCAState extends State<CreateCCA> {
                       MaterialPageRoute(
                           builder: (c) => CCAAdminView(
                                 document: doc,
+                                exploreIndex: 0,
                               )));
                 }),
 

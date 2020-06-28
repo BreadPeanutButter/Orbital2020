@@ -13,16 +13,16 @@ class CCAAdminView extends StatefulWidget {
   Auth auth = new Auth();
   DocumentSnapshot document;
   bool favCCA;
-  int index;
-  int previousIndex;
+  int currentIndex;
+  int exploreIndex;
 
-  CCAAdminView({@required this.document, @required this.previousIndex}) {
-    index = 0;
+  CCAAdminView({@required this.document, @required this.exploreIndex}) {
+    currentIndex = 0;
   }
   CCAAdminView.tab(
       {@required this.document,
-      @required this.index,
-      @required this.previousIndex});
+      @required this.currentIndex,
+      @required this.exploreIndex});
 
   @override
   _CCAAdminViewState createState() => _CCAAdminViewState();
@@ -52,7 +52,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        initialIndex: widget.index,
+        initialIndex: widget.currentIndex,
         length: 3,
         child: Scaffold(
           appBar: new AppBar(
@@ -69,7 +69,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            Explore.tab(index: widget.previousIndex)));
+                            Explore.tab(index: widget.exploreIndex)));
               },
               color: Colors.white,
             ),
@@ -138,12 +138,16 @@ class _CCAAdminViewState extends State<CCAAdminView> {
             children: [
               CCAAdminAbout(
                 document: widget.document,
+                index: widget.exploreIndex,
               ),
-              CCAAdminEventlist(ccaDocument: widget.document),
+              CCAAdminEventlist(
+                ccaDocument: widget.document,
+                index: widget.exploreIndex,
+              ),
               CCAAdminPanel(
                 ccaName: widget.document['Name'],
                 auth: widget.auth,
-                previousIndex: widget.previousIndex,
+                previousIndex: widget.exploreIndex,
               )
             ],
           ),

@@ -103,7 +103,7 @@ class MyEvents extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EventAdminView(
+              builder: (context) => EventAdminView.fromMyEvents(
                     document: document,
                   )));
     } else {

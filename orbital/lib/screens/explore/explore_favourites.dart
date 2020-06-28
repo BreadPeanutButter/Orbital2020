@@ -77,7 +77,7 @@ class ExploreFavourites extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  CCAAdminView(document: document, previousIndex: index)));
+                  CCAAdminView(document: document, exploreIndex: index)));
     } else {
       Navigator.push(
           context,

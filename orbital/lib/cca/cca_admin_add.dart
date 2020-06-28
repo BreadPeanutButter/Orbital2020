@@ -50,8 +50,8 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
                   MaterialPageRoute(
                       builder: (context) => CCAAdminView.tab(
                             document: document,
-                            index: 2,
-                            previousIndex: widget.previousIndex,
+                            currentIndex: 2,
+                            exploreIndex: widget.previousIndex,
                           )));
             },
             color: Colors.white,
