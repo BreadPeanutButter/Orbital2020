@@ -9,6 +9,18 @@ class CCANormalEventlist extends StatelessWidget {
 
   CCANormalEventlist({@required this.ccaDocument});
 
+  Widget closedEvent(DocumentSnapshot doc) {
+    if (doc['Closed'] == true) {
+      return Image.asset(
+        "images/closed.png",
+        height: 100,
+        width: 100,
+      );
+    } else {
+      return SizedBox();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -56,6 +68,7 @@ class CCANormalEventlist extends StatelessWidget {
                                   style: TextStyle(fontSize: 24)),
                               subtitle: new Text(document['EventTime'],
                                   style: TextStyle(fontSize: 20)),
+                                  trailing: closedEvent(document)
                             ))));
               }).toList(),
             );
