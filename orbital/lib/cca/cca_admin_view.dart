@@ -76,7 +76,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
             actions: [
               Ink(
                   decoration: ShapeDecoration(
-                      color: Colors.red,
+                      color: Colors.transparent,
                       shape: CircleBorder(
                           side: BorderSide(
                         width: 2,
@@ -91,7 +91,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
                         } else {
                           widget.favCCA = snapshot.data;
                           return IconButton(
-                            highlightColor: Colors.blue[900],
+                            highlightColor: Colors.red[700],
                             icon: Icon(Icons.star),
                             iconSize: 35,
                             onPressed: () {

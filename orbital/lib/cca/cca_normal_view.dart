@@ -73,7 +73,7 @@ class _CCANormalViewState extends State<CCANormalView> {
             actions: [
               Ink(
                   decoration: ShapeDecoration(
-                      color: Colors.blue,
+                      color: Colors.transparent,
                       shape: CircleBorder(
                           side: BorderSide(
                         width: 2,
@@ -88,7 +88,7 @@ class _CCANormalViewState extends State<CCANormalView> {
                         } else {
                           widget.favCCA = snapshot.data;
                           return IconButton(
-                            highlightColor: Colors.blue[900],
+                            highlightColor: Colors.blue[700],
                             icon: Icon(Icons.star),
                             iconSize: 35,
                             onPressed: () {
