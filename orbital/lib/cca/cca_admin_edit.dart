@@ -24,6 +24,7 @@ class CCAAdminEdit extends StatefulWidget {
 class _CCAAdminEditState extends State<CCAAdminEdit> {
   File _image;
   String description, contact, imageURL;
+  bool isLoading = false;
 
   void initState() {
     super.initState();
@@ -112,6 +113,7 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
       final pickedFile = await picker.getImage(source: ImageSource.gallery);
       setState(() {
         _image = File(pickedFile.path);
+        isLoading = true;
       });
       StorageReference firebaseStorageRef = FirebaseStorage.instance
           .ref()
@@ -121,6 +123,7 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
       print(dowurl.toString());
       setState(() {
         imageURL = dowurl.toString();
+        isLoading = false;
       });
       print(imageURL);
       showAlertDialog(context);
@@ -140,7 +143,7 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Edit Event'),
+          title: Text('Edit CCA'),
           centerTitle: true,
           backgroundColor: Colors.red,
         ),
@@ -153,6 +156,7 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
                     SizedBox(height: 30),
                     imageWidget(),
                     SizedBox(height: 20),
+                    isLoading ? CircularProgressIndicator() : 
                     RaisedButton.icon(
                       onPressed: () {
                         uploadImage(context);
