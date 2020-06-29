@@ -1,4 +1,4 @@
-#NUS WhatToD#
+# NUS WhatToDo
 
 **Team**
 
