@@ -1,12 +1,14 @@
 # NUS WhatToDo
 
-**Team**
+
+### Team
 
 Heng Yong Ming
 
 Lee Joon Jie
 
-**Download and Install NUS WhatToDo**
+
+### Download and Install NUS WhatToDo
 
 Latest Version: v1.0
 
@@ -18,15 +20,21 @@ Link: [https://github.com/hengyongming/Orbital2020/releases](https://github.com/
 
 3. Explore the app!
 
-**Motivation**
+
+
+### Motivation
 
 We realised that in NUS, there isn't a centralised and portable online platform for students to obtain information regarding a particular CCA that he/she is interested in other than the official NUS website. However, the NUS website provides minimal information and is not maintained by the CCAs themselves. This has limited utility to people looking for more detailed and up-to-date information. Most CCAs have their own social media pages but this is not central and may lack outreach.
 
-**Aim**
+
+
+### Aim
 
 We hope to make information and updates regarding CCAs more central and accessible to NUS students with an app. We also hope that the information that students obtain is reliable and updated.
 
-**Concept Validation**
+
+
+### Concept Validation
 
 Our app is a centralised mobile (and hence portable) platform for CCAs to disseminate first-hand information about themselves and for students to benefit from that information conveniently. We believe there is no such app as of yet though here are several similar alternatives.
 
@@ -36,7 +44,9 @@ Our app is a centralised mobile (and hence portable) platform for CCAs to dissem
 
 **Social Media &amp; Other Forms of Communication:** Most CCAs already have their own channels of disseminating information such as Telegram, Instagram, Facebook etc. However, this is not centralised and only useful for students who already know the CCA. For new students still unfamiliar with the school, it would not be much use.
 
-**User Stories**
+
+
+### User Stories
 
 1. As a new student who is still navigating the school and unsure of what CCA to join or even what is available, I can use the app to browse the available choices and make an informed decision. I can find the right channels to contact a CCA if I have questions. I can also follow/subscribe to certain CCAs that I take interest in so as to receive updates regarding any activities they might be holding.
 
@@ -44,7 +54,9 @@ Our app is a centralised mobile (and hence portable) platform for CCAs to dissem
 
 3. As someone that is looking to start an interest group that is not yet available, I can find like minded people with the app.
 
-**Tech Stack**
+
+
+### Tech Stack
 
 **1. Git and GitHub**
 
@@ -74,13 +86,19 @@ We used as part of our back-end:
 
 We used Android Studio as our IDE for this project. We also used its Android Emulator to run and test our code.
 
-**Database Design**
+
+
+
+### Database Design
 
 Firebase Database is a NoSQL database which is structured differently from usual SQL databases. Data in NoSQL is stored in Documents under Collections and not tables like SQL.
 
 We used 3 Collections in our database: Users, CCAs and Events.
 
-**Features**
+
+
+
+### Features
 
 **For CCAs**
 
@@ -116,7 +134,10 @@ We used 3 Collections in our database: Users, CCAs and Events.
 
 8. Users can add and remove Events to their list of Bookmarks for easy reference in the future. They can access their bookmarks from the &#39;My Events&#39; page.
 
-**Challenges Faced**
+
+
+
+### Challenges Faced
 
 All the technology mentioned in the Tech Stack was new to us so it was no surprise that we frequently encountered roadblocks that required much Googling and brainstorming to solve. Some of the methods and solutions we came up with were probably not the best way to accomplish certain tasks but we take them as lessons learnt. Most of the problems faced were due to front-end and back-end integration and having to unify and coordinate two different technologies. Here we highlight problems that caused us some frustration.
 
