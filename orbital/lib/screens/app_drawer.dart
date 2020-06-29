@@ -27,21 +27,33 @@ class AppDrawer extends StatelessWidget {
           color: drawer == Drawers.explore ? Colors.blue : Colors.transparent,
           child: ListTile(
             leading: Icon(Icons.looks_one),
-            title: Text('Explore CCAs'),
+            title: Text('Explore CCAs',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )),
             onTap: () => Navigator.pushNamed(context, '/explore'),
           )),
       Ink(
           color: drawer == Drawers.eventfeed ? Colors.blue : Colors.transparent,
           child: ListTile(
             leading: Icon(Icons.looks_two),
-            title: Text('Event Feed'),
+            title: Text('Event Feed',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )),
             onTap: () => Navigator.pushNamed(context, '/eventfeed'),
           )),
       Ink(
           color: drawer == Drawers.event ? Colors.blue : Colors.transparent,
           child: ListTile(
             leading: Icon(Icons.looks_3),
-            title: Text('My Events'),
+            title: Text('My Events',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )),
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -53,7 +65,11 @@ class AppDrawer extends StatelessWidget {
           color: drawer == Drawers.profile ? Colors.blue : Colors.transparent,
           child: ListTile(
             leading: Icon(Icons.looks_4),
-            title: Text('My Profile'),
+            title: Text('My Profile',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )),
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
