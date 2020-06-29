@@ -318,7 +318,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                         .isBookmarkedEvent(widget.document.documentID),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        return CircularProgressIndicator();
+                        return SizedBox();
                       } else {
                         widget.bookmarked = snapshot.data;
                         return IconButton(
