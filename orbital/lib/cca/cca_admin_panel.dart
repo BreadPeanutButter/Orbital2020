@@ -31,7 +31,7 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
     Flushbar(
       icon: Icon(FontAwesomeIcons.times, color: Colors.white),
       title: 'Oops! Prohibited Action',
-      message: 'You cannot remove yourself as admin.',
+      message: 'You cannot remove yourself as Admin.',
       duration: Duration(seconds: 2),
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       margin: EdgeInsets.all(8),
@@ -42,8 +42,19 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Column(children: [
+    return SingleChildScrollView(
+        child: Column(children: [
       addAdminButton(context),
+      Container(
+          padding: EdgeInsets.all(8),
+          child: Text("Delete an Admin by swiping left.",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ))),
+      SizedBox(
+        height: 8,
+      ),
       FutureBuilder(
           future: widget.docRef.get(),
           builder: (context, snapshot) {
@@ -58,7 +69,7 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
               );
             }
           })
-    ]);
+    ]));
   }
 
   Widget addAdminButton(BuildContext context) {
@@ -113,7 +124,7 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
                   color: Colors.white,
                   border: Border.all(
                     color: Colors.red[200],
-                    width: 1.5,
+                    width: 3,
                   ),
                   borderRadius: BorderRadius.circular(4.0),
                 ),
