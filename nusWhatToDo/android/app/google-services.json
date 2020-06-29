@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "132810278342",
+    "firebase_url": "https://nus-whattodo.firebaseio.com",
+    "project_id": "nus-whattodo",
+    "storage_bucket": "nus-whattodo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132810278342:android:108ebba99f5c13cc841ec7",
+        "android_client_info": {
+          "package_name": "com.NUSWhatToDO.orbital"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132810278342-a7jemu82rsv0nrdpdto774v0enbn6o0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWMFvhPGJFNsMvsse1svVquGcAeIQSXR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132810278342-a7jemu82rsv0nrdpdto774v0enbn6o0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
