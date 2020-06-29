@@ -23,6 +23,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
   File _image;
   String name, details, eventTime, location, registrationInstructions, imageURL;
   bool closed;
+  bool isLoading = false;
 
   void initState() {
     super.initState();
@@ -168,6 +169,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       final pickedFile = await picker.getImage(source: ImageSource.gallery);
       setState(() {
         _image = File(pickedFile.path);
+        isLoading = true;
       });
       StorageReference firebaseStorageRef = FirebaseStorage.instance
           .ref()
@@ -177,6 +179,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       print(dowurl.toString());
       setState(() {
         imageURL = dowurl.toString();
+        isLoading = false;
       });
       print(imageURL);
       showAlertDialog(context);
@@ -209,6 +212,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     SizedBox(height: 30),
                     imageWidget(),
                     SizedBox(height: 20),
+                    isLoading ? CircularProgressIndicator() : 
                     RaisedButton.icon(
                       onPressed: () {
                         uploadImage(context);

@@ -27,6 +27,7 @@ class CreateEvent extends StatefulWidget {
 class _CreateEventState extends State<CreateEvent> {
   String _name, _time, _details, _location, _register, _imageURL;
   File _image;
+  bool isLoading = false;
   final GlobalKey<FormState> _key = GlobalKey();
 
   void _showDialog() {
@@ -174,14 +175,22 @@ class _CreateEventState extends State<CreateEvent> {
                           onSaved: (input) => _register = input,
                         )),
                     SizedBox(height: 20),
-                    Padding( padding: EdgeInsets.only(top: 0),
-                    child: IconButton(
-                       icon: Icon(
-                          FontAwesomeIcons.camera,
-                           size: 30.0,
-                       ),
-                       onPressed: () => uploadImage(context),
-                    )),
+                    isLoading ? CircularProgressIndicator() :
+                    Ink(
+                        decoration: ShapeDecoration(
+                            shape: CircleBorder(
+                                side: BorderSide(
+                          width: 2,
+                          color: Colors.black,
+                        ))),
+                        child: IconButton(
+                          highlightColor: Colors.blue[500],
+                          icon: Icon(Icons.add_a_photo),
+                          iconSize: 50,
+                          onPressed: () => uploadImage(context),
+                          color: Colors.black,
+                        )),
+                    SizedBox(height: 10),
                     Text("Upload display image"),
                     SizedBox(height: 10),
                     Container(
@@ -256,6 +265,7 @@ class _CreateEventState extends State<CreateEvent> {
       final pickedFile = await picker.getImage(source: ImageSource.gallery);
       setState(() {
         _image = File(pickedFile.path);
+        isLoading = true;
       });
       StorageReference firebaseStorageRef = FirebaseStorage.instance
           .ref()
@@ -264,6 +274,7 @@ class _CreateEventState extends State<CreateEvent> {
       var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
       setState(() {
         _imageURL = dowurl.toString();
+        isLoading = false;
       });
       showAlertDialog(context);
       print(_imageURL);

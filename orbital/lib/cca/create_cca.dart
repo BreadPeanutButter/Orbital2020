@@ -24,6 +24,7 @@ class CreateCCA extends StatefulWidget {
 class _CreateCCAState extends State<CreateCCA> {
   String _name, _description, _contact, _cat, _imageURL;
   File _image;
+  bool isLoading = false;
   final GlobalKey<FormState> _key = GlobalKey();
 
   void _showDialog() {
@@ -83,6 +84,7 @@ class _CreateCCAState extends State<CreateCCA> {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       _image = File(pickedFile.path);
+      isLoading = true;
     });
     StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
@@ -91,6 +93,7 @@ class _CreateCCAState extends State<CreateCCA> {
     var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
     setState(() {
       _imageURL = dowurl.toString();
+      isLoading = false;
     });
     showAlertDialog(context);
 
@@ -116,7 +119,7 @@ class _CreateCCAState extends State<CreateCCA> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            highlightColor: Colors.red[700],
+            highlightColor: Colors.blue[700],
             icon: Icon(FontAwesomeIcons.times),
             iconSize: 35,
             onPressed: _showDialog,
@@ -264,6 +267,7 @@ class _CreateCCAState extends State<CreateCCA> {
                           onSaved: (input) => _contact = input,
                         )),
                     SizedBox(height: 20),
+                    isLoading ? CircularProgressIndicator() :
                     Ink(
                         decoration: ShapeDecoration(
                             shape: CircleBorder(
