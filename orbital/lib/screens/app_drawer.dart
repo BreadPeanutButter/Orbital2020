@@ -19,7 +19,9 @@ class AppDrawer extends StatelessWidget {
     return new Drawer(
         child: Column(children: <Widget>[
       DrawerHeader(
-        child: Image.asset("images/logo.png"),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.asset("images/logo.png", fit: BoxFit.fill)),
       ),
       Ink(
           color: drawer == Drawers.explore ? Colors.blue : Colors.transparent,
