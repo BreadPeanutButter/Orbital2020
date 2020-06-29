@@ -47,7 +47,7 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
       addAdminButton(context),
       Container(
           padding: EdgeInsets.all(8),
-          child: Text("Delete an Admin by swiping left.",
+          child: Text("Delete an Admin by swiping left on the card.",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
