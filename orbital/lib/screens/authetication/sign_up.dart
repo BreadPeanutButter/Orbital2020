@@ -94,6 +94,36 @@ class _SignUpPageState extends State<SignUpPage> {
             builder: (context) => SignUpPage(), fullscreenDialog: true));
   }
 
+      void _successDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Success!"),
+            content: new Text(
+                "Sign up is sucessful! Will now redirect you to the login page"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              OutlineButton(
+                  highlightedBorderColor: Colors.blue,
+                  borderSide: BorderSide(color: Colors.blue),
+                  child: new Text("ok"),
+                  onPressed: () {
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/', (Route<dynamic> route) => false);
+                    });
+                        
+                  }),
+
+              SizedBox(width: 110),
+            ],
+          );
+        },
+      );
+    }
+
   void signUp() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -104,8 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
             .user;
         final databaseReference = Firestore.instance;
         createRecord(databaseReference, user);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => SignIn()));
+        _successDialog();
       } catch (e) {
         showDialog(
             context: context,
