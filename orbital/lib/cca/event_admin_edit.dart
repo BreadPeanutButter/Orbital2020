@@ -113,20 +113,20 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       );
     }
 
-    void _successDialogClosed(DocumentSnapshot doc) {
+    void _closeDialog(DocumentSnapshot doc) {
       showDialog(
         context: context,
         builder: (BuildContext ctx) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Success!"),
-            content: new Text("Congratulations, you have closed the event!"),
+            title: new Text("Success"),
+            content: new Text("You have closed the event!"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               OutlineButton(
                   highlightedBorderColor: Colors.blue,
                   borderSide: BorderSide(color: Colors.blue),
-                  child: new Text("Event is now closed!"),
+                  child: new Text("Okay"),
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.pop(context);
@@ -134,7 +134,42 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => EventAdminView(document: doc)));
+                            builder: (c) => EventAdminView.fromEdit(
+                                  document: doc,
+                                  index: widget.index,
+                                )));
+                  }),
+
+              SizedBox(width: 110),
+            ],
+          );
+        },
+      );
+    }
+
+    void _openDialog(DocumentSnapshot doc) {
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Success"),
+            content: new Text("You have re-opened the event!"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              OutlineButton(
+                  highlightedBorderColor: Colors.blue,
+                  borderSide: BorderSide(color: Colors.blue),
+                  child: new Text("Okay"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => EventAdminView.fromEdit(
+                                document: doc, index: widget.index)));
                   }),
 
               SizedBox(width: 110),
@@ -158,10 +193,16 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       _successDialogEdit(snapShot);
     }
 
-    void _closedEvent() async {
+    void _closeEvent() async {
       widget.ccaDocument.reference.updateData({'Closed': true});
       DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
-      _successDialogClosed(snapShot);
+      _closeDialog(snapShot);
+    }
+
+    void _openEvent() async {
+      widget.ccaDocument.reference.updateData({'Closed': false});
+      DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
+      _openDialog(snapShot);
     }
 
     Future uploadImage(BuildContext context) async {
@@ -212,26 +253,28 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     SizedBox(height: 30),
                     imageWidget(),
                     SizedBox(height: 20),
-                    isLoading ? CircularProgressIndicator() : 
-                    RaisedButton.icon(
-                      onPressed: () {
-                        uploadImage(context);
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      label: Text(
-                        'Change',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                      textColor: Colors.red,
-                      splashColor: Colors.red,
-                      color: Colors.green,
-                    ),
+                    isLoading
+                        ? CircularProgressIndicator()
+                        : RaisedButton.icon(
+                            onPressed: () {
+                              uploadImage(context);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            label: Text(
+                              'Change',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ),
+                            textColor: Colors.red,
+                            splashColor: Colors.red,
+                            color: Colors.green,
+                          ),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
@@ -269,7 +312,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                         child: new TextField(
                             decoration: const InputDecoration(
                                 labelText: "Provide event location",
-                                hintText: 'where is the event held'),
+                                hintText: 'Where is the event held'),
                             autocorrect: true,
                             controller: locationController,
                             onChanged: (String value) {
@@ -290,16 +333,24 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     ButtonTheme(
                       minWidth: 200,
                       height: 50,
-                      buttonColor: Colors.red,
+                      buttonColor: widget.ccaDocument['Closed']
+                          ? Colors.green
+                          : Colors.red,
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Colors.red)),
-                        onPressed: () {
-                          _closedEvent();
-                        },
-                        child:
-                            Text("Close Event", style: TextStyle(fontSize: 15)),
+                            side: BorderSide(
+                                color: widget.ccaDocument['Closed']
+                                    ? Colors.green
+                                    : Colors.red)),
+                        onPressed: widget.ccaDocument['Closed']
+                            ? _openEvent
+                            : _closeEvent,
+                        child: widget.ccaDocument['Closed']
+                            ? Text("Re-open Event",
+                                style: TextStyle(fontSize: 15))
+                            : Text("Close Event",
+                                style: TextStyle(fontSize: 15)),
                       ),
                     ),
                     SizedBox(height: 20),

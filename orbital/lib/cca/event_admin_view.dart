@@ -219,7 +219,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(height: 50),
                 RaisedButton.icon(
                   onPressed: () {
-                    if (widget.fromCCA) {
+                    if (widget.fromCCA || widget.fromEdit) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -260,7 +260,9 @@ class _EventAdminViewState extends State<EventAdminView> {
                   ),
                   textColor: Colors.red,
                   splashColor: Colors.red,
-                  color: widget.fromCCA ? Colors.green : Colors.grey,
+                  color: (widget.fromCCA || widget.fromEdit)
+                      ? Colors.green
+                      : Colors.grey,
                 ),
               ],
             ),
