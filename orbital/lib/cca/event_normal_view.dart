@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital/cca/event_feedback_form.dart';
 import 'package:orbital/my_events/my_events.dart';
-import 'package:orbital/screens/event_feed/event_feed.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -177,8 +177,34 @@ class _EventNormalViewState extends State<EventNormalView> {
                   height: 7,
                 ),
                 myWidget(registrationInstructions),
-                SizedBox(height: 20.0),
-                SizedBox(height: 50),
+                SizedBox(height: 50.0),
+                RaisedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => EventFeedbackForm(
+                                  eventDocument: widget.document,
+                                  auth: widget.auth,
+                                )));
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  label: Text(
+                    'Feedback',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  icon: Icon(
+                    Icons.feedback,
+                    color: Colors.white,
+                  ),
+                  textColor: Colors.blue,
+                  splashColor: Colors.blue,
+                  color: Colors.blue,
+                ),
+                SizedBox(
+                  height: 20,
+                )
               ],
             ),
           ));
