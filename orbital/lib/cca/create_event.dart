@@ -1,14 +1,12 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:orbital/cca/event_admin_view.dart';
 import 'package:orbital/services/auth.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 
 class CreateEvent extends StatefulWidget {
@@ -58,7 +56,6 @@ class _CreateEventState extends State<CreateEvent> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -175,21 +172,22 @@ class _CreateEventState extends State<CreateEvent> {
                           onSaved: (input) => _register = input,
                         )),
                     SizedBox(height: 20),
-                    isLoading ? CircularProgressIndicator() :
-                    Ink(
-                        decoration: ShapeDecoration(
-                            shape: CircleBorder(
-                                side: BorderSide(
-                          width: 2,
-                          color: Colors.black,
-                        ))),
-                        child: IconButton(
-                          highlightColor: Colors.blue[500],
-                          icon: Icon(Icons.add_a_photo),
-                          iconSize: 50,
-                          onPressed: () => uploadImage(context),
-                          color: Colors.black,
-                        )),
+                    isLoading
+                        ? CircularProgressIndicator()
+                        : Ink(
+                            decoration: ShapeDecoration(
+                                shape: CircleBorder(
+                                    side: BorderSide(
+                              width: 2,
+                              color: Colors.black,
+                            ))),
+                            child: IconButton(
+                              highlightColor: Colors.blue[500],
+                              icon: Icon(Icons.add_a_photo),
+                              iconSize: 50,
+                              onPressed: () => uploadImage(context),
+                              color: Colors.black,
+                            )),
                     SizedBox(height: 10),
                     Text("Upload display image"),
                     SizedBox(height: 10),
@@ -260,24 +258,24 @@ class _CreateEventState extends State<CreateEvent> {
     );
   }
 
-    Future uploadImage(BuildContext context) async {
-      final picker = ImagePicker();
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
-      setState(() {
-        _image = File(pickedFile.path);
-        isLoading = true;
-      });
-      StorageReference firebaseStorageRef = FirebaseStorage.instance
-          .ref()
-          .child('event_profile/${Path.basename(_image.path)}}');
-      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-      var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
-      setState(() {
-        _imageURL = dowurl.toString();
-        isLoading = false;
-      });
-      showAlertDialog(context);
-      print(_imageURL);
+  Future uploadImage(BuildContext context) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedFile.path);
+      isLoading = true;
+    });
+    StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('event_profile/${Path.basename(_image.path)}}');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    setState(() {
+      _imageURL = dowurl.toString();
+      isLoading = false;
+    });
+    showAlertDialog(context);
+    print(_imageURL);
   }
 
   void _publishEvent() async {
@@ -300,7 +298,7 @@ class _CreateEventState extends State<CreateEvent> {
         'Closed': false
       });
       DocumentSnapshot snapShot = await documentRef.get();
-       _successDialog(snapShot);
+      _successDialog(snapShot);
     }
   }
 }
