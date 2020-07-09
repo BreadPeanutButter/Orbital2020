@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/services/auth.dart';
 
 class EventFeedbackForm extends StatefulWidget {
+  final db = Firestore.instance;
   Auth auth;
   DocumentSnapshot eventDocument;
 
@@ -23,6 +25,28 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
   String _feedback = "";
   double _rating = 3;
   bool _anon = false;
+  static const anonNames = [
+    "Tiger",
+    "Apple",
+    "Durian",
+    "Buffalo",
+    "Alligator",
+    "Lizard",
+    "Flower",
+    "Penguin",
+    "Sandwhich",
+    "Hamburger",
+    "Poodle",
+    "Turkey",
+    "Chicken",
+    "Cookie",
+    "Corgi",
+    "Otter",
+    "Shrub",
+    "Cherry",
+    "Jedi",
+    "Sith Lord"
+  ];
 
   void _showDialog() {
     // flutter defined function
@@ -70,7 +94,8 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
         padding: const EdgeInsets.all(10.0),
         decoration: myBoxDecoration(Colors.blue),
         child: Column(children: [
-          Text("How satisfied are you with ${widget.eventDocument['Name']}?",
+          Text(
+              "How satisfied are you with ${widget.eventDocument['Name']} overall?",
               style: TextStyle(
                 fontSize: 18,
               )),
@@ -129,7 +154,8 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
         'Your feedback will only be seen by Admins of ${widget.eventDocument['CCA']}.\n' +
             'Do not hesistate to be honest with us!\n' +
             'You can choose to give your feedback anonymously or otherwise. ' +
-            'If you submit anonymously, your name and email will be hidden.';
+            'If you submit anonymously, your name and email will be hidden. ' +
+            'You can only submit one feedback per event.';
 
     return Scaffold(
         appBar: AppBar(
@@ -186,6 +212,33 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
                 )),
             SizedBox(height: 30),
             Container(
+                width: 340,
+                child: CheckboxListTile(
+                  value: _anon,
+                  onChanged: (val) => setState(() => _anon = !_anon),
+                  activeColor: Colors.blue,
+                  title: Text(
+                    "Go Anonymous",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  subtitle: Text(
+                    "Disguise yourself",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  secondary: _anon
+                      ? Icon(
+                          FontAwesomeIcons.userSecret,
+                          color: Colors.black,
+                          size: 40,
+                        )
+                      : Icon(
+                          FontAwesomeIcons.user,
+                          color: Colors.black,
+                          size: 40,
+                        ),
+                )),
+            SizedBox(height: 20),
+            Container(
               padding: EdgeInsets.all(8),
               child: CupertinoButton.filled(
                 child: Text('Submit'),
@@ -195,5 +248,39 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
             SizedBox(height: 30),
           ])),
         ));
+  }
+
+  void submitButton() async {
+    _key.currentState.save();
+    DocumentReference ref = widget.eventDocument.reference;
+    ref.collection("Feedback").document(widget.auth.uid).setData({
+      "Rating": _rating,
+      "Comment": _feedback,
+      "DateTime": DateTime.now(),
+      "Name": _anon
+          ? "Anonymous " + anonNames[Random().nextInt(20)]
+          : widget.auth.name,
+      "Email": _anon ? "" : widget.auth.email,
+      "Anonymous": _anon
+    });
+
+    ref.updateData({
+      "totalFeedbackCount": FieldValue.increment(1),
+      "totalFeedbackScore": FieldValue.increment(_rating),
+      "feedbackED": //Extremely Dissatisfied
+          _rating <= 1.0 ? FieldValue.increment(1) : FieldValue.increment(0),
+      "feedbackD": _rating > 1.0 && _rating <= 2.0 //Dissatisfied
+          ? FieldValue.increment(1)
+          : FieldValue.increment(0),
+      "feedbackN": _rating > 2.0 && _rating <= 3.0 //Neutral
+          ? FieldValue.increment(1)
+          : FieldValue.increment(0),
+      "feedbackS": _rating > 3.0 && _rating <= 4.0 //Satisfied
+          ? FieldValue.increment(1)
+          : FieldValue.increment(0),
+      "feedbackES": _rating > 4.0 && _rating <= 5.0 //Extremely Satisfied
+          ? FieldValue.increment(1)
+          : FieldValue.increment(0),
+    });
   }
 }
