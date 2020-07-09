@@ -296,57 +296,77 @@ class _EventAdminViewState extends State<EventAdminView> {
       }
     }
 
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.redAccent,
-          title: Text(name, style: TextStyle(color: Colors.black)),
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: backButton,
-            color: Colors.white,
-          ),
-          actions: [
-            Ink(
-                decoration: ShapeDecoration(
-                    color: Colors.transparent,
-                    shape: CircleBorder(
-                        side: BorderSide(
-                      width: 2,
-                      color: Colors.black,
-                    ))),
-                child: FutureBuilder(
-                    future: widget.auth
-                        .isBookmarkedEvent(widget.document.documentID),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return SizedBox();
-                      } else {
-                        widget.bookmarked = snapshot.data;
-                        return IconButton(
-                          highlightColor: Colors.red[700],
-                          icon: Icon(Icons.bookmark),
-                          iconSize: 35,
-                          onPressed: () {
-                            _flushBar(context);
-                            if (widget.bookmarked) {
-                              widget.auth
-                                  .unbookmarkEvent(widget.document.documentID);
-                            } else {
-                              widget.auth
-                                  .bookmarkEvent(widget.document.documentID);
-                            }
-                            setState(() {
-                              widget.bookmarked = !widget.bookmarked;
-                            });
-                          },
-                          color:
-                              widget.bookmarked ? Colors.orange : Colors.white,
-                        );
-                      }
-                    }))
-          ],
-        ),
-        body: helper(widget.document));
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.redAccent,
+              title: Text(name, style: TextStyle(color: Colors.black)),
+              centerTitle: true,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: backButton,
+                color: Colors.white,
+              ),
+              actions: [
+                Ink(
+                    decoration: ShapeDecoration(
+                        color: Colors.transparent,
+                        shape: CircleBorder(
+                            side: BorderSide(
+                          width: 2,
+                          color: Colors.black,
+                        ))),
+                    child: FutureBuilder(
+                        future: widget.auth
+                            .isBookmarkedEvent(widget.document.documentID),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return SizedBox();
+                          } else {
+                            widget.bookmarked = snapshot.data;
+                            return IconButton(
+                              highlightColor: Colors.red[700],
+                              icon: Icon(Icons.bookmark),
+                              iconSize: 35,
+                              onPressed: () {
+                                _flushBar(context);
+                                if (widget.bookmarked) {
+                                  widget.auth.unbookmarkEvent(
+                                      widget.document.documentID);
+                                } else {
+                                  widget.auth.bookmarkEvent(
+                                      widget.document.documentID);
+                                }
+                                setState(() {
+                                  widget.bookmarked = !widget.bookmarked;
+                                });
+                              },
+                              color: widget.bookmarked
+                                  ? Colors.orange
+                                  : Colors.white,
+                            );
+                          }
+                        }))
+              ],
+              bottom: TabBar(
+                labelStyle: TextStyle(fontSize: 22.0),
+                indicatorColor: Colors.amber[700],
+                indicatorWeight: 4.0,
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.grey[50],
+                tabs: <Widget>[
+                  Tab(
+                    icon: Icon(FontAwesomeIcons.infoCircle),
+                    child: Text("Info"),
+                  ),
+                  Tab(
+                    icon: Icon(FontAwesomeIcons.solidComments),
+                    child: Text("Feedback"),
+                  ),
+                ],
+              ),
+            ),
+            body: TabBarView(children: [helper(widget.document), SizedBox()])));
   }
 }
