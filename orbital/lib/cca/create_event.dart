@@ -295,7 +295,14 @@ class _CreateEventState extends State<CreateEvent> {
         'BookmarkCount': 0,
         'EventTime': _time,
         'CreatedBy': widget.auth.name,
-        'Closed': false
+        'Closed': false,
+        'totalFeedbackCount': 0,
+        'totalFeedbackScore': 0,
+        'feedbackED': 0,
+        'feedbackD': 0,
+        'feedbackN': 0,
+        'feedbackS': 0,
+        'feedbackES': 0,
       });
       DocumentSnapshot snapShot = await documentRef.get();
       _successDialog(snapShot);
