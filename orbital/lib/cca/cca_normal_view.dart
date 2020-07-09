@@ -117,11 +117,11 @@ class _CCANormalViewState extends State<CCANormalView> {
               unselectedLabelColor: Colors.grey[50],
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(FontAwesomeIcons.infoCircle),
                   child: Text("About"),
                 ),
                 Tab(
-                  icon: Icon(Icons.whatshot),
+                  icon: Icon(Icons.event),
                   child: Text("Events"),
                 ),
               ],

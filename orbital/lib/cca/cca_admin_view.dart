@@ -120,15 +120,15 @@ class _CCAAdminViewState extends State<CCAAdminView> {
               unselectedLabelColor: Colors.grey[50],
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(FontAwesomeIcons.infoCircle),
                   child: Text("About"),
                 ),
                 Tab(
-                  icon: Icon(Icons.whatshot),
+                  icon: Icon(Icons.event),
                   child: Text("Events"),
                 ),
                 Tab(
-                  icon: Icon(Icons.person),
+                  icon: Icon(FontAwesomeIcons.crown),
                   child: Text("Admin"),
                 ),
               ],
