@@ -48,6 +48,20 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
     "Sith Lord"
   ];
 
+  static var rate = {
+    0: "Extremely Dissatisfied",
+    0.5: "Extremely Dissatisfied",
+    1.0: "Extremely Dissatisfied",
+    1.5: "Dissatisfied",
+    2.0: "Dissatisfied",
+    2.5: "Neutral",
+    3.0: "Neutral",
+    3.5: "Satisfied",
+    4.0: "Satisfied",
+    4.5: "Extremely Satisfied",
+    5.0: "Extremely Satisfied"
+  };
+
   void _showDialog() {
     // flutter defined function
     showDialog(
@@ -141,20 +155,22 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
           ),
           SizedBox(height: 5),
           Center(
-              child: Text("$_rating/5.0",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ))),
+              child: Column(children: [
+            Text("$_rating/5.0",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+            Text("${rate[_rating]}",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          ])),
         ]));
   }
 
   @override
   Widget build(BuildContext context) {
     String message =
-        'Your feedback will only be seen by Admins of ${widget.eventDocument['CCA']}.\n' +
+        'Your feedback for ${widget.eventDocument['Name']} will only be seen by Admins of ${widget.eventDocument['CCA']}.\n' +
             'Do not hesistate to be honest with us!\n' +
-            'You can choose to give your feedback anonymously or otherwise. ' +
-            'If you submit anonymously, your name and email will be hidden. ' +
+            'You can choose to give your feedback anonymously. ' +
+            'If you submit anonymously, your name and email will be hidden.\n' +
             'You can only submit one feedback per event.';
 
     return Scaffold(
