@@ -66,8 +66,6 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
                 child: Column(children: <Widget>[
               Image.asset(
                 "images/admin.jpg",
-                height: 200,
-                width: 200,
               ),
               Container(
                   padding: EdgeInsets.all(8),
@@ -117,6 +115,9 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
                   )),
               SizedBox(height: 15),
               Text("Add"),
+              SizedBox(
+                height: 30,
+              )
             ]))));
   }
 
