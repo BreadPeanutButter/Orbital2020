@@ -69,7 +69,7 @@ class _CreateEventState extends State<CreateEvent> {
             onPressed: _showDialog,
             color: Colors.white,
           ),
-          title: Text('Create Event'),
+          title: Text('Create Event', style: TextStyle(color: Colors.black)),
           centerTitle: true,
         ),
         body: Center(

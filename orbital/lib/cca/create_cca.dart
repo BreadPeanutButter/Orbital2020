@@ -125,7 +125,10 @@ class _CreateCCAState extends State<CreateCCA> {
             onPressed: _showDialog,
             color: Colors.white,
           ),
-          title: Text('CCA Application'),
+          title: Text(
+            'CCA Application',
+            style: TextStyle(color: Colors.black),
+          ),
           centerTitle: true,
         ),
         body: Center(
@@ -267,21 +270,22 @@ class _CreateCCAState extends State<CreateCCA> {
                           onSaved: (input) => _contact = input,
                         )),
                     SizedBox(height: 20),
-                    isLoading ? CircularProgressIndicator() :
-                    Ink(
-                        decoration: ShapeDecoration(
-                            shape: CircleBorder(
-                                side: BorderSide(
-                          width: 2,
-                          color: Colors.black,
-                        ))),
-                        child: IconButton(
-                          highlightColor: Colors.blue[500],
-                          icon: Icon(Icons.add_a_photo),
-                          iconSize: 50,
-                          onPressed: () => getImage(context),
-                          color: Colors.black,
-                        )),
+                    isLoading
+                        ? CircularProgressIndicator()
+                        : Ink(
+                            decoration: ShapeDecoration(
+                                shape: CircleBorder(
+                                    side: BorderSide(
+                              width: 2,
+                              color: Colors.black,
+                            ))),
+                            child: IconButton(
+                              highlightColor: Colors.blue[500],
+                              icon: Icon(Icons.add_a_photo),
+                              iconSize: 50,
+                              onPressed: () => getImage(context),
+                              color: Colors.black,
+                            )),
                     SizedBox(height: 15),
                     Text("Upload display picture"),
                     SizedBox(height: 30),
