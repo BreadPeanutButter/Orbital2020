@@ -2,9 +2,11 @@ import 'dart:math';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:orbital/cca/event_feedbacked_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/services/auth.dart';
+import 'package:flushbar/flushbar.dart';
 
 class EventFeedbackForm extends StatefulWidget {
   final db = Firestore.instance;
@@ -34,7 +36,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
     "Lizard",
     "Flower",
     "Penguin",
-    "Sandwhich",
+    "Sandwich",
     "Hamburger",
     "Poodle",
     "Turkey",
@@ -261,7 +263,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
               padding: EdgeInsets.all(8),
               child: CupertinoButton.filled(
                 child: Text('Submit'),
-                onPressed: submitButton,
+                onPressed: submitAlert,
               ),
             ),
             SizedBox(height: 30),
@@ -269,17 +271,70 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
         ));
   }
 
-  void submitButton() async {
+  void _submitFlushBar(BuildContext context) {
+    String eventName = widget.eventDocument['Name'];
+    Flushbar(
+      icon: Icon(FontAwesomeIcons.grinAlt, color: Colors.white),
+      title: "Hooray!",
+      message: "You submitted feedback for $eventName. Thank you!",
+      duration: Duration(seconds: 3),
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      margin: EdgeInsets.all(8),
+      borderRadius: 8,
+    )..show(context);
+  }
+
+  void submitAlert() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Submit Feedback"),
+          content: new Text("Are you ready to submit your feedback?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            FlatButton(
+                child: new Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            FlatButton(
+                child: new Text("Yes"),
+                onPressed: () async {
+                  await submitFeedback();
+                  DocumentSnapshot ss = await widget.eventDocument.reference
+                      .collection("Feedback")
+                      .document(widget.auth.uid)
+                      .get();
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => EventFeedbackedView(
+                                feedbackDocument: ss,
+                              )));
+                  _submitFlushBar(context);
+                }),
+          ],
+        );
+      },
+    );
+  }
+
+  void submitFeedback() async {
     _key.currentState.save();
     DocumentReference ref = widget.eventDocument.reference;
     ref.collection("Feedback").document(widget.auth.uid).setData({
+      "Event": widget.eventDocument['Name'],
       "Rating": _rating,
       "Comment": _feedback,
       "DateTime": DateTime.now(),
       "Name": _anon
           ? "Anonymous " + anonNames[Random().nextInt(20)]
           : widget.auth.name,
-      "Email": _anon ? "" : widget.auth.email,
+      "Email": _anon ? "Some things are best kept secret" : widget.auth.email,
       "Anonymous": _anon
     });
 
@@ -295,7 +350,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
       });
     }
 
-    ref.updateData({
+    await ref.updateData({
       "totalFeedbackCount": FieldValue.increment(1),
       "totalFeedbackScore": FieldValue.increment(_rating),
       "feedbackED": //Extremely Dissatisfied

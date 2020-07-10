@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital/cca/event_feedback_form.dart';
+import 'package:orbital/cca/event_feedbacked_view.dart';
 import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -116,6 +117,29 @@ class _EventNormalViewState extends State<EventNormalView> {
       );
     }
 
+    void feedbackButton() async {
+      DocumentSnapshot ss = await widget.document.reference
+          .collection("Feedback")
+          .document(widget.auth.uid)
+          .get();
+      if (ss.exists) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => EventFeedbackedView(
+                      feedbackDocument: ss,
+                    )));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => EventFeedbackForm(
+                      eventDocument: widget.document,
+                      auth: widget.auth,
+                    )));
+      }
+    }
+
     Widget helper() {
       return Card(
           margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
@@ -136,7 +160,7 @@ class _EventNormalViewState extends State<EventNormalView> {
                 ),
                 myWidget(name),
                 SizedBox(
-                  height: 5,
+                  height: 20,
                 ),
                 Text("Details",
                     style: TextStyle(
@@ -179,15 +203,7 @@ class _EventNormalViewState extends State<EventNormalView> {
                 myWidget(registrationInstructions),
                 SizedBox(height: 50.0),
                 RaisedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) => EventFeedbackForm(
-                                  eventDocument: widget.document,
-                                  auth: widget.auth,
-                                )));
-                  },
+                  onPressed: feedbackButton,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   label: Text(
