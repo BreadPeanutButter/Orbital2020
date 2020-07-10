@@ -23,7 +23,7 @@ class EventFeedbackForm extends StatefulWidget {
 class _EventFeedbackFormState extends State<EventFeedbackForm> {
   final GlobalKey<FormState> _key = GlobalKey();
   String _feedback = "";
-  double _rating = 3;
+  double _rating = 5;
   bool _anon = false;
   static const anonNames = [
     "Tiger",
@@ -104,7 +104,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
             glow: true,
             itemSize: 50,
             allowHalfRating: true,
-            initialRating: 3,
+            initialRating: 5,
             itemCount: 5,
             itemBuilder: (context, index) {
               switch (index) {
@@ -166,7 +166,10 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
             onPressed: _showDialog,
             color: Colors.white,
           ),
-          title: Text('Event Feedback'),
+          title: Text(
+            'Feedback',
+            style: TextStyle(color: Colors.black),
+          ),
           centerTitle: true,
         ),
         body: Form(
@@ -218,7 +221,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
                   onChanged: (val) => setState(() => _anon = !_anon),
                   activeColor: Colors.blue,
                   title: Text(
-                    "Anonymous",
+                    "Go Anonymous",
                     style: TextStyle(fontSize: 18),
                   ),
                   subtitle: Text(
