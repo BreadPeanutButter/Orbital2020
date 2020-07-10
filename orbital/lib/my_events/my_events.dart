@@ -37,7 +37,12 @@ class MyEvents extends StatelessWidget {
           centerTitle: true,
         ),
         drawer: AppDrawer(drawer: Drawers.event),
-        body: getBookmarkFuture());
+        body: ListView(shrinkWrap: true, children: [
+          SizedBox(
+            height: 5,
+          ),
+          getBookmarkFuture(),
+        ]));
   }
 
   Widget getBookmarkFuture() {
@@ -56,6 +61,7 @@ class MyEvents extends StatelessWidget {
               ));
             } else {
               return ListView.builder(
+                  shrinkWrap: true,
                   itemCount: bookmarkList.length,
                   itemBuilder: (BuildContext ctx, int index) =>
                       buildBody(ctx, index));
@@ -79,10 +85,11 @@ class MyEvents extends StatelessWidget {
                 height: 100,
                 child: Card(
                     shape: RoundedRectangleBorder(
-                        side: new BorderSide(color: Colors.grey, width: 1.0),
+                        side:
+                            new BorderSide(color: Colors.grey[600], width: 1.0),
                         borderRadius: BorderRadius.circular(4.0)),
                     margin: EdgeInsets.all(3),
-                    elevation: 3.0,
+                    elevation: 1.0,
                     shadowColor: Colors.blue,
                     child: InkWell(
                         highlightColor: Colors.blueAccent,

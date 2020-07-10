@@ -13,8 +13,6 @@ class CCAAdminEventlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Column(children: [
       publishButton(context),
       eventList(),
@@ -86,10 +84,11 @@ class CCAAdminEventlist extends StatelessWidget {
                   height: 100,
                   child: Card(
                       shape: RoundedRectangleBorder(
-                          side: new BorderSide(color: Colors.grey, width: 1.0),
+                          side: new BorderSide(
+                              color: Colors.grey[600], width: 1.0),
                           borderRadius: BorderRadius.circular(4.0)),
                       margin: EdgeInsets.all(3),
-                      elevation: 3.0,
+                      elevation: 1.0,
                       shadowColor: Colors.blue,
                       child: InkWell(
                           highlightColor: Colors.blueAccent,

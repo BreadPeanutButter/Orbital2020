@@ -218,11 +218,11 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
                   onChanged: (val) => setState(() => _anon = !_anon),
                   activeColor: Colors.blue,
                   title: Text(
-                    "Go Anonymous",
+                    "Anonymous",
                     style: TextStyle(fontSize: 18),
                   ),
                   subtitle: Text(
-                    "Disguise yourself",
+                    "Put on a disguise",
                     style: TextStyle(fontSize: 16),
                   ),
                   secondary: _anon
@@ -242,7 +242,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
               padding: EdgeInsets.all(8),
               child: CupertinoButton.filled(
                 child: Text('Submit'),
-                onPressed: () {},
+                onPressed: submitButton,
               ),
             ),
             SizedBox(height: 30),
@@ -263,6 +263,18 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
       "Email": _anon ? "" : widget.auth.email,
       "Anonymous": _anon
     });
+
+    if (!widget.eventDocument.data.containsKey("totalFeedbackCount")) {
+      await ref.updateData({
+        "totalFeedbackCount": 0,
+        "totalFeedbackScore": 0,
+        "feedbackED": 0,
+        "feedbackD": 0,
+        "feedbackN": 0,
+        "feedbackS": 0,
+        "feedbackES": 0,
+      });
+    }
 
     ref.updateData({
       "totalFeedbackCount": FieldValue.increment(1),
