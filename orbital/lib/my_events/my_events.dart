@@ -32,17 +32,13 @@ class MyEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: new AppBar(
-          title: Text('My Events', style: TextStyle(color: Colors.black)),
-          centerTitle: true,
-        ),
-        drawer: AppDrawer(drawer: Drawers.event),
-        body: ListView(shrinkWrap: true, children: [
-          SizedBox(
-            height: 5,
-          ),
-          getBookmarkFuture(),
-        ]));
+      appBar: new AppBar(
+        title: Text('My Events', style: TextStyle(color: Colors.black)),
+        centerTitle: true,
+      ),
+      drawer: AppDrawer(drawer: Drawers.event),
+      body: getBookmarkFuture(),
+    );
   }
 
   Widget getBookmarkFuture() {
