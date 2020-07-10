@@ -275,8 +275,8 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
     String eventName = widget.eventDocument['Name'];
     Flushbar(
       icon: Icon(FontAwesomeIcons.grinAlt, color: Colors.white),
-      title: "Hooray!",
-      message: "You submitted feedback for $eventName. Thank you!",
+      title: "Thank you!",
+      message: "You submitted feedback for $eventName.",
       duration: Duration(seconds: 3),
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       margin: EdgeInsets.all(8),
