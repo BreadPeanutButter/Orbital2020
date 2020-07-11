@@ -13,6 +13,7 @@ class CCAAdminAbout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    final String name = document['Name'];
     final String category = document['Category'];
     final String description = document['Description'];
     final String email = document['Contact'];
@@ -61,6 +62,16 @@ class CCAAdminAbout extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
+                Text("CCA",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 7,
+                ),
+                myWidget(name),
+                SizedBox(height: 20),
                 Text("Category",
                     style: TextStyle(
                         fontSize: 20,
@@ -70,7 +81,7 @@ class CCAAdminAbout extends StatelessWidget {
                   height: 7,
                 ),
                 myWidget(category),
-                SizedBox(height: 6.0),
+                SizedBox(height: 20.0),
                 Text("Description",
                     style: TextStyle(
                         fontSize: 20,
@@ -80,7 +91,7 @@ class CCAAdminAbout extends StatelessWidget {
                   height: 7,
                 ),
                 myWidget(description),
-                SizedBox(height: 6.0),
+                SizedBox(height: 20.0),
                 Text("Email and contact:",
                     style: TextStyle(
                         fontSize: 20,
