@@ -63,6 +63,8 @@ class ExploreFavourites extends StatelessWidget {
                         onTap: () => goToCCAViewPage(context, snapshot.data),
                         child: ListTile(
                           title: new Text(snapshot.data['Name'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 24)),
                           subtitle: new Text(snapshot.data['Category'],
                               style: TextStyle(fontSize: 20)),

@@ -74,9 +74,7 @@ class MyEvents extends StatelessWidget {
             return SizedBox();
           } else {
             String eventTime = snapshot.data['EventTime'];
-            if (eventTime.length > 28) {
-              eventTime = eventTime.substring(0, 24) + "...";
-            }
+
             return new SizedBox(
                 height: 100,
                 child: Card(
@@ -96,7 +94,9 @@ class MyEvents extends StatelessWidget {
                                   ": " +
                                   snapshot.data['Name'],
                               style: TextStyle(fontSize: 24)),
-                          subtitle: new Text(snapshot.data['EventTime'],
+                          subtitle: new Text(eventTime,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 20)),
                           trailing: closedEvent(snapshot),
                         ))));
