@@ -304,6 +304,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
                   submitFeedback();
                   Navigator.pop(context);
                   Navigator.pop(context);
+                  FocusScope.of(context).unfocus();
                   _submitFlushBar(context);
                 }),
           ],
