@@ -37,6 +37,7 @@ dependencies:
   flutter_launcher_icons: ^0.7.5
   flutter_launcher_name: ^0.0.1
   flutter_rating_bar: ^3.0.1+1
+  expandable: ^4.1.4
 
 flutter_icons: 
   image_path: "images/logo.png"
