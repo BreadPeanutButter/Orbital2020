@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:orbital/cca/event_feedbacked_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/services/auth.dart';
@@ -301,11 +300,11 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
                 }),
             FlatButton(
                 child: new Text("Yes"),
-                onPressed: () async {
+                onPressed: () {
+                  submitFeedback();
                   Navigator.pop(context);
                   Navigator.pop(context);
                   _submitFlushBar(context);
-                  await submitFeedback();
                 }),
           ],
         );
@@ -313,7 +312,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
     );
   }
 
-  void submitFeedback() async {
+  void submitFeedback() {
     _key.currentState.save();
     DocumentReference ref = widget.eventDocument.reference;
     ref.collection("Feedback").document(widget.auth.uid).setData({
@@ -330,7 +329,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
     });
 
     if (!widget.eventDocument.data.containsKey("totalFeedbackCount")) {
-      await ref.updateData({
+      ref.updateData({
         "totalFeedbackCount": 0,
         "totalFeedbackScore": 0,
         "feedbackED": 0,
@@ -341,7 +340,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
       });
     }
 
-    await ref.updateData({
+    ref.updateData({
       "totalFeedbackCount": FieldValue.increment(1),
       "totalFeedbackScore": FieldValue.increment(_rating),
       "feedbackED": //Extremely Dissatisfied
