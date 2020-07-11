@@ -88,13 +88,10 @@ class EventFeedbackAdmin extends StatelessWidget {
             },
           ),
           SizedBox(height: 7),
-          Center(
-              child: Column(children: [
-            Text("$aveRating/5.0",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-            Text("$satisfaction",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          ])),
+          Text("$aveRating/5.0",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+          Text("$satisfaction",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
         ]));
   }
 

@@ -155,13 +155,10 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
             },
           ),
           SizedBox(height: 5),
-          Center(
-              child: Column(children: [
-            Text("$_rating/5.0",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-            Text("${rate[_rating]}",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          ])),
+          Text("$_rating/5.0",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+          Text("${rate[_rating]}",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
         ]));
   }
 

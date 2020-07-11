@@ -125,13 +125,10 @@ class EventFeedbackedView extends StatelessWidget {
             },
           ),
           SizedBox(height: 5),
-          Center(
-              child: Column(children: [
-            Text("${feedbackDocument['Rating']}/5.0",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-            Text("${rate[feedbackDocument['Rating']]}",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          ])),
+          Text("${feedbackDocument['Rating']}/5.0",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+          Text("${rate[feedbackDocument['Rating']]}",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
         ]));
   }
 
