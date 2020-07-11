@@ -100,7 +100,7 @@ class _EventAdminViewState extends State<EventAdminView> {
             decoration: myBoxDecoration(Colors.red[900]),
             child: Row(children: <Widget>[
               Icon(FontAwesomeIcons.bullhorn, color: Colors.red[900], size: 28),
-              Text("  This Event is now closed.",
+              Text("  This Event is now closed",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.ptSans(
                       fontSize: 25,
