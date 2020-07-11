@@ -64,9 +64,11 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
             key: _key,
             child: SingleChildScrollView(
                 child: Column(children: <Widget>[
-              Image.asset(
-                "images/admin.jpg",
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset(
+                    "images/admin.jpg",
+                  )),
               Container(
                   padding: EdgeInsets.all(8),
                   child: Text(message,
