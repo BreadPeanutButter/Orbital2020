@@ -49,6 +49,7 @@ class _CreateEventState extends State<CreateEvent> {
                 child: new Text("Yes"),
                 onPressed: () {
                   Navigator.pop(context);
+                  FocusScope.of(context).unfocus();
                   Navigator.pop(context);
                 }),
           ],
@@ -220,6 +221,7 @@ class _CreateEventState extends State<CreateEvent> {
                 child: new Text("Hurray!"),
                 onPressed: () {
                   Navigator.pop(ctx);
+                  FocusScope.of(context).unfocus();
                   Navigator.pop(ctx);
                   Navigator.push(
                       ctx,

@@ -43,11 +43,13 @@ class _CreateCCAState extends State<CreateCCA> {
                 child: new Text("No"),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  FocusScope.of(context).unfocus();
                 }),
             FlatButton(
                 child: new Text("Yes"),
                 onPressed: () {
                   Navigator.pop(context);
+                  FocusScope.of(context).unfocus();
                   Navigator.pop(context);
                 }),
           ],
@@ -338,6 +340,9 @@ class _CreateCCAState extends State<CreateCCA> {
                 borderSide: BorderSide(color: Colors.blue),
                 child: new Text("Hurray!"),
                 onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  FocusScope.of(context).unfocus();
                   Navigator.pushNamed(ctx, '/explore');
                   Navigator.push(
                       ctx,
@@ -373,6 +378,7 @@ class _CreateCCAState extends State<CreateCCA> {
                 child: new Text("OK"),
                 onPressed: () {
                   Navigator.of(ctx).pop();
+                  FocusScope.of(context).unfocus();
                 }),
             SizedBox(width: 110),
           ],
