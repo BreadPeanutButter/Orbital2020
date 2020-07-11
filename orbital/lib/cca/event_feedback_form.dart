@@ -302,20 +302,10 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
             FlatButton(
                 child: new Text("Yes"),
                 onPressed: () async {
-                  await submitFeedback();
-                  DocumentSnapshot ss = await widget.eventDocument.reference
-                      .collection("Feedback")
-                      .document(widget.auth.uid)
-                      .get();
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (c) => EventFeedbackedView(
-                                feedbackDocument: ss,
-                              )));
                   _submitFlushBar(context);
+                  await submitFeedback();
                 }),
           ],
         );
@@ -334,7 +324,8 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
       "Name": _anon
           ? "Anonymous " + anonNames[Random().nextInt(20)]
           : widget.auth.name,
-      "Email": _anon ? "Some things are best kept secret" : widget.auth.email,
+      "Email":
+          _anon ? "Some things are best kept secret..." : widget.auth.email,
       "Anonymous": _anon
     });
 
