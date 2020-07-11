@@ -71,8 +71,10 @@ class EventFeedbackedView extends StatelessWidget {
               ),
               Text(
                 feedbackDocument['Email'],
-                style: GoogleFonts.ptSans(
-                    fontSize: 18, fontStyle: FontStyle.italic),
+                style: feedbackDocument['Anonymous']
+                    ? GoogleFonts.ptSans(
+                        fontSize: 18, fontStyle: FontStyle.italic)
+                    : GoogleFonts.ptSans(fontSize: 20),
               ),
             ],
           )
@@ -160,12 +162,6 @@ class EventFeedbackedView extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: ListView(shrinkWrap: true, children: <Widget>[
                 SizedBox(height: 5),
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: Image.asset(
-                      "images/feedback.jpg",
-                      fit: BoxFit.fill,
-                    )),
                 Container(
                     padding: EdgeInsets.all(8),
                     child: Text('Thank you for your feedback!',
