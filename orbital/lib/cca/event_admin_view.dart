@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital/cca/cca_admin_view.dart';
+import 'package:orbital/cca/event_feedback_list.dart';
 import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -367,6 +368,9 @@ class _EventAdminViewState extends State<EventAdminView> {
                 ],
               ),
             ),
-            body: TabBarView(children: [helper(widget.document), SizedBox()])));
+            body: TabBarView(children: [
+              helper(widget.document),
+              EventFeedbackList(eventDocRef: widget.document.reference)
+            ])));
   }
 }
