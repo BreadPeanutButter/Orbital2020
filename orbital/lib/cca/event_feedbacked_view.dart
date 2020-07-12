@@ -2,6 +2,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -59,8 +60,11 @@ class EventFeedbackedView extends StatelessWidget {
               SizedBox(
                 width: 8,
               ),
-              Text(feedbackDocument['Name'],
-                  style: GoogleFonts.ptSans(fontSize: 20))
+              Flexible(
+                  flex: 8,
+                  fit: FlexFit.tight,
+                  child: Text(feedbackDocument['Name'],
+                      style: GoogleFonts.ptSans(fontSize: 20)))
             ],
           ),
           Row(
@@ -134,6 +138,7 @@ class EventFeedbackedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final df = new DateFormat('dd/MM/yyyy hh:mm');
     String message =
         "You have already submitted feedback for ${feedbackDocument['Event']}. " +
             "We greatly appreciate your feedback and will strive to improve! " +
@@ -221,10 +226,7 @@ class EventFeedbackedView extends StatelessWidget {
                 SizedBox(
                   height: 7,
                 ),
-                myWidget(feedbackDocument['DateTime']
-                    .toDate()
-                    .toString()
-                    .substring(0, 16)),
+                myWidget(df.format(feedbackDocument['DateTime'].toDate())),
                 SizedBox(
                   height: 20,
                 ),

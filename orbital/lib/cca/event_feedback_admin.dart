@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:expandable/expandable.dart';
+import 'package:intl/intl.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class EventFeedbackAdmin extends StatelessWidget {
@@ -12,21 +13,6 @@ class EventFeedbackAdmin extends StatelessWidget {
 
   EventFeedbackAdmin(
       {@required this.eventDocRef, @required this.eventDocSnapshot});
-
-  Widget feedbackWidget(Widget widget) {
-    return Container(
-      margin: const EdgeInsets.all(1.0),
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.red,
-          width: 3.0,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(4.0)),
-      ),
-      child: widget,
-    );
-  }
 
   BoxDecoration myBoxDecoration(Color color) {
     return BoxDecoration(
@@ -205,6 +191,43 @@ class EventFeedbackAdmin extends StatelessWidget {
             )));
   }
 
+  Widget feedbackWidget(DocumentSnapshot doc) {
+    final df = new DateFormat('dd/MM/yyyy');
+    return Container(
+      margin: const EdgeInsets.all(1.0),
+      padding: const EdgeInsets.all(3.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(3.0)),
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Flexible(
+                  flex: 6, fit: FlexFit.tight, child: Text("${doc['Name']}")),
+              Spacer(
+                flex: 5,
+              ),
+              Flexible(
+                  flex: 3,
+                  fit: FlexFit.tight,
+                  child: Text("${df.format(doc['DateTime'].toDate())}")),
+            ],
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text("${doc['Comment']}"),
+        ],
+      ),
+    );
+  }
+
   Widget expendableFeedback(AsyncSnapshot<QuerySnapshot> snapshot) {
     return ExpandablePanel(
       header: Row(children: [
@@ -222,7 +245,7 @@ class EventFeedbackAdmin extends StatelessWidget {
       expanded: ListView(
         shrinkWrap: true,
         children: snapshot.data.documents.map((DocumentSnapshot document) {
-          return feedbackWidget(Text("${document['Comment']}"));
+          return feedbackWidget(document);
         }).toList(),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:orbital/cca/cca_admin_edit.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -18,6 +19,8 @@ class CCAAdminAbout extends StatelessWidget {
     final String description = document['Description'];
     final String email = document['Contact'];
     final String imageURL = document['image'];
+    final df = new DateFormat('dd/MM/yyyy hh:mm');
+    final date = df.format(document['DateJoined'].toDate());
 
     Widget imageWidget() {
       if (imageURL == null) {
@@ -92,7 +95,7 @@ class CCAAdminAbout extends StatelessWidget {
                 ),
                 myWidget(description),
                 SizedBox(height: 20.0),
-                Text("Email and contact:",
+                Text("Email and contact",
                     style: TextStyle(
                         fontSize: 20,
                         fontStyle: FontStyle.italic,
@@ -101,6 +104,18 @@ class CCAAdminAbout extends StatelessWidget {
                   height: 7,
                 ),
                 myWidget(email),
+                SizedBox(
+                  height: 20,
+                ),
+                Text("Created",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 7,
+                ),
+                myWidget("on " + date),
                 SizedBox(
                   height: 50,
                 ),

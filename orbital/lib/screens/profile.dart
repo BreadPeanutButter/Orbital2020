@@ -267,7 +267,7 @@ class _ProfileState extends State<Profile> {
   Widget profileWidget() {
     String name = widget.auth.name;
     String email = widget.auth.email;
-    String dateJoined = 'Joined ' + widget.auth.dateJoined.substring(0, 10);
+    String dateJoined = 'Joined ' + widget.auth.dateJoined;
     return new Scaffold(
         appBar: new AppBar(
           title: Text(

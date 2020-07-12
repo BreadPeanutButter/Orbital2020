@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class Auth {
   FirebaseUser mCurrentUser;
@@ -16,13 +17,14 @@ class Auth {
   }
 
   Future<bool> getCurrentUser() async {
+    final df = new DateFormat('dd/MM/yyyy');
     mCurrentUser = await FirebaseAuth.instance.currentUser();
     uid = mCurrentUser.uid;
     DocumentSnapshot document =
         await firestoreInstance.collection('User').document(uid).get();
     name = document.data["Name"];
     email = document.data["Email"];
-    dateJoined = document.data["DateJoined"].toDate().toString();
+    dateJoined = df.format(document.data["DateJoined"].toDate());
     return true;
   }
 
@@ -77,14 +79,15 @@ class Auth {
         .updateData({"FavouriteCount": FieldValue.increment(1)});
   }
 
-  void editName(String name) async{
+  void editName(String name) async {
     if (uid.isEmpty) {
       await getCurrentUser();
     }
-    
-    firestoreInstance.collection('User').document(uid).updateData({
-      "Name": name
-    });
+
+    firestoreInstance
+        .collection('User')
+        .document(uid)
+        .updateData({"Name": name});
   }
 
   void removeFavouriteCCA(String ccaName) async {

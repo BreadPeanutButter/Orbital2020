@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital/cca/cca_admin_view.dart';
 import 'package:orbital/cca/event_feedback_admin.dart';
+import 'package:intl/intl.dart';
 import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,7 +67,9 @@ class _EventAdminViewState extends State<EventAdminView> {
         widget.document['RegisterInstructions'];
     final String bookmarkCount = widget.document['BookmarkCount'].toString();
     final String createdBy = widget.document['CreatedBy'];
-    final Timestamp dateCreated = widget.document['DateCreated'];
+    final df = new DateFormat('dd/MM/yyyy hh:mm');
+    final String dateCreated =
+        df.format(widget.document['DateCreated'].toDate());
 
     Widget imageWidget() {
       if (imageURL == null) {
@@ -212,11 +215,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(
                   height: 7,
                 ),
-                myWidget("By: " +
-                    createdBy +
-                    '\n' +
-                    "On: " +
-                    dateCreated.toDate().toString().substring(0, 10)),
+                myWidget("By: " + createdBy + '\n' + "On: " + dateCreated),
                 SizedBox(height: 50),
                 RaisedButton.icon(
                   onPressed: () {
