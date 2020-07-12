@@ -22,7 +22,7 @@ class EventFeedbackAdmin extends StatelessWidget {
           color: Colors.red,
           width: 3.0,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(7.0)),
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),
       ),
       child: widget,
     );
@@ -32,7 +32,7 @@ class EventFeedbackAdmin extends StatelessWidget {
     return BoxDecoration(
       border: Border.all(
         color: color,
-        width: 3.0,
+        width: 2.0,
       ),
       borderRadius: BorderRadius.all(Radius.circular(7.0)),
     );
@@ -152,6 +152,14 @@ class EventFeedbackAdmin extends StatelessWidget {
             ]),
             collapsed: SizedBox(),
             expanded: Container(
+              padding: EdgeInsets.fromLTRB(3, 2, 0, 6),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              ),
               alignment: Alignment.center,
               width: 400,
               child: Column(
@@ -178,11 +186,11 @@ class EventFeedbackAdmin extends StatelessWidget {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(
-                      height: 7,
+                      height: 11,
                     ),
                     Row(children: [
                       SizedBox(
-                        width: 6,
+                        width: 60,
                       ),
                       _ratingBar(),
                     ]),
