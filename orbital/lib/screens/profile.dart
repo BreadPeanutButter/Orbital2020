@@ -93,6 +93,11 @@ class _ProfileState extends State<Profile> {
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
+                child: Text("Cancel"),
+                onPressed: () => Navigator.pop(context),
+              ),
+              MaterialButton(
+                elevation: 5,
                 child: Text("Submit"),
                 onPressed: () {
                   widget.auth.editName(customController.text.toString());
@@ -185,13 +190,13 @@ class _ProfileState extends State<Profile> {
                 style: GoogleFonts.ptSans(fontSize: 23, color: Colors.black),
                 softWrap: true,
               )),
-          SizedBox(
-            width: 80,
+          new Spacer(
+            flex: 1,
           ),
           FlatButton.icon(
               onPressed: () => CreateAlertDialog(context),
               icon: Icon(FontAwesomeIcons.edit),
-              label: Text("")),
+              label: Text("Edit")),
         ],
       ),
     );
@@ -236,8 +241,10 @@ class _ProfileState extends State<Profile> {
           SizedBox(
             width: 12,
           ),
-          Text(info,
-              style: GoogleFonts.ptSans(fontSize: 23, color: Colors.black)),
+          Flexible(
+              child: Text(info,
+                  style:
+                      GoogleFonts.ptSans(fontSize: 23, color: Colors.black))),
         ],
       ),
     );
