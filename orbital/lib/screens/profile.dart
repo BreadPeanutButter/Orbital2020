@@ -170,7 +170,10 @@ class _ProfileState extends State<Profile> {
       padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
       child: Row(
         children: <Widget>[
-          Icon(FontAwesomeIcons.user),
+          Icon(
+            FontAwesomeIcons.user,
+            color: Colors.blue[700],
+          ),
           SizedBox(
             width: 12,
           ),
@@ -201,7 +204,10 @@ class _ProfileState extends State<Profile> {
       padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
       child: Row(
         children: <Widget>[
-          Icon(FontAwesomeIcons.calendarAlt),
+          Icon(
+            FontAwesomeIcons.calendarAlt,
+            color: Colors.blue[700],
+          ),
           SizedBox(
             width: 12,
           ),
@@ -219,7 +225,10 @@ class _ProfileState extends State<Profile> {
       padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
       child: Row(
         children: <Widget>[
-          Icon(FontAwesomeIcons.envelope),
+          Icon(
+            FontAwesomeIcons.envelope,
+            color: Colors.blue[700],
+          ),
           SizedBox(
             width: 12,
           ),
