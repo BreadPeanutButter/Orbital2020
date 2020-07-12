@@ -168,7 +168,7 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
         'Your feedback for ${widget.eventDocument['Name']} will only be seen by Admins of ${widget.eventDocument['CCA']}.\n' +
             'Do not hesistate to be honest with us!\n' +
             'You can choose to give your feedback anonymously. ' +
-            'If you submit anonymously, your name and email will be hidden.\n' +
+            'If you submit anonymously, your name and email will be concealed.\n' +
             'You can only submit one feedback per event.';
 
     return Scaffold(
