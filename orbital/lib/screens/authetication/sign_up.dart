@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:orbital/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import "package:orbital/screens/authetication/sign_in.dart";
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -94,35 +92,34 @@ class _SignUpPageState extends State<SignUpPage> {
             builder: (context) => SignUpPage(), fullscreenDialog: true));
   }
 
-      void _successDialog() {
-      showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: new Text("Success!"),
-            content: new Text(
-                "Sign up is sucessful! Will now redirect you to the login page"),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              OutlineButton(
-                  highlightedBorderColor: Colors.blue,
-                  borderSide: BorderSide(color: Colors.blue),
-                  child: new Text("ok"),
-                  onPressed: () {
-                    SchedulerBinding.instance.addPostFrameCallback((_) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/', (Route<dynamic> route) => false);
-                    });
-                        
-                  }),
+  void _successDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Success!"),
+          content: new Text(
+              "Sign up is sucessful! Will now redirect you to the login page"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            OutlineButton(
+                highlightedBorderColor: Colors.blue,
+                borderSide: BorderSide(color: Colors.blue),
+                child: new Text("ok"),
+                onPressed: () {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/', (Route<dynamic> route) => false);
+                  });
+                }),
 
-              SizedBox(width: 110),
-            ],
-          );
-        },
-      );
-    }
+            SizedBox(width: 110),
+          ],
+        );
+      },
+    );
+  }
 
   void signUp() async {
     if (_formKey.currentState.validate()) {
