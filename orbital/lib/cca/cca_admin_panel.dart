@@ -123,8 +123,8 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(
-                    color: Colors.red[200],
-                    width: 3,
+                    color: Colors.grey,
+                    width: 2,
                   ),
                   borderRadius: BorderRadius.circular(4.0),
                 ),
