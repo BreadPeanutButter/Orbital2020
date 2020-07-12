@@ -25,7 +25,7 @@ class EventFeedbackAdmin extends StatelessWidget {
   }
 
   Widget _ratingBar() {
-    var aveRating = eventDocSnapshot['totalFeedbackScore'] /
+    double aveRating = eventDocSnapshot['totalFeedbackScore'] /
         eventDocSnapshot['totalFeedbackCount'];
     String satisfaction = aveRating <= 1.0
         ? "Very Dissatisfied"
@@ -70,7 +70,7 @@ class EventFeedbackAdmin extends StatelessWidget {
         },
       ),
       SizedBox(height: 7),
-      Text("$aveRating/5.0",
+      Text("${aveRating.toStringAsFixed(2)}/5.0",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
       Text("$satisfaction",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
@@ -167,7 +167,7 @@ class EventFeedbackAdmin extends StatelessWidget {
                     ]),
                     SizedBox(height: 20),
                     Text(
-                      " Mean satisfaction level:",
+                      " Mean rating:",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
@@ -194,22 +194,30 @@ class EventFeedbackAdmin extends StatelessWidget {
   Widget feedbackWidget(DocumentSnapshot doc) {
     final df = new DateFormat('dd/MM/yyyy');
     return Container(
-      margin: const EdgeInsets.all(1.0),
-      padding: const EdgeInsets.all(3.0),
+      margin: EdgeInsets.all(2),
+      padding: const EdgeInsets.fromLTRB(5, 4, 3, 4),
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey,
           width: 2.0,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(3.0)),
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),
       ),
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
           Row(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Flexible(
-                  flex: 6, fit: FlexFit.tight, child: Text("${doc['Name']}")),
+              doc['Anonymous']
+                  ? Flexible(
+                      flex: 6,
+                      fit: FlexFit.tight,
+                      child: Text("${doc['Name']}"))
+                  : Flexible(
+                      flex: 6,
+                      fit: FlexFit.tight,
+                      child: Text("${doc['Name']}\n${doc['Email']}")),
               Spacer(
                 flex: 5,
               ),
@@ -219,6 +227,10 @@ class EventFeedbackAdmin extends StatelessWidget {
                   child: Text("${df.format(doc['DateTime'].toDate())}")),
             ],
           ),
+          SizedBox(
+            height: 7,
+          ),
+          Text("Rating: ${doc['Rating']}/5.0"),
           SizedBox(
             height: 4,
           ),
@@ -284,6 +296,9 @@ class EventFeedbackAdmin extends StatelessWidget {
                   width: 380,
                   child: expendableFeedback(snapshot),
                 ),
+                SizedBox(
+                  height: 40,
+                )
               ],
             ));
           }
