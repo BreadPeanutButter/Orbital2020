@@ -151,51 +151,50 @@ class EventFeedbackAdmin extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20))
             ]),
             collapsed: SizedBox(),
-            expanded: Card(
-                margin: const EdgeInsets.fromLTRB(1.0, 1.0, 1.0, 0),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(children: [
-                          Text(" No. of respondents:",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w400)),
-                          SizedBox(
-                            height: 3,
-                          ),
-                          Text(" ${eventDocSnapshot['totalFeedbackCount']}",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500)),
-                        ]),
-                        SizedBox(height: 20),
-                        Text(
-                          " Mean satisfaction level:",
+            expanded: Container(
+              alignment: Alignment.center,
+              width: 400,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(children: [
+                      Text(" No. of respondents:",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w400),
-                        ),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        Row(children: [
-                          SizedBox(
-                            width: 6,
-                          ),
-                          _ratingBar(),
-                        ]),
-                        SizedBox(height: 27),
-                        Text(
-                          " Rating distribution:",
+                              fontSize: 18, fontWeight: FontWeight.w400)),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Text(" ${eventDocSnapshot['totalFeedbackCount']}",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w400),
-                        ),
-                        barChart(),
-                      ]),
-                ))));
+                              fontSize: 18, fontWeight: FontWeight.w500)),
+                    ]),
+                    SizedBox(height: 20),
+                    Text(
+                      " Mean satisfaction level:",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: 7,
+                    ),
+                    Row(children: [
+                      SizedBox(
+                        width: 6,
+                      ),
+                      _ratingBar(),
+                    ]),
+                    SizedBox(height: 27),
+                    Text(
+                      " Rating distribution:",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
+                    barChart(),
+                  ]),
+            )));
   }
 
   Widget expendableFeedback(AsyncSnapshot<QuerySnapshot> snapshot) {
