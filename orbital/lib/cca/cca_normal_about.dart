@@ -90,7 +90,7 @@ class CCANormalAbout extends StatelessWidget {
                 ),
                 myWidget(description),
                 SizedBox(height: 20.0),
-                Text("Email and contact:",
+                Text("Email and contact",
                     style: TextStyle(
                         fontSize: 20,
                         fontStyle: FontStyle.italic,
