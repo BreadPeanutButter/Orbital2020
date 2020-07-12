@@ -14,10 +14,8 @@ class AppDrawer extends StatelessWidget {
     auth = new Auth();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    
     return new Drawer(
         child: Column(children: <Widget>[
       DrawerHeader(
@@ -32,7 +30,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('Explore CCAs',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 )),
             onTap: () => Navigator.pushNamed(context, '/explore'),
           )),
@@ -43,7 +41,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('Event Feed',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 )),
             onTap: () => Navigator.pushNamed(context, '/eventfeed'),
           )),
@@ -54,7 +52,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('My Events',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 )),
             onTap: () => Navigator.push(
                 context,
@@ -70,7 +68,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('My Profile',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 )),
             onTap: () => Navigator.push(
                 context,
