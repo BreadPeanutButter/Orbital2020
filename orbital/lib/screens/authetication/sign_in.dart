@@ -96,7 +96,6 @@ class _SignInState extends State<SignIn> {
                         onPressed: () {
                           Navigator.of(context).pop();
                           _formKey.currentState.reset();
-                          FocusScope.of(context).unfocus();
                         })
                   ]);
             });
