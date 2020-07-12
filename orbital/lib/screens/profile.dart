@@ -166,13 +166,25 @@ class _ProfileState extends State<Profile> {
   Widget myWidgetName(String info) {
     return Container(
       width: 500,
-      margin: const EdgeInsets.all(1.0),
-      padding: const EdgeInsets.all(10.0),
-      decoration: myBoxDecoration(),
+      //margin: const EdgeInsets.all(1.0),
+      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
       child: Row(
         children: <Widget>[
-          Text(info,
-              style: GoogleFonts.ptSans(fontSize: 25, color: Colors.black)),
+          Icon(FontAwesomeIcons.user),
+          SizedBox(
+            width: 12,
+          ),
+          Flexible(
+              fit: FlexFit.loose,
+              flex: 1,
+              child: Text(
+                info,
+                style: GoogleFonts.ptSans(fontSize: 23, color: Colors.black),
+                softWrap: true,
+              )),
+          SizedBox(
+            width: 80,
+          ),
           FlatButton.icon(
               onPressed: () => CreateAlertDialog(context),
               icon: Icon(FontAwesomeIcons.edit),
@@ -182,16 +194,37 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget myWidget(String info) {
+  Widget myWidgetDate(String info) {
     return Container(
       width: 500,
-      margin: const EdgeInsets.all(1.0),
-      padding: const EdgeInsets.all(10.0),
-      decoration: myBoxDecoration(),
+      //margin: const EdgeInsets.all(1.0),
+      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
       child: Row(
         children: <Widget>[
+          Icon(FontAwesomeIcons.calendarAlt),
+          SizedBox(
+            width: 12,
+          ),
           Text(info,
-              style: GoogleFonts.ptSans(fontSize: 25, color: Colors.black)),
+              style: GoogleFonts.ptSans(fontSize: 23, color: Colors.black)),
+        ],
+      ),
+    );
+  }
+
+  Widget myWidgetEmail(String info) {
+    return Container(
+      width: 500,
+      //margin: const EdgeInsets.all(1.0),
+      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+      child: Row(
+        children: <Widget>[
+          Icon(FontAwesomeIcons.envelope),
+          SizedBox(
+            width: 12,
+          ),
+          Text(info,
+              style: GoogleFonts.ptSans(fontSize: 23, color: Colors.black)),
         ],
       ),
     );
@@ -212,10 +245,9 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget profileWidget() {
-    String name = 'Name: ' + widget.auth.name;
-    String email = 'Email: ' + widget.auth.email;
-    String dateJoined =
-        'Date joined: ' + widget.auth.dateJoined.substring(0, 10);
+    String name = widget.auth.name;
+    String email = widget.auth.email;
+    String dateJoined = 'Joined ' + widget.auth.dateJoined.substring(0, 10);
     return new Scaffold(
         appBar: new AppBar(
           title: Text(
@@ -242,9 +274,9 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: 30),
             myLayoutName(myWidgetName(name)),
             SizedBox(height: 20),
-            myLayoutWidget(myWidget(email)),
-            SizedBox(height: 20),
-            myLayoutWidget(myWidget(dateJoined)),
+            myLayoutWidget(myWidgetEmail(email)),
+            SizedBox(height: 25),
+            myLayoutWidget(myWidgetDate(dateJoined)),
             actionButtons(),
           ],
         ));
