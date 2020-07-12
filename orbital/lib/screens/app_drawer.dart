@@ -14,8 +14,10 @@ class AppDrawer extends StatelessWidget {
     auth = new Auth();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    
     return new Drawer(
         child: Column(children: <Widget>[
       DrawerHeader(

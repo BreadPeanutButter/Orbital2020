@@ -77,6 +77,16 @@ class Auth {
         .updateData({"FavouriteCount": FieldValue.increment(1)});
   }
 
+  void editName(String name) async{
+    if (uid.isEmpty) {
+      await getCurrentUser();
+    }
+    
+    firestoreInstance.collection('User').document(uid).updateData({
+      "Name": name
+    });
+  }
+
   void removeFavouriteCCA(String ccaName) async {
     if (uid.isEmpty) {
       await getCurrentUser();
