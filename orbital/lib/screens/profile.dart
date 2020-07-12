@@ -172,14 +172,14 @@ class _ProfileState extends State<Profile> {
         children: <Widget>[
           Icon(
             FontAwesomeIcons.user,
-            color: Colors.blue[700],
+            color: Colors.blue[600],
           ),
           SizedBox(
             width: 12,
           ),
           Flexible(
-              fit: FlexFit.loose,
-              flex: 1,
+              fit: FlexFit.tight,
+              flex: 5,
               child: Text(
                 info,
                 style: GoogleFonts.ptSans(fontSize: 23, color: Colors.black),
@@ -206,13 +206,17 @@ class _ProfileState extends State<Profile> {
         children: <Widget>[
           Icon(
             FontAwesomeIcons.calendarAlt,
-            color: Colors.blue[700],
+            color: Colors.blue[600],
           ),
           SizedBox(
             width: 12,
           ),
-          Text(info,
-              style: GoogleFonts.ptSans(fontSize: 23, color: Colors.black)),
+          Flexible(
+              fit: FlexFit.tight,
+              flex: 5,
+              child: Text(info,
+                  style:
+                      GoogleFonts.ptSans(fontSize: 23, color: Colors.black))),
         ],
       ),
     );
@@ -227,7 +231,7 @@ class _ProfileState extends State<Profile> {
         children: <Widget>[
           Icon(
             FontAwesomeIcons.envelope,
-            color: Colors.blue[700],
+            color: Colors.blue[600],
           ),
           SizedBox(
             width: 12,
