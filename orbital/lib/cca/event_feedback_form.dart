@@ -50,17 +50,17 @@ class _EventFeedbackFormState extends State<EventFeedbackForm> {
   ];
 
   static var rate = {
-    0: "Extremely Dissatisfied",
-    0.5: "Extremely Dissatisfied",
-    1.0: "Extremely Dissatisfied",
+    0: "Very Dissatisfied",
+    0.5: "Very Dissatisfied",
+    1.0: "Very Dissatisfied",
     1.5: "Dissatisfied",
     2.0: "Dissatisfied",
     2.5: "Neutral",
     3.0: "Neutral",
     3.5: "Satisfied",
     4.0: "Satisfied",
-    4.5: "Extremely Satisfied",
-    5.0: "Extremely Satisfied"
+    4.5: "Very Satisfied",
+    5.0: "Very Satisfied"
   };
 
   void _showDialog() {

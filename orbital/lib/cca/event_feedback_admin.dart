@@ -42,12 +42,12 @@ class EventFeedbackAdmin extends StatelessWidget {
     var aveRating = eventDocSnapshot['totalFeedbackScore'] /
         eventDocSnapshot['totalFeedbackCount'];
     String satisfaction = aveRating <= 1.0
-        ? "Extremely Dissatisfied"
+        ? "Very Dissatisfied"
         : aveRating <= 2.0
             ? "Dissatisfied"
             : aveRating <= 3.0
                 ? "Neutral"
-                : aveRating <= 4.0 ? "Satisfied" : "Extremely Satisfied";
+                : aveRating <= 4.0 ? "Satisfied" : "Very Satisfied";
     return Column(children: [
       RatingBarIndicator(
         rating: aveRating,
@@ -95,7 +95,7 @@ class EventFeedbackAdmin extends StatelessWidget {
     List<Rating> data = [
       Rating(
           count: eventDocSnapshot['feedbackES'],
-          satisfaction: "E. Satisfied",
+          satisfaction: "V. Satisfied",
           barColor: charts.ColorUtil.fromDartColor(Colors.green)),
       Rating(
           count: eventDocSnapshot['feedbackS'],
@@ -111,7 +111,7 @@ class EventFeedbackAdmin extends StatelessWidget {
           barColor: charts.ColorUtil.fromDartColor(Colors.redAccent)),
       Rating(
           count: eventDocSnapshot['feedbackED'],
-          satisfaction: "E. Dissatisfied",
+          satisfaction: "V. Dissatisfied",
           barColor: charts.ColorUtil.fromDartColor(Colors.red)),
     ];
     List<charts.Series<Rating, String>> series = [
@@ -124,7 +124,7 @@ class EventFeedbackAdmin extends StatelessWidget {
     ];
 
     return Padding(
-      padding: new EdgeInsets.all(7.0),
+      padding: new EdgeInsets.all(3.0),
       child: new SizedBox(
           height: 240.0,
           child: charts.BarChart(
@@ -183,7 +183,7 @@ class EventFeedbackAdmin extends StatelessWidget {
                         ),
                         Row(children: [
                           SizedBox(
-                            width: 3,
+                            width: 6,
                           ),
                           _ratingBar(),
                         ]),
