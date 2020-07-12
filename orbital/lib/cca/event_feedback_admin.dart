@@ -152,7 +152,7 @@ class EventFeedbackAdmin extends StatelessWidget {
             ]),
             collapsed: SizedBox(),
             expanded: Card(
-                margin: const EdgeInsets.fromLTRB(3.0, 3.0, 3.0, 0),
+                margin: const EdgeInsets.fromLTRB(1.0, 1.0, 1.0, 0),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
