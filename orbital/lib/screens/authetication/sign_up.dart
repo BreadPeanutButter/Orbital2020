@@ -99,14 +99,14 @@ class _SignUpPageState extends State<SignUpPage> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Success!"),
-          content: new Text(
-              "Sign up is sucessful! Will now redirect you to the login page"),
+          content:
+              new Text("Your account has been created! Log in to continue."),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             OutlineButton(
                 highlightedBorderColor: Colors.blue,
                 borderSide: BorderSide(color: Colors.blue),
-                child: new Text("ok"),
+                child: new Text("Ok"),
                 onPressed: () {
                   SchedulerBinding.instance.addPostFrameCallback((_) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
