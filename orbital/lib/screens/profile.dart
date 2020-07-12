@@ -65,44 +65,46 @@ class _ProfileState extends State<Profile> {
   Future resetEmail(String email) async {
     return FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
-  
+
   route(Auth auth) {
-  Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (c) => Profile(
-                          auth: auth,
-                        )));
-}
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (c) => Profile(
+                  auth: auth,
+                )));
+  }
+
   startTime(Auth auth) async {
     var duration = new Duration(seconds: 6);
     return new Timer(duration, route(auth));
   }
 
-  CreateAlertDialog(BuildContext context){
+  CreateAlertDialog(BuildContext context) {
     TextEditingController customController = TextEditingController();
-    return showDialog(context: context, builder: (context){
-      return AlertDialog(
-        title: Text("Edit profile name"),
-        content: TextField(
-          controller: customController,
-        ),
-        actions: <Widget>[
-          MaterialButton(
-            elevation: 5,
-            child: Text("Submit"),
-            onPressed: (){
-              widget.auth.editName(customController.text.toString());
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/eventfeed');
-              Auth auth = new Auth();
-              startTime(auth);
-            
-            },
-          )
-        ],
-      );
-    });
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Edit name"),
+            content: TextField(
+              controller: customController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5,
+                child: Text("Submit"),
+                onPressed: () {
+                  widget.auth.editName(customController.text.toString());
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/eventfeed');
+                  Auth auth = new Auth();
+                  startTime(auth);
+                },
+              )
+            ],
+          );
+        });
   }
 
   Widget actionButtons() {
@@ -170,11 +172,13 @@ class _ProfileState extends State<Profile> {
       child: Row(
         children: <Widget>[
           Text(info,
-          style: GoogleFonts.ptSans(fontSize: 25, color: Colors.black)),
-          FlatButton.icon(onPressed: () => CreateAlertDialog(context), icon: Icon(FontAwesomeIcons.edit), label: Text("")),
+              style: GoogleFonts.ptSans(fontSize: 25, color: Colors.black)),
+          FlatButton.icon(
+              onPressed: () => CreateAlertDialog(context),
+              icon: Icon(FontAwesomeIcons.edit),
+              label: Text("")),
         ],
       ),
-      
     );
   }
 
@@ -187,10 +191,9 @@ class _ProfileState extends State<Profile> {
       child: Row(
         children: <Widget>[
           Text(info,
-          style: GoogleFonts.ptSans(fontSize: 25, color: Colors.black)),
+              style: GoogleFonts.ptSans(fontSize: 25, color: Colors.black)),
         ],
       ),
-      
     );
   }
 
@@ -208,9 +211,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  
-
-
   Widget profileWidget() {
     String name = 'Name: ' + widget.auth.name;
     String email = 'Email: ' + widget.auth.email;
@@ -225,29 +225,29 @@ class _ProfileState extends State<Profile> {
           centerTitle: true,
         ),
         drawer: AppDrawer(drawer: Drawers.profile),
-        body:ListView(
-              children: <Widget>[
-                SizedBox(height: 15),
-                  SizedBox(
-                    width: 70,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.solidIdCard,
-                    color: Colors.black,
-                    size: 230,
-                  ),
-                  SizedBox(
-                    width: 1,
-                  ),
-                  SizedBox(height: 30),
-                  myLayoutName(myWidgetName(name)),
-                  SizedBox(height: 20),
-                  myLayoutWidget(myWidget(email)),
-                  SizedBox(height: 20),
-                  myLayoutWidget(myWidget(dateJoined)),
-                  actionButtons(),
-              ],
-            ));
+        body: ListView(
+          children: <Widget>[
+            SizedBox(height: 15),
+            SizedBox(
+              width: 70,
+            ),
+            Icon(
+              FontAwesomeIcons.solidIdCard,
+              color: Colors.black,
+              size: 230,
+            ),
+            SizedBox(
+              width: 1,
+            ),
+            SizedBox(height: 30),
+            myLayoutName(myWidgetName(name)),
+            SizedBox(height: 20),
+            myLayoutWidget(myWidget(email)),
+            SizedBox(height: 20),
+            myLayoutWidget(myWidget(dateJoined)),
+            actionButtons(),
+          ],
+        ));
   }
 
   @override
