@@ -191,11 +191,12 @@ class _EventAdminEditState extends State<EventAdminEdit> {
 
     Widget closedCheckBox() {
       return Container(
+          height: 90,
           width: 340,
           child: CheckboxListTile(
             value: closed,
             onChanged: (val) => setState(() => closed = !closed),
-            activeColor: Colors.blue,
+            activeColor: closed ? Colors.red[400] : Colors.green,
             title: Text(
               "Close Event",
               style: TextStyle(fontSize: 22),
