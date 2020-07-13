@@ -51,9 +51,9 @@ class CCANormalAbout extends StatelessWidget {
 
     Widget helper() {
       return Card(
-          margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+          margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(6.0),
             child: ListView(
               children: <Widget>[
                 imageWidget(),

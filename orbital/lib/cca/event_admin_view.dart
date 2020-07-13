@@ -102,10 +102,11 @@ class _EventAdminViewState extends State<EventAdminView> {
 
     Widget myWidgetClosing() {
       return Column(children: [
-        SizedBox(height: 8),
+        SizedBox(height: 16),
         Container(
+            height: 70,
             margin: const EdgeInsets.all(1.0),
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             decoration: myBoxDecoration(Colors.red[900]),
             child: Row(children: <Widget>[
               Icon(FontAwesomeIcons.bullhorn, color: Colors.red[900], size: 28),
@@ -115,9 +116,9 @@ class _EventAdminViewState extends State<EventAdminView> {
                   child: Text("  This Event is now closed",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.ptSans(
-                          fontSize: 25,
+                          fontSize: 28,
                           color: Colors.red[900],
-                          fontWeight: FontWeight.bold))),
+                          fontWeight: FontWeight.w700))),
             ])),
         SizedBox(height: 15),
       ]);
@@ -145,9 +146,9 @@ class _EventAdminViewState extends State<EventAdminView> {
 
     Widget helper(DocumentSnapshot document) {
       return Card(
-          margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+          margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(6.0),
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
