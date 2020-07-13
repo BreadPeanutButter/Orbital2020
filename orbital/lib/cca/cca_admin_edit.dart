@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:orbital/cca/cca_admin_view.dart';
-import 'package:orbital/cca/event_admin_view.dart';
 import 'dart:io';
 import 'package:path/path.dart' as Path;
 
@@ -156,26 +155,28 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
                     SizedBox(height: 30),
                     imageWidget(),
                     SizedBox(height: 20),
-                    isLoading ? CircularProgressIndicator() : 
-                    RaisedButton.icon(
-                      onPressed: () {
-                        uploadImage(context);
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      label: Text(
-                        'Change',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                      textColor: Colors.red,
-                      splashColor: Colors.red,
-                      color: Colors.green,
-                    ),
+                    isLoading
+                        ? CircularProgressIndicator()
+                        : RaisedButton.icon(
+                            onPressed: () {
+                              uploadImage(context);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            label: Text(
+                              'Change',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ),
+                            textColor: Colors.red,
+                            splashColor: Colors.red,
+                            color: Colors.green,
+                          ),
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
