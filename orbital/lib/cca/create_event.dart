@@ -223,6 +223,7 @@ class _CreateEventState extends State<CreateEvent> {
                   Navigator.pop(ctx);
                   FocusScope.of(context).unfocus();
                   Navigator.pop(ctx);
+                  Navigator.pop(ctx);
                   Navigator.push(
                       ctx,
                       MaterialPageRoute(

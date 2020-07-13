@@ -154,7 +154,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                 imageWidget(),
                 closedEvent(document),
                 SizedBox(
-                  height: 5,
+                  height: 15,
                 ),
                 Text("Event",
                     style: TextStyle(
@@ -301,6 +301,8 @@ class _EventAdminViewState extends State<EventAdminView> {
             context,
             MaterialPageRoute(
                 builder: (context) => EventFeed.tab(index: widget.index)));
+      } else {
+        Navigator.pop(context);
       }
     }
 

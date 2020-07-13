@@ -153,6 +153,9 @@ class _EventNormalViewState extends State<EventNormalView> {
               children: <Widget>[
                 imageWidget(),
                 closedEvent(widget.document),
+                SizedBox(
+                  height: 15,
+                ),
                 Text("Event",
                     style: TextStyle(
                         fontSize: 18,
