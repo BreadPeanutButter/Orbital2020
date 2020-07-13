@@ -191,6 +191,13 @@ class _EventAdminEditState extends State<EventAdminEdit> {
 
     Widget closedCheckBox() {
       return Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: closed ? Colors.red[400] : Colors.green,
+              width: 3.0,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(7.0)),
+          ),
           height: 90,
           width: 340,
           child: CheckboxListTile(
