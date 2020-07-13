@@ -45,9 +45,9 @@ class ExploreAll extends StatelessWidget {
                           onTap: () => goToCCAViewPage(context, document),
                           child: ListTile(
                             title: new Text(document['Name'],
-                                maxLines: 1,
+                                maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 24)),
+                                style: TextStyle(fontSize: 22)),
                             subtitle: new Text(document['Category'],
                                 style: TextStyle(fontSize: 20)),
                           ))));

@@ -68,7 +68,9 @@ class CCANormalEventlist extends StatelessWidget {
                           child: ListTile(
                               title: new Text(
                                   document['CCA'] + ': ' + document['Name'],
-                                  style: TextStyle(fontSize: 24)),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 22)),
                               subtitle: new Text(eventTime,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
