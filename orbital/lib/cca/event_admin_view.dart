@@ -226,7 +226,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                   height: 7,
                 ),
                 myWidget("By: " + createdBy + '\n' + "On: " + dateCreated),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 RaisedButton.icon(
                   onPressed: () {
                     if (widget.fromCCA || widget.fromEdit) {
