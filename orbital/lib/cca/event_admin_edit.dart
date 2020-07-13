@@ -2,6 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:orbital/cca/event_admin_view.dart';
 import 'dart:io';
@@ -140,101 +141,6 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       );
     }
 
-    void _closeDialog(DocumentSnapshot doc) {
-      showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: new Text("Success"),
-            content: new Text("You have closed the event!"),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              OutlineButton(
-                  highlightedBorderColor: Colors.blue,
-                  borderSide: BorderSide(color: Colors.blue),
-                  child: new Text("Okay"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    if (widget.fromCCA) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) => EventAdminView.fromEdit(
-                                    document: doc,
-                                    index: widget.index,
-                                  )));
-                    } else if (widget.fromMyEvents) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) => EventAdminView.fromMyEvents(
-                                    document: doc,
-                                  )));
-                    } else if (widget.fromEventFeed) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) => EventAdminView.fromEventFeed(
-                                  document: doc, index: widget.index)));
-                    }
-                  }),
-
-              SizedBox(width: 110),
-            ],
-          );
-        },
-      );
-    }
-
-    void _openDialog(DocumentSnapshot doc) {
-      showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: new Text("Success"),
-            content: new Text("You have re-opened the event!"),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              OutlineButton(
-                  highlightedBorderColor: Colors.blue,
-                  borderSide: BorderSide(color: Colors.blue),
-                  child: new Text("Okay"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    if (widget.fromCCA) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) => EventAdminView.fromEdit(
-                                  document: doc, index: widget.index)));
-                    } else if (widget.fromMyEvents) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) => EventAdminView.fromMyEvents(
-                                    document: doc,
-                                  )));
-                    } else if (widget.fromEventFeed) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) => EventAdminView.fromEventFeed(
-                                  document: doc, index: widget.index)));
-                    }
-                  }),
-              SizedBox(width: 110),
-            ],
-          );
-        },
-      );
-    }
-
     void _publishEvent() async {
       print(imageURL);
       widget.ccaDocument.reference.updateData({
@@ -243,22 +149,11 @@ class _EventAdminEditState extends State<EventAdminEdit> {
         'Location': location,
         'RegisterInstructions': registrationInstructions,
         'EventTime': eventTime,
-        'image': imageURL
+        'image': imageURL,
+        'Closed': closed
       });
       DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
       _successDialogEdit(snapShot);
-    }
-
-    void _closeEvent() async {
-      widget.ccaDocument.reference.updateData({'Closed': true});
-      DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
-      _closeDialog(snapShot);
-    }
-
-    void _openEvent() async {
-      widget.ccaDocument.reference.updateData({'Closed': false});
-      DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
-      _openDialog(snapShot);
     }
 
     Future uploadImage(BuildContext context) async {
@@ -292,6 +187,31 @@ class _EventAdminEditState extends State<EventAdminEdit> {
           width: 200,
         );
       }
+    }
+
+    Widget closedCheckBox() {
+      return Container(
+          width: 340,
+          child: CheckboxListTile(
+            value: closed,
+            onChanged: (val) => setState(() => closed = !closed),
+            activeColor: Colors.blue,
+            title: Text(
+              "Close Event",
+              style: TextStyle(fontSize: 22),
+            ),
+            secondary: closed
+                ? Icon(
+                    FontAwesomeIcons.doorClosed,
+                    color: Colors.black,
+                    size: 40,
+                  )
+                : Icon(
+                    FontAwesomeIcons.doorOpen,
+                    color: Colors.black,
+                    size: 40,
+                  ),
+          ));
     }
 
     return Scaffold(
@@ -386,30 +306,8 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                               registrationInstructions = value;
                             })),
                     SizedBox(height: 20),
-                    ButtonTheme(
-                      minWidth: 200,
-                      height: 50,
-                      buttonColor: widget.ccaDocument['Closed']
-                          ? Colors.green
-                          : Colors.red,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(
-                                color: widget.ccaDocument['Closed']
-                                    ? Colors.green
-                                    : Colors.red)),
-                        onPressed: widget.ccaDocument['Closed']
-                            ? _openEvent
-                            : _closeEvent,
-                        child: widget.ccaDocument['Closed']
-                            ? Text("Re-open Event",
-                                style: TextStyle(fontSize: 15))
-                            : Text("Close Event",
-                                style: TextStyle(fontSize: 15)),
-                      ),
-                    ),
-                    SizedBox(height: 20),
+                    closedCheckBox(),
+                    SizedBox(height: 40),
                     ButtonTheme(
                       minWidth: 200,
                       height: 50,
