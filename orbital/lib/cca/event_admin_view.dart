@@ -4,6 +4,7 @@ import 'package:orbital/cca/cca_admin_view.dart';
 import 'package:orbital/cca/event_feedback_admin.dart';
 import 'package:intl/intl.dart';
 import 'package:orbital/my_events/my_events.dart';
+import 'package:orbital/screens/event_feed/event_feed.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +16,7 @@ class EventAdminView extends StatefulWidget {
   Auth auth = new Auth();
   final DocumentSnapshot document;
   bool bookmarked;
+  bool fromEventFeed = false;
   bool fromMyEvents = false;
   bool fromCCA = false;
   bool fromEdit = false;
@@ -23,6 +25,10 @@ class EventAdminView extends StatefulWidget {
   EventAdminView({@required this.document});
   EventAdminView.fromCCA({@required this.document, @required this.index}) {
     fromCCA = true;
+  }
+  EventAdminView.fromEventFeed(
+      {@required this.document, @required this.index}) {
+    fromEventFeed = true;
   }
   EventAdminView.fromMyEvents({@required this.document}) {
     fromMyEvents = true;
@@ -223,29 +229,25 @@ class _EventAdminViewState extends State<EventAdminView> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (c) => EventAdminEdit(
+                              builder: (c) => EventAdminEdit.fromCCA(
                                     ccaDocument: document,
                                     index: widget.index,
                                   )));
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext ctx) {
-                          // return object of type Dialog
-                          return AlertDialog(
-                            title: new Text("Oops!"),
-                            content: new Text(
-                                "You can only edit pages as Admin through the CCA page."),
-                            actions: <Widget>[
-                              FlatButton(
-                                  child: new Text("Okay"),
-                                  onPressed: () {
-                                    Navigator.of(ctx).pop();
-                                  }),
-                            ],
-                          );
-                        },
-                      );
+                    } else if (widget.fromMyEvents) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminEdit.fromMyEvents(
+                                    ccaDocument: document,
+                                  )));
+                    } else if (widget.fromEventFeed) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminEdit.fromEventFeed(
+                                    ccaDocument: document,
+                                    index: widget.index,
+                                  )));
                     }
                   },
                   shape: RoundedRectangleBorder(
@@ -260,9 +262,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                   ),
                   textColor: Colors.red,
                   splashColor: Colors.red,
-                  color: (widget.fromCCA || widget.fromEdit)
-                      ? Colors.green
-                      : Colors.grey,
+                  color: Colors.green,
                 ),
               ],
             ),
@@ -291,8 +291,13 @@ class _EventAdminViewState extends State<EventAdminView> {
             context,
             MaterialPageRoute(
                 builder: (context) => MyEvents(auth: widget.auth)));
-      } else {
+      } else if (widget.fromEventFeed) {
         Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EventFeed.tab(index: widget.index)));
       }
     }
 

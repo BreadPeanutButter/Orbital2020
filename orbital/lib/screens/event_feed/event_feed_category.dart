@@ -94,8 +94,9 @@ class EventFeedCategory extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EventAdminView(
+              builder: (context) => EventAdminView.fromEventFeed(
                     document: document,
+                    index: index[category],
                   )));
     } else {
       Navigator.push(

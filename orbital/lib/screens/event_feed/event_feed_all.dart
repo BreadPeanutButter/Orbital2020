@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:orbital/cca/event_admin_view.dart';
 import 'package:orbital/cca/event_normal_view.dart';
 import 'package:orbital/services/auth.dart';
@@ -7,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class EventFeedAll extends StatelessWidget {
-  static const index = 1;
+  static const index = 0;
   final database = Firestore.instance;
   Auth auth;
 
@@ -85,9 +84,8 @@ class EventFeedAll extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EventAdminView(
-                    document: document,
-                  )));
+              builder: (context) => EventAdminView.fromEventFeed(
+                  document: document, index: index)));
     } else {
       Navigator.push(
           context,

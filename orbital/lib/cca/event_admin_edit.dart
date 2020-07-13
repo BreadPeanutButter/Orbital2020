@@ -10,8 +10,20 @@ import 'package:path/path.dart' as Path;
 class EventAdminEdit extends StatefulWidget {
   DocumentSnapshot ccaDocument;
   int index;
-  EventAdminEdit({@required this.ccaDocument, @required this.index});
+  bool fromEventFeed = false;
+  bool fromMyEvents = false;
+  bool fromCCA = false;
 
+  EventAdminEdit.fromCCA({@required this.ccaDocument, @required this.index}) {
+    fromCCA = true;
+  }
+  EventAdminEdit.fromEventFeed(
+      {@required this.ccaDocument, @required this.index}) {
+    fromEventFeed = true;
+  }
+  EventAdminEdit.fromMyEvents({@required this.ccaDocument}) {
+    fromMyEvents = true;
+  }
   @override
   State<StatefulWidget> createState() {
     return _EventAdminEditState();
@@ -85,25 +97,40 @@ class _EventAdminEditState extends State<EventAdminEdit> {
           // return object of type Dialog
           return AlertDialog(
             title: new Text("Success!"),
-            content: new Text(
-                "Congratulations, you have edited the event! You can now view ${doc['Name']}."),
+            content:
+                new Text("You have edited ${doc['Name']}. Press Okay to view."),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               OutlineButton(
                   highlightedBorderColor: Colors.blue,
                   borderSide: BorderSide(color: Colors.blue),
-                  child: new Text("Hurray!"),
+                  child: new Text("Okay"),
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) => EventAdminView.fromEdit(
-                                  document: doc,
-                                  index: widget.index,
-                                )));
+                    if (widget.fromCCA) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromEdit(
+                                    document: doc,
+                                    index: widget.index,
+                                  )));
+                    } else if (widget.fromMyEvents) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromMyEvents(
+                                    document: doc,
+                                  )));
+                    } else if (widget.fromEventFeed) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromEventFeed(
+                                  document: doc, index: widget.index)));
+                    }
                   }),
 
               SizedBox(width: 110),
@@ -131,13 +158,28 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) => EventAdminView.fromEdit(
-                                  document: doc,
-                                  index: widget.index,
-                                )));
+                    if (widget.fromCCA) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromEdit(
+                                    document: doc,
+                                    index: widget.index,
+                                  )));
+                    } else if (widget.fromMyEvents) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromMyEvents(
+                                    document: doc,
+                                  )));
+                    } else if (widget.fromEventFeed) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromEventFeed(
+                                  document: doc, index: widget.index)));
+                    }
                   }),
 
               SizedBox(width: 110),
@@ -165,13 +207,27 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) => EventAdminView.fromEdit(
-                                document: doc, index: widget.index)));
+                    if (widget.fromCCA) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromEdit(
+                                  document: doc, index: widget.index)));
+                    } else if (widget.fromMyEvents) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromMyEvents(
+                                    document: doc,
+                                  )));
+                    } else if (widget.fromEventFeed) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromEventFeed(
+                                  document: doc, index: widget.index)));
+                    }
                   }),
-
               SizedBox(width: 110),
             ],
           );
