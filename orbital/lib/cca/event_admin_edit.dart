@@ -209,8 +209,8 @@ class _EventAdminEditState extends State<EventAdminEdit> {
               style: TextStyle(fontSize: 20),
             ),
             subtitle: Text(
-              "Check box to close event",
-              style: TextStyle(fontSize: 20),
+              "Tick box to close event",
+              style: TextStyle(fontSize: 16),
             ),
             secondary: closed
                 ? Icon(
