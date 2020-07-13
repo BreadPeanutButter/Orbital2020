@@ -206,7 +206,11 @@ class _EventAdminEditState extends State<EventAdminEdit> {
             activeColor: closed ? Colors.red[400] : Colors.green,
             title: Text(
               "Close Event",
-              style: TextStyle(fontSize: 22),
+              style: TextStyle(fontSize: 20),
+            ),
+            subtitle: Text(
+              "Check box to close event",
+              style: TextStyle(fontSize: 20),
             ),
             secondary: closed
                 ? Icon(
