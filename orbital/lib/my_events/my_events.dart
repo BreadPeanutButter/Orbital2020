@@ -33,7 +33,7 @@ class MyEvents extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: new AppBar(
-        title: Text('My Events', style: TextStyle(color: Colors.black)),
+        title: Text('Bookmarks', style: TextStyle(color: Colors.black)),
         centerTitle: true,
       ),
       drawer: AppDrawer(drawer: Drawers.event),
