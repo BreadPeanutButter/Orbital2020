@@ -5,7 +5,7 @@ import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
 
-enum Drawers { eventfeed, explore, event, profile }
+enum Drawers { eventfeed, explore, event, profile, myCCAs }
 
 class AppDrawer extends StatelessWidget {
   Drawers drawer;
@@ -47,6 +47,30 @@ class AppDrawer extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 )),
             onTap: () => Navigator.pushNamed(context, '/explore'),
+          )),
+      Ink(
+          decoration: BoxDecoration(
+            color: drawer == Drawers.myCCAs
+                ? Colors.blue[400]
+                : Colors.transparent,
+            border: drawer == Drawers.myCCAs
+                ? Border.all(width: 2, color: Colors.grey[600])
+                : null,
+          ),
+          child: ListTile(
+            leading: Icon(
+              FontAwesomeIcons.crown,
+              size: 35,
+              color: drawer == Drawers.explore
+                  ? Colors.yellow[700]
+                  : Colors.yellow[900],
+            ),
+            title: Text('My CCAs',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                )),
+            onTap: () => {},
           )),
       Ink(
           decoration: BoxDecoration(
