@@ -49,7 +49,7 @@ class AppDrawer extends StatelessWidget {
           color: drawer == Drawers.event ? Colors.blue : Colors.transparent,
           child: ListTile(
             leading: Icon(Icons.looks_3),
-            title: Text('My Events',
+            title: Text('Bookmarks',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -65,7 +65,7 @@ class AppDrawer extends StatelessWidget {
           color: drawer == Drawers.profile ? Colors.blue : Colors.transparent,
           child: ListTile(
             leading: Icon(Icons.looks_4),
-            title: Text('My Profile',
+            title: Text('Profile',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
