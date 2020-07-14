@@ -110,7 +110,7 @@ class AppDrawer extends StatelessWidget {
               size: 35,
               color: Colors.orange,
             ),
-            title: Text('Bookmarks',
+            title: Text('Event Bookmarks',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
