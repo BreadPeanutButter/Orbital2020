@@ -14,16 +14,42 @@ class EventAdminEdit extends StatefulWidget {
   bool fromEventFeed = false;
   bool fromMyEvents = false;
   bool fromCCA = false;
+  bool closed;
+  String imageURL;
+  File _image;
+  String name, details, eventTime, location, registrationInstructions;
+  bool isLoading = false;
 
   EventAdminEdit.fromCCA({@required this.ccaDocument, @required this.index}) {
     fromCCA = true;
+    closed = ccaDocument['Closed'];
+    imageURL = ccaDocument['image'];
+    name = ccaDocument['Name'];
+    details = ccaDocument['Details'];
+    eventTime = ccaDocument['EventTime'];
+    location = ccaDocument['Location'];
+    registrationInstructions = ccaDocument['RegisterInstructions'];
   }
   EventAdminEdit.fromEventFeed(
       {@required this.ccaDocument, @required this.index}) {
     fromEventFeed = true;
+    closed = ccaDocument['Closed'];
+    imageURL = ccaDocument['image'];
+    name = ccaDocument['Name'];
+    details = ccaDocument['Details'];
+    eventTime = ccaDocument['EventTime'];
+    location = ccaDocument['Location'];
+    registrationInstructions = ccaDocument['RegisterInstructions'];
   }
   EventAdminEdit.fromMyEvents({@required this.ccaDocument}) {
     fromMyEvents = true;
+    closed = ccaDocument['Closed'];
+    imageURL = ccaDocument['image'];
+    name = ccaDocument['Name'];
+    details = ccaDocument['Details'];
+    eventTime = ccaDocument['EventTime'];
+    location = ccaDocument['Location'];
+    registrationInstructions = ccaDocument['RegisterInstructions'];
   }
   @override
   State<StatefulWidget> createState() {
@@ -33,24 +59,9 @@ class EventAdminEdit extends StatefulWidget {
 
 class _EventAdminEditState extends State<EventAdminEdit> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  File _image;
-  String name, details, eventTime, location, registrationInstructions, imageURL;
-  bool closed;
-  bool isLoading = false;
-
-  void initState() {
-    super.initState();
-    imageURL = widget.ccaDocument['image'];
-    closed = widget.ccaDocument['Closed'];
-  }
 
   @override
   Widget build(BuildContext context) {
-    name = widget.ccaDocument['Name'];
-    details = widget.ccaDocument['Details'];
-    eventTime = widget.ccaDocument['EventTime'];
-    location = widget.ccaDocument['Location'];
-    registrationInstructions = widget.ccaDocument['RegisterInstructions'];
     final GlobalKey<FormState> _key = GlobalKey();
     final TextEditingController nameController = new TextEditingController();
     final TextEditingController detailsController = new TextEditingController();
@@ -61,12 +72,12 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     final TextEditingController imageURLController =
         new TextEditingController();
     final TextEditingController RIController = new TextEditingController();
-    nameController.text = name;
-    detailsController.text = details;
-    eventTimeController.text = eventTime;
-    locationController.text = location;
-    imageURLController.text = imageURL;
-    RIController.text = registrationInstructions;
+    nameController.text = widget.name;
+    detailsController.text = widget.details;
+    eventTimeController.text = widget.eventTime;
+    locationController.text = widget.location;
+    imageURLController.text = widget.imageURL;
+    RIController.text = widget.registrationInstructions;
 
     showAlertDialog(BuildContext context) {
       Widget OkayButton = FlatButton(
@@ -142,15 +153,15 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     }
 
     void _publishEvent() async {
-      print(imageURL);
+      print(widget.imageURL);
       widget.ccaDocument.reference.updateData({
-        'Name': name,
-        'Details': details,
-        'Location': location,
-        'RegisterInstructions': registrationInstructions,
-        'EventTime': eventTime,
-        'image': imageURL,
-        'Closed': closed
+        'Name': widget.name,
+        'Details': widget.details,
+        'Location': widget.location,
+        'RegisterInstructions': widget.registrationInstructions,
+        'EventTime': widget.eventTime,
+        'image': widget.imageURL,
+        'Closed': widget.closed
       });
       DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
       _successDialogEdit(snapShot);
@@ -160,29 +171,29 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       final picker = ImagePicker();
       final pickedFile = await picker.getImage(source: ImageSource.gallery);
       setState(() {
-        _image = File(pickedFile.path);
-        isLoading = true;
+        widget._image = File(pickedFile.path);
+        widget.isLoading = true;
       });
       StorageReference firebaseStorageRef = FirebaseStorage.instance
           .ref()
-          .child('event_profile/${Path.basename(_image.path)}}');
-      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+          .child('event_profile/${Path.basename(widget._image.path)}}');
+      StorageUploadTask uploadTask = firebaseStorageRef.putFile(widget._image);
       var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
       print(dowurl.toString());
       setState(() {
-        imageURL = dowurl.toString();
-        isLoading = false;
+        widget.imageURL = dowurl.toString();
+        widget.isLoading = false;
       });
-      print(imageURL);
+      print(widget.imageURL);
       showAlertDialog(context);
     }
 
     Widget imageWidget() {
-      if (imageURL == null) {
+      if (widget.imageURL == null) {
         return SizedBox(height: 50);
       } else {
         return Image.network(
-          imageURL,
+          widget.imageURL,
           height: 200,
           width: 200,
         );
@@ -193,7 +204,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
       return Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: closed ? Colors.red[400] : Colors.green,
+              color: widget.closed ? Colors.red[400] : Colors.green,
               width: 3.0,
             ),
             borderRadius: BorderRadius.all(Radius.circular(7.0)),
@@ -201,9 +212,9 @@ class _EventAdminEditState extends State<EventAdminEdit> {
           height: 90,
           width: 340,
           child: CheckboxListTile(
-            value: closed,
-            onChanged: (val) => setState(() => closed = !closed),
-            activeColor: closed ? Colors.red[400] : Colors.green,
+            value: widget.closed,
+            onChanged: (val) => setState(() => widget.closed = !widget.closed),
+            activeColor: widget.closed ? Colors.red[400] : Colors.green,
             title: Text(
               "Close Event",
               style: TextStyle(fontSize: 20),
@@ -212,7 +223,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
               "Select to close event",
               style: TextStyle(fontSize: 16),
             ),
-            secondary: closed
+            secondary: widget.closed
                 ? Icon(
                     FontAwesomeIcons.doorClosed,
                     color: Colors.black,
@@ -241,7 +252,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     SizedBox(height: 30),
                     imageWidget(),
                     SizedBox(height: 20),
-                    isLoading
+                    widget.isLoading
                         ? CircularProgressIndicator()
                         : RaisedButton.icon(
                             onPressed: () {
@@ -271,7 +282,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             autocorrect: true,
                             controller: nameController,
                             onChanged: (String value) {
-                              name = value;
+                              widget.name = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
@@ -282,7 +293,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             autocorrect: true,
                             controller: detailsController,
                             onChanged: (String value) {
-                              details = value;
+                              widget.details = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
@@ -293,7 +304,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             autocorrect: true,
                             controller: eventTimeController,
                             onChanged: (String value) {
-                              eventTime = value;
+                              widget.eventTime = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
@@ -304,7 +315,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             autocorrect: true,
                             controller: locationController,
                             onChanged: (String value) {
-                              location = value;
+                              widget.location = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
@@ -315,7 +326,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                             autocorrect: true,
                             controller: RIController,
                             onChanged: (String value) {
-                              registrationInstructions = value;
+                              widget.registrationInstructions = value;
                             })),
                     SizedBox(height: 20),
                     closedCheckBox(),
