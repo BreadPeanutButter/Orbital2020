@@ -133,12 +133,21 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
                 ),
                 height: 90,
                 child: ListTile(
+                  leading: Icon(
+                    Icons.account_circle,
+                    size: 65,
+                    color: Colors.red[400],
+                  ),
                   title: Text(
                     snapshot.data['Name'],
-                    style: TextStyle(fontSize: 23),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 20),
                   ),
                   subtitle: Text(snapshot.data['Email'],
-                      style: TextStyle(fontSize: 19)),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 18)),
                 ),
               ),
               secondaryActions: <Widget>[
