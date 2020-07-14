@@ -54,15 +54,15 @@ class Auth {
     return (await getBookmarks()).contains(id);
   }
 
-  Future<bool> isAdmin(String ccaName) async {
+  Future<bool> isAdminOf(String ccaID) async {
     if (uid.isEmpty) {
       await getCurrentUser();
     }
     return List.from((await firestoreInstance
-            .collection('CCA')
-            .document(ccaName)
-            .get())['Admin'])
-        .contains(uid);
+            .collection('User')
+            .document(uid)
+            .get())['AdminOf'])
+        .contains(ccaID);
   }
 
   void addFavouriteCCA(String ccaName) async {

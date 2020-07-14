@@ -123,16 +123,10 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
             ]))));
   }
 
-  void _addAdmin(String uid) {
-    widget.docRef.updateData({
-      "Admin": FieldValue.arrayUnion([uid])
+  void _addAdmin(DocumentReference userRef) async {
+    userRef.updateData({
+      "AdminOf": FieldValue.arrayUnion([widget.docRef.documentID])
     });
-  }
-
-  Future<bool> _isAdmin(String uid) async {
-    widget.docSnapshot = await widget.docRef.get();
-    List adminList = List.from(widget.docSnapshot['Admin']);
-    return adminList.contains(uid);
   }
 
   void _addDialog(BuildContext ctx) async {
@@ -167,8 +161,9 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
       );
     } else {
       DocumentSnapshot user = snapshot.documents[0];
-      bool alreadyAdmin = await _isAdmin(user.documentID);
-
+      List adminOfList = List.from(user['AdminOf']);
+      bool alreadyAdmin = adminOfList.contains(user.documentID);
+      int adminOfListSize = adminOfList.length;
       if (alreadyAdmin) {
         showDialog(
           context: ctx,
@@ -189,7 +184,8 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
             );
           },
         );
-      } else {
+      } else if (adminOfListSize < 10) {
+        DocumentReference userRef = snapshot.documents[0].reference;
         showDialog(
           context: ctx,
           builder: (BuildContext ctx) {
@@ -208,10 +204,30 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
                 FlatButton(
                     child: new Text("Yes!"),
                     onPressed: () {
-                      _addAdmin(user.documentID);
+                      _addAdmin(userRef);
                       Navigator.of(ctx).pop();
                       _key.currentState.reset();
                       _successFlushBar(ctx, user['Name']);
+                    }),
+              ],
+            );
+          },
+        );
+      } else if (adminOfListSize >= 10) {
+        showDialog(
+          context: ctx,
+          builder: (BuildContext ctx) {
+            // return object of type Dialog
+            return AlertDialog(
+              title: new Text("Oops! Prohibited Action"),
+              content: new Text(
+                  "${user['Name']} is already an Admin of the maximum allowed number of CCA pages. He/She cannot be added as Admin anymore."),
+              actions: <Widget>[
+                // usually buttons at the bottom of the dialog
+                FlatButton(
+                    child: new Text("Ok"),
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
                     }),
               ],
             );

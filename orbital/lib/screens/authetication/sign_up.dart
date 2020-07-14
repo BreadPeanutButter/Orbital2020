@@ -81,7 +81,8 @@ class _SignUpPageState extends State<SignUpPage> {
       'Name': _name,
       'Favourite': <String>[],
       'BookmarkedEvent': <String>[],
-      'DateJoined': DateTime.now()
+      'DateJoined': DateTime.now(),
+      'AdminOf': <String>[]
     });
   }
 

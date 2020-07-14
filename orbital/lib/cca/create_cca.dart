@@ -402,8 +402,13 @@ class _CreateCCAState extends State<CreateCCA> {
           'image': _imageURL,
           'Contact': _contact,
           'DateJoined': DateTime.now(),
-          'Admin': <String>[widget.auth.uid],
           'FavouriteCount': 0
+        });
+        Firestore.instance
+            .collection('User')
+            .document(widget.auth.uid)
+            .updateData({
+          "AdminOf": FieldValue.arrayUnion([docRef.documentID])
         });
         DocumentSnapshot _newSnapShot = await docRef.get();
         _successDialog(_newSnapShot);

@@ -59,7 +59,7 @@ class ExploreAll extends StatelessWidget {
   }
 
   void goToCCAViewPage(BuildContext context, DocumentSnapshot document) async {
-    bool userIsAdmin = await auth.isAdmin(document['Name']);
+    bool userIsAdmin = await auth.isAdminOf(document.documentID);
     if (userIsAdmin) {
       Navigator.push(
           context,

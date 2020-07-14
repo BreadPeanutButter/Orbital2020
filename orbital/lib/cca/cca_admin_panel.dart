@@ -12,7 +12,6 @@ class CCAAdminPanel extends StatefulWidget {
   final String ccaName;
   Auth auth;
   DocumentReference docRef;
-  DocumentSnapshot docSnapshot;
   int previousIndex;
 
   CCAAdminPanel(
@@ -42,8 +41,7 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return SingleChildScrollView(
-        child: Column(children: [
+    return Column(children: [
       addAdminButton(context),
       Container(
           padding: EdgeInsets.all(8),
@@ -55,21 +53,37 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
       SizedBox(
         height: 8,
       ),
-      FutureBuilder(
-          future: widget.docRef.get(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              widget.docSnapshot = snapshot.data;
-              return Center(
-                child: OrientationBuilder(
-                  builder: (context, orientation) => _buildList(context),
-                ),
-              );
-            }
-          })
-    ]));
+      adminList()
+    ]);
+  }
+
+  Widget adminList() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: widget.database
+          .collection('User')
+          .where("AdminOf", arrayContains: widget.docRef.documentID)
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return new Text('Error: ${snapshot.error}');
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.data.documents.isEmpty) {
+          return new Center(
+              child: Text(
+            'No admins available ☹️',
+            style: TextStyle(fontSize: 30),
+          ));
+        } else {
+          return new Expanded(
+              child: ListView(
+            children: snapshot.data.documents.map((DocumentSnapshot document) {
+              return _getSlidable(document.documentID);
+            }).toList(),
+          ));
+        }
+      },
+    );
   }
 
   Widget addAdminButton(BuildContext context) {
@@ -97,18 +111,7 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
         ));
   }
 
-  Widget _buildList(BuildContext context) {
-    List adminList = List.from(widget.docSnapshot['Admin']);
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return _getSlidable(adminList[index], index);
-      },
-      itemCount: adminList.length,
-    );
-  }
-
-  Widget _getSlidable(String adminID, int index) {
+  Widget _getSlidable(String adminID) {
     return FutureBuilder(
         future: widget.database.collection('User').document(adminID).get(),
         builder: (context, snapshot) {
@@ -130,12 +133,6 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
                 ),
                 height: 90,
                 child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.indigoAccent,
-                    child: Text('${index + 1}'),
-                    foregroundColor: Colors.white,
-                  ),
                   title: Text(
                     snapshot.data['Name'],
                     style: TextStyle(fontSize: 23),
@@ -185,14 +182,10 @@ class _CCAAdminPanelState extends State<CCAAdminPanel> {
               onPressed: () async {
                 Navigator.of(context).pop();
                 widget.database
-                    .collection('CCA')
-                    .document(widget.ccaName)
+                    .collection('User')
+                    .document(adminID)
                     .updateData({
-                  "Admin": FieldValue.arrayRemove([adminID])
-                });
-                DocumentSnapshot snap = await widget.docRef.get();
-                setState(() {
-                  widget.docSnapshot = snap;
+                  "AdminOf": FieldValue.arrayRemove([widget.docRef.documentID])
                 });
               },
             ),
