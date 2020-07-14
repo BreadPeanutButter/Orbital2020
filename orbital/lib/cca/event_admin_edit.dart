@@ -251,12 +251,12 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0))),
                             label: Text(
-                              'Change',
+                              'Upload Image',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             ),
                             icon: Icon(
-                              Icons.edit,
+                              Icons.add_a_photo,
                               color: Colors.white,
                             ),
                             textColor: Colors.red,
