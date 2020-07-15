@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital/cca/event_feedback_form.dart';
 import 'package:orbital/cca/event_feedbacked_view.dart';
+import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -235,7 +236,16 @@ class _EventNormalViewState extends State<EventNormalView> {
     }
 
     void backButton() {
-      Navigator.pop(context);
+      if (widget.fromMyEvents) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MyEvents(auth: widget.auth)));
+      } else {
+        Navigator.pop(context);
+      }
     }
 
     return Scaffold(

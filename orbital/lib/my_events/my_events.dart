@@ -36,9 +36,34 @@ class MyEvents extends StatelessWidget {
         title: Text('Bookmarks', style: TextStyle(color: Colors.black)),
         centerTitle: true,
       ),
-      drawer: AppDrawer(drawer: Drawers.event),
+      drawer: AppDrawer(drawer: Drawers.bookmark),
       body: getBookmarkFuture(),
     );
+  }
+
+  Widget getBookmarkStream() {
+    return StreamBuilder<List<String>>(
+        stream: Stream.fromFuture(bookmarks),
+        builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+          if (snapshot.hasError) {
+            return new Text('Error: ${snapshot.error}');
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.data.isEmpty) {
+            return new Center(
+                child: Text(
+              'No bookmarked events ☹️',
+              style: TextStyle(fontSize: 30),
+            ));
+          } else {
+            bookmarkList = snapshot.data;
+            return ListView.builder(
+                shrinkWrap: true,
+                itemCount: bookmarkList.length,
+                itemBuilder: (BuildContext ctx, int index) =>
+                    buildBody(ctx, index));
+          }
+        });
   }
 
   Widget getBookmarkFuture() {
