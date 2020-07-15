@@ -64,8 +64,9 @@ class ExploreAll extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => CCAAdminView(
+              builder: (context) => CCAAdminView.fromExplore(
                     document: document,
+                    currentIndex: 0,
                     exploreIndex: index,
                   )));
     } else {

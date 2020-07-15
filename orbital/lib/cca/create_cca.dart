@@ -347,8 +347,9 @@ class _CreateCCAState extends State<CreateCCA> {
                   Navigator.push(
                       ctx,
                       MaterialPageRoute(
-                          builder: (c) => CCAAdminView(
+                          builder: (c) => CCAAdminView.fromExplore(
                                 document: doc,
+                                currentIndex: 0,
                                 exploreIndex: 0,
                               )));
                 }),

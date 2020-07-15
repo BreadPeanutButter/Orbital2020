@@ -10,12 +10,8 @@ class CCAAdminAdd extends StatefulWidget {
   final String ccaName;
   DocumentReference docRef;
   DocumentSnapshot docSnapshot;
-  int previousIndex;
 
-  CCAAdminAdd(
-      {@required this.ccaName,
-      @required this.docRef,
-      @required this.previousIndex});
+  CCAAdminAdd({@required this.ccaName, @required this.docRef});
 
   @override
   State<StatefulWidget> createState() {
@@ -41,19 +37,7 @@ class _CCAAdminAddState extends State<CCAAdminAdd> {
             highlightColor: Colors.blue[700],
             icon: Icon(FontAwesomeIcons.times),
             iconSize: 35,
-            onPressed: () async {
-              DocumentSnapshot document = await widget.docRef.get();
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CCAAdminView.tab(
-                            document: document,
-                            currentIndex: 2,
-                            exploreIndex: widget.previousIndex,
-                          )));
-            },
+            onPressed: () => Navigator.pop(context),
             color: Colors.white,
           ),
           title: Text('Add Admin'),

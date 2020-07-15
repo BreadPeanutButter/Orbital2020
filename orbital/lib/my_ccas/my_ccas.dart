@@ -33,7 +33,11 @@ class MyCCAs extends StatelessWidget {
                     shadowColor: Colors.blue,
                     child: InkWell(
                         highlightColor: Colors.blueAccent,
-                        onTap: () => {},
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CCAAdminView.fromMyCCAs(
+                                    document: snapshot.data, currentIndex: 0))),
                         child: ListTile(
                           title: new Text(snapshot.data['Name'],
                               maxLines: 2,

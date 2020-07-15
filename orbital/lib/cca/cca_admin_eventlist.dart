@@ -8,8 +8,16 @@ class CCAAdminEventlist extends StatelessWidget {
   final database = Firestore.instance;
   DocumentSnapshot ccaDocument;
   int index;
+  bool fromExplore = false;
+  bool fromMyCCAs = false;
 
-  CCAAdminEventlist({@required this.ccaDocument, @required this.index});
+  CCAAdminEventlist.fromExplore(
+      {@required this.ccaDocument, @required this.index}) {
+    fromExplore = true;
+  }
+  CCAAdminEventlist.fromMyCCAs({@required this.ccaDocument}) {
+    fromMyCCAs = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +98,23 @@ class CCAAdminEventlist extends StatelessWidget {
                       child: InkWell(
                           highlightColor: Colors.blueAccent,
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        EventAdminView.fromCCA(
-                                            document: document, index: index)));
+                            if (fromMyCCAs) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EventAdminView.fromMyCCAs(
+                                            document: document,
+                                          )));
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EventAdminView.fromExplore(
+                                              document: document,
+                                              index: index)));
+                            }
                           },
                           child: ListTile(
                             title: new Text(

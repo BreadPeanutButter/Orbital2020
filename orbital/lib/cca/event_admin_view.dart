@@ -18,13 +18,14 @@ class EventAdminView extends StatefulWidget {
   bool bookmarked;
   bool fromEventFeed = false;
   bool fromMyEvents = false;
-  bool fromCCA = false;
+  bool fromExplore = false;
   bool fromEdit = false;
+  bool fromMyCCAs = false;
   int index;
 
   EventAdminView({@required this.document});
-  EventAdminView.fromCCA({@required this.document, @required this.index}) {
-    fromCCA = true;
+  EventAdminView.fromExplore({@required this.document, @required this.index}) {
+    fromExplore = true;
   }
   EventAdminView.fromEventFeed(
       {@required this.document, @required this.index}) {
@@ -35,6 +36,9 @@ class EventAdminView extends StatefulWidget {
   }
   EventAdminView.fromEdit({@required this.document, @required this.index}) {
     fromEdit = true;
+  }
+  EventAdminView.fromMyCCAs({@required this.document}) {
+    fromMyCCAs = true;
   }
 
   @override
@@ -229,11 +233,11 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(height: 30),
                 RaisedButton.icon(
                   onPressed: () {
-                    if (widget.fromCCA || widget.fromEdit) {
+                    if (widget.fromExplore || widget.fromEdit) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (c) => EventAdminEdit.fromCCA(
+                              builder: (c) => EventAdminEdit.fromExplore(
                                     ccaDocument: document,
                                     index: widget.index,
                                   )));
@@ -251,6 +255,13 @@ class _EventAdminViewState extends State<EventAdminView> {
                               builder: (c) => EventAdminEdit.fromEventFeed(
                                     ccaDocument: document,
                                     index: widget.index,
+                                  )));
+                    } else if (widget.fromMyCCAs) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminEdit.fromMyCCAs(
+                                    ccaDocument: document,
                                   )));
                     }
                   },
@@ -274,7 +285,7 @@ class _EventAdminViewState extends State<EventAdminView> {
     }
 
     void backButton() async {
-      if (widget.fromEdit) {
+      if (widget.fromMyCCAs) {
         DocumentSnapshot ccaDoc = await Firestore.instance
             .collection('CCA')
             .document(widget.document['CCA'])
@@ -284,7 +295,19 @@ class _EventAdminViewState extends State<EventAdminView> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => CCAAdminView.tab(
+                builder: (context) => CCAAdminView.fromMyCCAs(
+                    document: ccaDoc, currentIndex: 1)));
+      } else if (widget.fromExplore) {
+        DocumentSnapshot ccaDoc = await Firestore.instance
+            .collection('CCA')
+            .document(widget.document['CCA'])
+            .get();
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CCAAdminView.fromExplore(
                     document: ccaDoc,
                     exploreIndex: widget.index,
                     currentIndex: 1)));

@@ -8,8 +8,15 @@ import 'package:flutter/cupertino.dart';
 class CCAAdminAbout extends StatelessWidget {
   final DocumentSnapshot document;
   int index;
+  bool fromExplore = false;
+  bool fromMyCCAs = false;
 
-  CCAAdminAbout({this.document, this.index});
+  CCAAdminAbout.fromExplore({this.document, this.index}) {
+    fromExplore = true;
+  }
+  CCAAdminAbout.fromMyCCAs({this.document}) {
+    fromMyCCAs = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,13 +128,22 @@ class CCAAdminAbout extends StatelessWidget {
                 ),
                 RaisedButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) => CCAAdminEdit(
-                                  ccaDocument: document,
-                                  index: index,
-                                )));
+                    if (fromMyCCAs) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => CCAAdminEdit.fromMyCCAs(
+                                    ccaDocument: document,
+                                  )));
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => CCAAdminEdit.fromExplore(
+                                    ccaDocument: document,
+                                    index: index,
+                                  )));
+                    }
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),

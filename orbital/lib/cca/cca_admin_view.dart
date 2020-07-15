@@ -13,16 +13,21 @@ class CCAAdminView extends StatefulWidget {
   Auth auth = new Auth();
   DocumentSnapshot document;
   bool favCCA;
-  int currentIndex;
-  int exploreIndex;
+  bool fromExplore = false;
+  bool fromMyCCAs = false;
+  int currentIndex = 0;
+  int exploreIndex = 0;
 
-  CCAAdminView({@required this.document, @required this.exploreIndex}) {
-    currentIndex = 0;
-  }
-  CCAAdminView.tab(
+  CCAAdminView.fromExplore(
       {@required this.document,
       @required this.currentIndex,
-      @required this.exploreIndex});
+      @required this.exploreIndex}) {
+    fromExplore = true;
+  }
+  CCAAdminView.fromMyCCAs(
+      {@required this.document, @required this.currentIndex}) {
+    fromMyCCAs = true;
+  }
 
   @override
   _CCAAdminViewState createState() => _CCAAdminViewState();
@@ -52,7 +57,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        initialIndex: widget.currentIndex,
+        initialIndex: widget.currentIndex == null ? 0 : widget.currentIndex,
         length: 3,
         child: Scaffold(
           appBar: new AppBar(
@@ -63,13 +68,17 @@ class _CCAAdminViewState extends State<CCAAdminView> {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Explore.tab(index: widget.exploreIndex)));
+                if (widget.fromMyCCAs) {
+                  Navigator.pop(context);
+                } else {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Explore.tab(index: widget.exploreIndex)));
+                }
               },
               color: Colors.white,
             ),
@@ -136,19 +145,32 @@ class _CCAAdminViewState extends State<CCAAdminView> {
           ),
           body: TabBarView(
             children: [
-              CCAAdminAbout(
-                document: widget.document,
-                index: widget.exploreIndex,
-              ),
-              CCAAdminEventlist(
-                ccaDocument: widget.document,
-                index: widget.exploreIndex,
-              ),
-              CCAAdminPanel(
-                ccaName: widget.document['Name'],
-                auth: widget.auth,
-                previousIndex: widget.exploreIndex,
-              )
+              widget.fromMyCCAs
+                  ? CCAAdminAbout.fromMyCCAs(
+                      document: widget.document,
+                    )
+                  : CCAAdminAbout.fromExplore(
+                      document: widget.document,
+                      index: widget.exploreIndex,
+                    ),
+              widget.fromMyCCAs
+                  ? CCAAdminEventlist.fromMyCCAs(
+                      ccaDocument: widget.document,
+                    )
+                  : CCAAdminEventlist.fromExplore(
+                      ccaDocument: widget.document,
+                      index: widget.exploreIndex,
+                    ),
+              widget.fromMyCCAs
+                  ? CCAAdminPanel.fromMyCCAs(
+                      ccaName: widget.document['Name'],
+                      auth: widget.auth,
+                    )
+                  : CCAAdminPanel.fromExplore(
+                      ccaName: widget.document['Name'],
+                      auth: widget.auth,
+                      previousIndex: widget.exploreIndex,
+                    )
             ],
           ),
         ));

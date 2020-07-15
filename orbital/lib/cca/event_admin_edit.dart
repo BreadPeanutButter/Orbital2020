@@ -13,15 +13,27 @@ class EventAdminEdit extends StatefulWidget {
   int index;
   bool fromEventFeed = false;
   bool fromMyEvents = false;
-  bool fromCCA = false;
+  bool fromExplore = false;
+  bool fromMyCCAs = false;
   bool closed;
   String imageURL;
   File _image;
   String name, details, eventTime, location, registrationInstructions;
   bool isLoading = false;
 
-  EventAdminEdit.fromCCA({@required this.ccaDocument, @required this.index}) {
-    fromCCA = true;
+  EventAdminEdit.fromExplore(
+      {@required this.ccaDocument, @required this.index}) {
+    fromExplore = true;
+    closed = ccaDocument['Closed'];
+    imageURL = ccaDocument['image'];
+    name = ccaDocument['Name'];
+    details = ccaDocument['Details'];
+    eventTime = ccaDocument['EventTime'];
+    location = ccaDocument['Location'];
+    registrationInstructions = ccaDocument['RegisterInstructions'];
+  }
+  EventAdminEdit.fromMyCCAs({@required this.ccaDocument}) {
+    fromMyCCAs = true;
     closed = ccaDocument['Closed'];
     imageURL = ccaDocument['image'];
     name = ccaDocument['Name'];
@@ -121,11 +133,11 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    if (widget.fromCCA) {
+                    if (widget.fromExplore) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (c) => EventAdminView.fromEdit(
+                              builder: (c) => EventAdminView.fromExplore(
                                     document: doc,
                                     index: widget.index,
                                   )));
@@ -142,6 +154,13 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                           MaterialPageRoute(
                               builder: (c) => EventAdminView.fromEventFeed(
                                   document: doc, index: widget.index)));
+                    } else if (widget.fromMyCCAs) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromMyCCAs(
+                                    document: doc,
+                                  )));
                     }
                   }),
 

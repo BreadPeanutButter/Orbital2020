@@ -11,8 +11,15 @@ import 'package:path/path.dart' as Path;
 class CCAAdminEdit extends StatefulWidget {
   DocumentSnapshot ccaDocument;
   int index;
+  bool fromExplore = false;
+  bool fromMyCCAs = false;
 
-  CCAAdminEdit({@required this.ccaDocument, this.index});
+  CCAAdminEdit.fromExplore({@required this.ccaDocument, this.index}) {
+    fromExplore = true;
+  }
+  CCAAdminEdit.fromMyCCAs({@required this.ccaDocument}) {
+    fromMyCCAs = true;
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -83,13 +90,22 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) => CCAAdminView(
-                                  document: doc,
-                                  exploreIndex: widget.index,
-                                )));
+                    if (widget.fromMyCCAs) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => CCAAdminView.fromMyCCAs(
+                                  document: doc, currentIndex: 0)));
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => CCAAdminView.fromExplore(
+                                    document: doc,
+                                    currentIndex: 0,
+                                    exploreIndex: widget.index,
+                                  )));
+                    }
                   }),
 
               SizedBox(width: 110),

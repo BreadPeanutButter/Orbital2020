@@ -106,7 +106,7 @@ class MyEvents extends StatelessWidget {
   }
 
   void goToEventPage(BuildContext context, DocumentSnapshot document) async {
-    bool userIsAdmin = await auth.isAdminOf(document.documentID);
+    bool userIsAdmin = await auth.isAdminOf(document['CCA']);
     if (userIsAdmin) {
       Navigator.push(
           context,
