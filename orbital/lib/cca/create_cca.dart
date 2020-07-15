@@ -341,14 +341,11 @@ class _CreateCCAState extends State<CreateCCA> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                   FocusScope.of(context).unfocus();
-                  Navigator.pushNamed(ctx, '/explore');
                   Navigator.push(
                       ctx,
                       MaterialPageRoute(
                           builder: (c) => CCAAdminView.fromExplore(
                                 document: doc,
-                                currentIndex: 0,
-                                exploreIndex: 0,
                               )));
                 }),
 

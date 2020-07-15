@@ -19,7 +19,6 @@ class Explore extends StatelessWidget {
   Explore.tab({@required this.index});
 
   static const categories = <Text>[
-    Text('Favourites'),
     Text('All'),
     Text('Academic'),
     Text('Adventure'),
@@ -58,7 +57,7 @@ class Explore extends StatelessWidget {
 
     return DefaultTabController(
         initialIndex: index,
-        length: 11,
+        length: 10,
         child: Scaffold(
           appBar: new AppBar(
             title: Text('Explore CCAs', style: TextStyle(color: Colors.black)),
@@ -99,57 +98,50 @@ class Explore extends StatelessWidget {
               unselectedLabelColor: Colors.grey[50],
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.star),
+                  icon: Icon(Icons.whatshot),
                   child: categories[0],
                 ),
                 Tab(
-                  icon: Icon(Icons.whatshot),
+                  icon: Icon(FontAwesomeIcons.book),
                   child: categories[1],
                 ),
                 Tab(
-                  icon: Icon(FontAwesomeIcons.book),
+                  icon: Icon(FontAwesomeIcons.campground),
                   child: categories[2],
                 ),
                 Tab(
-                  icon: Icon(FontAwesomeIcons.campground),
+                  icon: Icon(FontAwesomeIcons.penSquare),
                   child: categories[3],
                 ),
                 Tab(
-                  icon: Icon(FontAwesomeIcons.penSquare),
+                  icon: Icon(FontAwesomeIcons.peopleCarry),
                   child: categories[4],
                 ),
                 Tab(
-                  icon: Icon(FontAwesomeIcons.peopleCarry),
+                  icon: Icon(Icons.fitness_center),
                   child: categories[5],
                 ),
                 Tab(
-                  icon: Icon(Icons.fitness_center),
+                  icon: Icon(FontAwesomeIcons.handsHelping),
                   child: categories[6],
                 ),
                 Tab(
-                  icon: Icon(FontAwesomeIcons.handsHelping),
+                  icon: Icon(FontAwesomeIcons.atom),
                   child: categories[7],
                 ),
                 Tab(
-                  icon: Icon(FontAwesomeIcons.atom),
+                  icon: Icon(FontAwesomeIcons.footballBall),
                   child: categories[8],
                 ),
                 Tab(
-                  icon: Icon(FontAwesomeIcons.footballBall),
-                  child: categories[9],
-                ),
-                Tab(
                   icon: Icon(Icons.laptop_chromebook),
-                  child: categories[10],
+                  child: categories[9],
                 ),
               ],
             ),
           ),
           body: TabBarView(
             children: [
-              ExploreFavourites(
-                auth: auth,
-              ),
               ExploreAll(auth: auth),
               ExploreCategory(category: "Academic"),
               ExploreCategory(category: "Adventure"),

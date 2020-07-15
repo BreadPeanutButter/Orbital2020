@@ -10,20 +10,29 @@ import 'package:path/path.dart' as Path;
 
 class EventAdminEdit extends StatefulWidget {
   DocumentSnapshot ccaDocument;
-  int index;
   bool fromEventFeed = false;
   bool fromMyEvents = false;
   bool fromExplore = false;
   bool fromMyCCAs = false;
+  bool fromFavourites = false;
   bool closed;
   String imageURL;
   File _image;
   String name, details, eventTime, location, registrationInstructions;
   bool isLoading = false;
 
-  EventAdminEdit.fromExplore(
-      {@required this.ccaDocument, @required this.index}) {
+  EventAdminEdit.fromExplore({@required this.ccaDocument}) {
     fromExplore = true;
+    closed = ccaDocument['Closed'];
+    imageURL = ccaDocument['image'];
+    name = ccaDocument['Name'];
+    details = ccaDocument['Details'];
+    eventTime = ccaDocument['EventTime'];
+    location = ccaDocument['Location'];
+    registrationInstructions = ccaDocument['RegisterInstructions'];
+  }
+  EventAdminEdit.fromFavourites({@required this.ccaDocument}) {
+    fromFavourites = true;
     closed = ccaDocument['Closed'];
     imageURL = ccaDocument['image'];
     name = ccaDocument['Name'];
@@ -42,8 +51,7 @@ class EventAdminEdit extends StatefulWidget {
     location = ccaDocument['Location'];
     registrationInstructions = ccaDocument['RegisterInstructions'];
   }
-  EventAdminEdit.fromEventFeed(
-      {@required this.ccaDocument, @required this.index}) {
+  EventAdminEdit.fromEventFeed({@required this.ccaDocument}) {
     fromEventFeed = true;
     closed = ccaDocument['Closed'];
     imageURL = ccaDocument['image'];
@@ -133,13 +141,20 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
+                    if (widget.fromFavourites) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminView.fromFavourites(
+                                    document: doc,
+                                  )));
+                    }
                     if (widget.fromExplore) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (c) => EventAdminView.fromExplore(
                                     document: doc,
-                                    index: widget.index,
                                   )));
                     } else if (widget.fromMyEvents) {
                       Navigator.push(
@@ -152,8 +167,8 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (c) => EventAdminView.fromEventFeed(
-                                  document: doc, index: widget.index)));
+                              builder: (c) =>
+                                  EventAdminView.fromEventFeed(document: doc)));
                     } else if (widget.fromMyCCAs) {
                       Navigator.push(
                           context,

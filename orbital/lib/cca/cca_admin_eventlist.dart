@@ -7,16 +7,19 @@ import 'package:orbital/cca/create_event.dart';
 class CCAAdminEventlist extends StatelessWidget {
   final database = Firestore.instance;
   DocumentSnapshot ccaDocument;
-  int index;
   bool fromExplore = false;
   bool fromMyCCAs = false;
+  bool fromFavourites = false;
 
-  CCAAdminEventlist.fromExplore(
-      {@required this.ccaDocument, @required this.index}) {
+  CCAAdminEventlist.fromExplore({@required this.ccaDocument}) {
     fromExplore = true;
   }
   CCAAdminEventlist.fromMyCCAs({@required this.ccaDocument}) {
     fromMyCCAs = true;
+  }
+
+  CCAAdminEventlist.fromFavourites({@required this.ccaDocument}) {
+    fromFavourites = true;
   }
 
   @override
@@ -98,7 +101,15 @@ class CCAAdminEventlist extends StatelessWidget {
                       child: InkWell(
                           highlightColor: Colors.blueAccent,
                           onTap: () {
-                            if (fromMyCCAs) {
+                            if (fromFavourites) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EventAdminView.fromFavourites(
+                                            document: document,
+                                          )));
+                            } else if (fromMyCCAs) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -112,8 +123,8 @@ class CCAAdminEventlist extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           EventAdminView.fromExplore(
-                                              document: document,
-                                              index: index)));
+                                            document: document,
+                                          )));
                             }
                           },
                           child: ListTile(

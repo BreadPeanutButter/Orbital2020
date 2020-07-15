@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/cca/cca_admin_about.dart';
 import 'package:orbital/cca/cca_admin_eventlist.dart';
 import 'package:orbital/cca/cca_admin_panel.dart';
-import 'package:orbital/screens/explore/explore.dart';
+import 'package:orbital/favourites/favourites.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flushbar/flushbar.dart';
@@ -15,18 +15,19 @@ class CCAAdminView extends StatefulWidget {
   bool favCCA;
   bool fromExplore = false;
   bool fromMyCCAs = false;
-  int currentIndex = 0;
-  int exploreIndex = 0;
+  bool fromFavourites = false;
 
-  CCAAdminView.fromExplore(
-      {@required this.document,
-      @required this.currentIndex,
-      @required this.exploreIndex}) {
+  CCAAdminView.fromExplore({
+    @required this.document,
+  }) {
     fromExplore = true;
   }
-  CCAAdminView.fromMyCCAs(
-      {@required this.document, @required this.currentIndex}) {
+  CCAAdminView.fromMyCCAs({@required this.document}) {
     fromMyCCAs = true;
+  }
+
+  CCAAdminView.fromFavourites({@required this.document}) {
+    fromFavourites = true;
   }
 
   @override
@@ -57,7 +58,6 @@ class _CCAAdminViewState extends State<CCAAdminView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        initialIndex: widget.currentIndex == null ? 0 : widget.currentIndex,
         length: 3,
         child: Scaffold(
           appBar: new AppBar(
@@ -68,16 +68,17 @@ class _CCAAdminViewState extends State<CCAAdminView> {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                if (widget.fromMyCCAs) {
-                  Navigator.pop(context);
-                } else if (widget.fromExplore) {
+                if (widget.fromFavourites) {
                   Navigator.pop(context);
                   Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              Explore.tab(index: widget.exploreIndex)));
+                          builder: (context) => Favourites(
+                                auth: widget.auth,
+                              )));
+                } else {
+                  Navigator.pop(context);
                 }
               },
               color: Colors.white,
@@ -116,7 +117,9 @@ class _CCAAdminViewState extends State<CCAAdminView> {
                                 widget.favCCA = !widget.favCCA;
                               });
                             },
-                            color: widget.favCCA ? Colors.orange : Colors.white,
+                            color: widget.favCCA
+                                ? Colors.orange[400]
+                                : Colors.white,
                           );
                         }
                       }))
@@ -149,18 +152,24 @@ class _CCAAdminViewState extends State<CCAAdminView> {
                   ? CCAAdminAbout.fromMyCCAs(
                       document: widget.document,
                     )
-                  : CCAAdminAbout.fromExplore(
-                      document: widget.document,
-                      index: widget.exploreIndex,
-                    ),
+                  : widget.fromFavourites
+                      ? CCAAdminAbout.fromFavourites(
+                          document: widget.document,
+                        )
+                      : CCAAdminAbout.fromExplore(
+                          document: widget.document,
+                        ),
               widget.fromMyCCAs
                   ? CCAAdminEventlist.fromMyCCAs(
                       ccaDocument: widget.document,
                     )
-                  : CCAAdminEventlist.fromExplore(
-                      ccaDocument: widget.document,
-                      index: widget.exploreIndex,
-                    ),
+                  : widget.fromFavourites
+                      ? CCAAdminEventlist.fromFavourites(
+                          ccaDocument: widget.document,
+                        )
+                      : CCAAdminEventlist.fromExplore(
+                          ccaDocument: widget.document,
+                        ),
               CCAAdminPanel(
                 ccaName: widget.document['Name'],
                 auth: widget.auth,

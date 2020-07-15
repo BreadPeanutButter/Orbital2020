@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:orbital/favourites/favourites.dart';
 import 'package:orbital/my_ccas/my_ccas.dart';
 import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
 
-enum Drawers { eventfeed, explore, bookmark, profile, myCCAs }
+enum Drawers { eventfeed, explore, bookmark, profile, myCCAs, favourites }
 
 class AppDrawer extends StatelessWidget {
   Drawers drawer;
@@ -48,6 +49,33 @@ class AppDrawer extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 )),
             onTap: () => Navigator.pushNamed(context, '/explore'),
+          )),
+      Ink(
+          decoration: BoxDecoration(
+            color: drawer == Drawers.favourites
+                ? Colors.blue[400]
+                : Colors.transparent,
+            border: drawer == Drawers.favourites
+                ? Border.all(width: 2, color: Colors.grey[600])
+                : null,
+          ),
+          child: ListTile(
+            leading: Icon(
+              FontAwesomeIcons.solidStar,
+              size: 35,
+              color: Colors.orange,
+            ),
+            title: Text('Favourite CCAs',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                )),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (c) => Favourites(
+                          auth: auth,
+                        ))),
           )),
       Ink(
           decoration: BoxDecoration(
@@ -107,7 +135,7 @@ class AppDrawer extends StatelessWidget {
                 : null,
           ),
           child: ListTile(
-            leading: Icon(Icons.bookmark, size: 35, color: Colors.orange),
+            leading: Icon(Icons.bookmark, size: 35, color: Colors.deepOrange),
             title: Text('Bookmarked Events',
                 style: TextStyle(
                   fontSize: 18,

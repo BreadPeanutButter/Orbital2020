@@ -20,24 +20,26 @@ class EventAdminView extends StatefulWidget {
   bool fromExplore = false;
   bool fromEdit = false;
   bool fromMyCCAs = false;
-  int index;
+  bool fromFavourites = false;
 
   EventAdminView({@required this.document});
-  EventAdminView.fromExplore({@required this.document, @required this.index}) {
+  EventAdminView.fromExplore({@required this.document}) {
     fromExplore = true;
   }
-  EventAdminView.fromEventFeed(
-      {@required this.document, @required this.index}) {
+  EventAdminView.fromEventFeed({@required this.document}) {
     fromEventFeed = true;
   }
   EventAdminView.fromMyEvents({@required this.document}) {
     fromMyEvents = true;
   }
-  EventAdminView.fromEdit({@required this.document, @required this.index}) {
+  EventAdminView.fromEdit({@required this.document}) {
     fromEdit = true;
   }
   EventAdminView.fromMyCCAs({@required this.document}) {
     fromMyCCAs = true;
+  }
+  EventAdminView.fromFavourites({@required this.document}) {
+    fromFavourites = true;
   }
 
   @override
@@ -232,13 +234,20 @@ class _EventAdminViewState extends State<EventAdminView> {
                 SizedBox(height: 30),
                 RaisedButton.icon(
                   onPressed: () {
+                    if (widget.fromFavourites) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => EventAdminEdit.fromFavourites(
+                                    ccaDocument: document,
+                                  )));
+                    }
                     if (widget.fromExplore || widget.fromEdit) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (c) => EventAdminEdit.fromExplore(
                                     ccaDocument: document,
-                                    index: widget.index,
                                   )));
                     } else if (widget.fromMyEvents) {
                       Navigator.push(
@@ -253,7 +262,6 @@ class _EventAdminViewState extends State<EventAdminView> {
                           MaterialPageRoute(
                               builder: (c) => EventAdminEdit.fromEventFeed(
                                     ccaDocument: document,
-                                    index: widget.index,
                                   )));
                     } else if (widget.fromMyCCAs) {
                       Navigator.push(
@@ -284,7 +292,7 @@ class _EventAdminViewState extends State<EventAdminView> {
     }
 
     void backButton() async {
-      if (widget.fromMyCCAs) {
+      if (widget.fromFavourites) {
         DocumentSnapshot ccaDoc = await Firestore.instance
             .collection('CCA')
             .document(widget.document['CCA'])
@@ -294,8 +302,21 @@ class _EventAdminViewState extends State<EventAdminView> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => CCAAdminView.fromMyCCAs(
-                    document: ccaDoc, currentIndex: 1)));
+                builder: (context) => CCAAdminView.fromFavourites(
+                      document: ccaDoc,
+                    )));
+      } else if (widget.fromMyCCAs) {
+        DocumentSnapshot ccaDoc = await Firestore.instance
+            .collection('CCA')
+            .document(widget.document['CCA'])
+            .get();
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    CCAAdminView.fromMyCCAs(document: ccaDoc)));
       } else if (widget.fromExplore) {
         DocumentSnapshot ccaDoc = await Firestore.instance
             .collection('CCA')
@@ -306,10 +327,8 @@ class _EventAdminViewState extends State<EventAdminView> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => CCAAdminView.fromExplore(
-                    document: ccaDoc,
-                    exploreIndex: widget.index,
-                    currentIndex: 1)));
+                builder: (context) =>
+                    CCAAdminView.fromExplore(document: ccaDoc)));
       } else if (widget.fromMyEvents) {
         Navigator.pop(context);
         Navigator.pop(context);

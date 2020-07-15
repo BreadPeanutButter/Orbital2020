@@ -7,15 +7,18 @@ import 'package:flutter/cupertino.dart';
 
 class CCAAdminAbout extends StatelessWidget {
   final DocumentSnapshot document;
-  int index;
   bool fromExplore = false;
   bool fromMyCCAs = false;
+  bool fromFavourites = false;
 
-  CCAAdminAbout.fromExplore({this.document, this.index}) {
+  CCAAdminAbout.fromExplore({this.document}) {
     fromExplore = true;
   }
   CCAAdminAbout.fromMyCCAs({this.document}) {
     fromMyCCAs = true;
+  }
+  CCAAdminAbout.fromFavourites({this.document}) {
+    fromFavourites = true;
   }
 
   @override
@@ -128,7 +131,14 @@ class CCAAdminAbout extends StatelessWidget {
                 ),
                 RaisedButton.icon(
                   onPressed: () {
-                    if (fromMyCCAs) {
+                    if (fromFavourites) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => CCAAdminEdit.fromFavourites(
+                                    ccaDocument: document,
+                                  )));
+                    } else if (fromMyCCAs) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -141,7 +151,6 @@ class CCAAdminAbout extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (c) => CCAAdminEdit.fromExplore(
                                     ccaDocument: document,
-                                    index: index,
                                   )));
                     }
                   },

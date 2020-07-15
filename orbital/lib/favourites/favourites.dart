@@ -1,22 +1,42 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:orbital/services/auth.dart';
-import 'package:orbital/cca/cca_admin_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:orbital/screens/app_drawer.dart';
+import 'package:orbital/cca/cca_normal_view.dart';
+import 'package:orbital/cca/cca_admin_view.dart';
 
-class MyCCAs extends StatelessWidget {
-  Auth auth;
+class Favourites extends StatelessWidget {
   final collectionRef = Firestore.instance.collection('CCA');
-  Future<List> adminOf;
-  List adminOfList;
-  MyCCAs({@required this.auth}) {
-    adminOf = auth.getAdminCCAs();
+  Auth auth;
+  Future<List> favourites;
+  List favList;
+
+  Favourites({@required this.auth}) {
+    favourites = auth.getFavourites();
   }
 
-  Widget buildBody(int index) {
+  void goToCCAViewPage(BuildContext context, DocumentSnapshot document) async {
+    bool userIsAdmin = await auth.isAdminOf(document.documentID);
+    if (userIsAdmin) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CCAAdminView.fromFavourites(
+                    document: document,
+                  )));
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  CCANormalView.fromFavourites(document: document)));
+    }
+  }
+
+  Widget buildBody(BuildContext ctxt, int indx) {
     return FutureBuilder(
-        future: collectionRef.document(adminOfList[index]).get(),
+        future: collectionRef.document(favList[indx]).get(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return SizedBox();
@@ -33,11 +53,7 @@ class MyCCAs extends StatelessWidget {
                     shadowColor: Colors.blue,
                     child: InkWell(
                         highlightColor: Colors.blueAccent,
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CCAAdminView.fromMyCCAs(
-                                    document: snapshot.data))),
+                        onTap: () => goToCCAViewPage(context, snapshot.data),
                         child: ListTile(
                           title: new Text(snapshot.data['Name'],
                               maxLines: 2,
@@ -52,33 +68,34 @@ class MyCCAs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: AppBar(
-        title: Text('My CCAs', style: TextStyle(color: Colors.black)),
+    // TODO: implement build
+    return Scaffold(
+      appBar: new AppBar(
+        title: Text('Favourite CCAs', style: TextStyle(color: Colors.black)),
         centerTitle: true,
       ),
-      drawer: AppDrawer(drawer: Drawers.myCCAs),
       body: FutureBuilder(
-          future: adminOf,
+          future: favourites,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             } else {
-              adminOfList = snapshot.data.reversed.toList();
-              if (adminOfList.isEmpty) {
+              favList = snapshot.data.reversed.toList();
+              if (favList.isEmpty) {
                 return Center(
                     child: Text(
-                  'You are not the Admin of any CCAs',
+                  'No favourite CCAs ☹️',
                   style: TextStyle(fontSize: 30),
                 ));
               } else {
                 return ListView.builder(
-                    itemCount: adminOfList.length,
-                    itemBuilder: (BuildContext ctx, int index) =>
-                        buildBody(index));
+                    itemCount: favList.length,
+                    itemBuilder: (BuildContext ctxt, int indx) =>
+                        buildBody(ctxt, indx));
               }
             }
           }),
+      drawer: AppDrawer(drawer: Drawers.favourites),
     );
   }
 }

@@ -6,7 +6,6 @@ import 'package:orbital/cca/cca_admin_view.dart';
 import 'package:orbital/services/auth.dart';
 
 class ExploreAll extends StatelessWidget {
-  static const index = 1;
   final database = Firestore.instance;
   Auth auth;
 
@@ -66,15 +65,12 @@ class ExploreAll extends StatelessWidget {
           MaterialPageRoute(
               builder: (context) => CCAAdminView.fromExplore(
                     document: document,
-                    currentIndex: 0,
-                    exploreIndex: index,
                   )));
     } else {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  CCANormalView.tab(document: document, previousIndex: index)));
+              builder: (context) => CCANormalView(document: document)));
     }
   }
 }

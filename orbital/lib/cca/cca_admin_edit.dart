@@ -10,15 +10,18 @@ import 'package:path/path.dart' as Path;
 
 class CCAAdminEdit extends StatefulWidget {
   DocumentSnapshot ccaDocument;
-  int index;
   bool fromExplore = false;
   bool fromMyCCAs = false;
+  bool fromFavourites = false;
 
-  CCAAdminEdit.fromExplore({@required this.ccaDocument, this.index}) {
+  CCAAdminEdit.fromExplore({@required this.ccaDocument}) {
     fromExplore = true;
   }
   CCAAdminEdit.fromMyCCAs({@required this.ccaDocument}) {
     fromMyCCAs = true;
+  }
+  CCAAdminEdit.fromFavourites({@required this.ccaDocument}) {
+    fromFavourites = true;
   }
 
   @override
@@ -90,20 +93,24 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    if (widget.fromMyCCAs) {
+                    if (widget.fromFavourites) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (c) => CCAAdminView.fromMyCCAs(
-                                  document: doc, currentIndex: 0)));
+                              builder: (c) =>
+                                  CCAAdminView.fromFavourites(document: doc)));
+                    } else if (widget.fromMyCCAs) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) =>
+                                  CCAAdminView.fromMyCCAs(document: doc)));
                     } else {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (c) => CCAAdminView.fromExplore(
                                     document: doc,
-                                    currentIndex: 0,
-                                    exploreIndex: widget.index,
                                   )));
                     }
                   }),

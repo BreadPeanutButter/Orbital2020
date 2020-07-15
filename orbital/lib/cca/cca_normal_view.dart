@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/cca/cca_normal_about.dart';
 import 'package:orbital/cca/cca_normal_eventlist.dart';
-import 'package:orbital/screens/explore/explore.dart';
+import 'package:orbital/favourites/favourites.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,10 +12,12 @@ class CCANormalView extends StatefulWidget {
   Auth auth = new Auth();
   DocumentSnapshot document;
   bool favCCA;
-  int previousIndex;
+  bool fromFavourites;
 
   CCANormalView({@required this.document});
-  CCANormalView.tab({@required this.document, @required this.previousIndex});
+  CCANormalView.fromFavourites({@required this.document}) {
+    fromFavourites = true;
+  }
 
   @override
   _CCANormalViewState createState() => _CCANormalViewState();
@@ -61,12 +63,12 @@ class _CCANormalViewState extends State<CCANormalView> {
               icon: Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Explore.tab(index: widget.previousIndex)));
+                if (widget.fromFavourites) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Favourites(auth: widget.auth)));
+                }
               },
               color: Colors.white,
             ),
