@@ -10,23 +10,11 @@ import 'cca_admin_add.dart';
 class CCAAdminPanel extends StatefulWidget {
   final database = Firestore.instance;
   final String ccaName;
-  bool fromExplore = false;
-  bool fromMyCCAs = false;
   Auth auth;
   DocumentReference docRef;
-  int previousIndex;
 
-  CCAAdminPanel.fromExplore(
-      {@required this.ccaName,
-      @required this.auth,
-      @required this.previousIndex}) {
+  CCAAdminPanel({@required this.ccaName, @required this.auth}) {
     docRef = database.collection('CCA').document(ccaName);
-    fromExplore = true;
-  }
-
-  CCAAdminPanel.fromMyCCAs({@required this.ccaName, @required this.auth}) {
-    docRef = database.collection('CCA').document(ccaName);
-    fromMyCCAs = true;
   }
 
   @override

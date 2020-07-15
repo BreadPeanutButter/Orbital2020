@@ -70,7 +70,7 @@ class _CCAAdminViewState extends State<CCAAdminView> {
               onPressed: () {
                 if (widget.fromMyCCAs) {
                   Navigator.pop(context);
-                } else {
+                } else if (widget.fromExplore) {
                   Navigator.pop(context);
                   Navigator.pop(context);
                   Navigator.push(
@@ -161,16 +161,10 @@ class _CCAAdminViewState extends State<CCAAdminView> {
                       ccaDocument: widget.document,
                       index: widget.exploreIndex,
                     ),
-              widget.fromMyCCAs
-                  ? CCAAdminPanel.fromMyCCAs(
-                      ccaName: widget.document['Name'],
-                      auth: widget.auth,
-                    )
-                  : CCAAdminPanel.fromExplore(
-                      ccaName: widget.document['Name'],
-                      auth: widget.auth,
-                      previousIndex: widget.exploreIndex,
-                    )
+              CCAAdminPanel(
+                ccaName: widget.document['Name'],
+                auth: widget.auth,
+              )
             ],
           ),
         ));

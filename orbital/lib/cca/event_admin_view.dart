@@ -320,11 +320,6 @@ class _EventAdminViewState extends State<EventAdminView> {
                 builder: (context) => MyEvents(auth: widget.auth)));
       } else if (widget.fromEventFeed) {
         Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => EventFeed.tab(index: widget.index)));
       } else {
         Navigator.pop(context);
       }
