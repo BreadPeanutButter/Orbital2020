@@ -59,13 +59,8 @@ class AppDrawer extends StatelessWidget {
                 : null,
           ),
           child: ListTile(
-            leading: Icon(
-              FontAwesomeIcons.crown,
-              size: 35,
-              color: drawer == Drawers.explore
-                  ? Colors.yellow[700]
-                  : Colors.yellow[900],
-            ),
+            leading: Icon(FontAwesomeIcons.crown,
+                size: 35, color: Colors.yellow[700]),
             title: Text('My CCAs',
                 style: TextStyle(
                   fontSize: 18,
