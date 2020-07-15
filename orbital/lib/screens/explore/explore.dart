@@ -34,6 +34,28 @@ class Explore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void maxCCAsDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Opps! Prohibited action"),
+            content: new Text(
+                "You are already the Admin of 10 CCAs which is the maximum. You cannot create anymore CCAs."),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              FlatButton(
+                  child: new Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          );
+        },
+      );
+    }
+
     return DefaultTabController(
         initialIndex: index,
         length: 11,
@@ -54,11 +76,17 @@ class Explore extends StatelessWidget {
                     highlightColor: Colors.blue[700],
                     icon: Icon(Icons.add),
                     iconSize: 35,
-                    onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                           CreateCCA())),
+                    onPressed: () async {
+                      List ccaList = (await auth.getAdminCCAs()).toList();
+                      if (ccaList.length < 10) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateCCA()));
+                      } else {
+                        maxCCAsDialog();
+                      }
+                    },
                     color: Colors.white,
                   ))
             ],
