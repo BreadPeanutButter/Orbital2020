@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:orbital/cca/cca_admin_view.dart';
 import 'package:orbital/cca/event_feedback_admin.dart';
 import 'package:intl/intl.dart';
-import 'package:orbital/my_events/my_events.dart';
-import 'package:orbital/screens/event_feed/event_feed.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -313,11 +311,6 @@ class _EventAdminViewState extends State<EventAdminView> {
                     currentIndex: 1)));
       } else if (widget.fromMyEvents) {
         Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MyEvents(auth: widget.auth)));
       } else if (widget.fromEventFeed) {
         Navigator.pop(context);
       } else {
@@ -372,7 +365,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                                 });
                               },
                               color: widget.bookmarked
-                                  ? Colors.orange
+                                  ? Colors.deepOrange
                                   : Colors.white,
                             );
                           }

@@ -6,7 +6,7 @@ import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
 
-enum Drawers { eventfeed, explore, event, profile, myCCAs }
+enum Drawers { eventfeed, explore, bookmark, profile, myCCAs }
 
 class AppDrawer extends StatelessWidget {
   Drawers drawer;
@@ -99,19 +99,16 @@ class AppDrawer extends StatelessWidget {
           )),
       Ink(
           decoration: BoxDecoration(
-            color:
-                drawer == Drawers.event ? Colors.blue[400] : Colors.transparent,
-            border: drawer == Drawers.event
-                ? Border.all(width: 2, color: Colors.grey[600])
+            color: drawer == Drawers.bookmark
+                ? Colors.blue[400]
+                : Colors.transparent,
+            border: drawer == Drawers.bookmark
+                ? Border.all(width: 2, color: Colors.grey[700])
                 : null,
           ),
           child: ListTile(
-            leading: Icon(
-              Icons.bookmark,
-              size: 35,
-              color: Colors.orange,
-            ),
-            title: Text('Event Bookmarks',
+            leading: Icon(Icons.bookmark, size: 35, color: Colors.deepOrange),
+            title: Text('Bookmarked Events',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

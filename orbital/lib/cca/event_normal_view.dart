@@ -236,16 +236,7 @@ class _EventNormalViewState extends State<EventNormalView> {
     }
 
     void backButton() {
-      if (widget.fromMyEvents) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MyEvents(auth: widget.auth)));
-      } else {
-        Navigator.pop(context);
-      }
+      Navigator.pop(context);
     }
 
     return Scaffold(
@@ -291,8 +282,9 @@ class _EventNormalViewState extends State<EventNormalView> {
                               widget.bookmarked = !widget.bookmarked;
                             });
                           },
-                          color:
-                              widget.bookmarked ? Colors.orange : Colors.white,
+                          color: widget.bookmarked
+                              ? Colors.deepOrange
+                              : Colors.white,
                         );
                       }
                     }))
