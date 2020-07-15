@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:orbital/my_ccas/my_ccas.dart';
 import 'package:orbital/my_events/my_events.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,7 +71,12 @@ class AppDrawer extends StatelessWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 )),
-            onTap: () => {},
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (c) => MyCCAs(
+                          auth: auth,
+                        ))),
           )),
       Ink(
           decoration: BoxDecoration(

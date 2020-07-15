@@ -34,16 +34,16 @@ class ExploreFavourites extends StatelessWidget {
             } else {
               return ListView.builder(
                   itemCount: favList.length,
-                  itemBuilder: (BuildContext ctxt, int index) =>
-                      buildBody(ctxt, index));
+                  itemBuilder: (BuildContext ctxt, int indx) =>
+                      buildBody(ctxt, indx));
             }
           }
         });
   }
 
-  Widget buildBody(BuildContext ctxt, int index) {
+  Widget buildBody(BuildContext ctxt, int indx) {
     return FutureBuilder(
-        future: collectionRef.document(favList[index]).get(),
+        future: collectionRef.document(favList[indx]).get(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return SizedBox();

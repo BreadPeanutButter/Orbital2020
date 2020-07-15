@@ -28,6 +28,15 @@ class Auth {
     return true;
   }
 
+  Future<List<String>> getAdminCCAs() async {
+    if (uid.isEmpty) {
+      await getCurrentUser();
+    }
+    DocumentSnapshot snapshot =
+        await Firestore.instance.collection('User').document(uid).get();
+    return List.from(snapshot['AdminOf']);
+  }
+
   Future<List<String>> getFavourites() async {
     if (uid.isEmpty) {
       await getCurrentUser();
