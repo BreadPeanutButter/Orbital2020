@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/cca/create_cca.dart';
-import 'package:orbital/screens/explore/explore_favourites.dart';
 import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
