@@ -107,7 +107,7 @@ class AppDrawer extends StatelessWidget {
                 : null,
           ),
           child: ListTile(
-            leading: Icon(Icons.bookmark, size: 35, color: Colors.deepOrange),
+            leading: Icon(Icons.bookmark, size: 35, color: Colors.orange),
             title: Text('Bookmarked Events',
                 style: TextStyle(
                   fontSize: 18,

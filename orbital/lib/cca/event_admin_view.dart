@@ -365,7 +365,7 @@ class _EventAdminViewState extends State<EventAdminView> {
                                 });
                               },
                               color: widget.bookmarked
-                                  ? Colors.deepOrange
+                                  ? Colors.orange[400]
                                   : Colors.white,
                             );
                           }
