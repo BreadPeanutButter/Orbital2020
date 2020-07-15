@@ -69,8 +69,8 @@ class _CCAAdminViewState extends State<CCAAdminView> {
               icon: Icon(Icons.arrow_back),
               onPressed: () {
                 if (widget.fromFavourites) {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+                  //Navigator.pop(context);
+                  //Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(

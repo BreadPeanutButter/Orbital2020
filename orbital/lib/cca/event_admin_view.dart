@@ -293,52 +293,17 @@ class _EventAdminViewState extends State<EventAdminView> {
 
     void backButton() async {
       if (widget.fromFavourites) {
-        DocumentSnapshot ccaDoc = await Firestore.instance
-            .collection('CCA')
-            .document(widget.document['CCA'])
-            .get();
         Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CCAAdminView.fromFavourites(
-                      document: ccaDoc,
-                    )));
       } else if (widget.fromMyCCAs) {
-        DocumentSnapshot ccaDoc = await Firestore.instance
-            .collection('CCA')
-            .document(widget.document['CCA'])
-            .get();
         Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    CCAAdminView.fromMyCCAs(document: ccaDoc)));
       } else if (widget.fromExplore) {
-        DocumentSnapshot ccaDoc = await Firestore.instance
-            .collection('CCA')
-            .document(widget.document['CCA'])
-            .get();
         Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    CCAAdminView.fromExplore(document: ccaDoc)));
       } else if (widget.fromMyEvents) {
-        Navigator.pop(context);
-        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => MyEvents(auth: widget.auth)));
       } else if (widget.fromEventFeed) {
-        Navigator.pop(context);
-      } else {
         Navigator.pop(context);
       }
     }

@@ -12,7 +12,7 @@ class CCANormalView extends StatefulWidget {
   Auth auth = new Auth();
   DocumentSnapshot document;
   bool favCCA;
-  bool fromFavourites;
+  bool fromFavourites = false;
 
   CCANormalView({@required this.document});
   CCANormalView.fromFavourites({@required this.document}) {
