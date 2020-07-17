@@ -290,8 +290,8 @@ class _CreateCCAState extends State<CreateCCA> {
                     Text("Upload display picture"),
                     SizedBox(height: 30),
                     Container(
-                      width: 270,
-                      padding: EdgeInsets.all(8),
+                      width: 248,
+                      padding: EdgeInsets.all(0),
                       child: CupertinoButton(
                         color: Colors.red[500],
                         child: Row(children: [
@@ -306,7 +306,7 @@ class _CreateCCAState extends State<CreateCCA> {
                         },
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 10),
                     Container(
                       padding: EdgeInsets.all(8),
                       child: CupertinoButton.filled(
