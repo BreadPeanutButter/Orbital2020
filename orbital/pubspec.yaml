@@ -39,6 +39,7 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   expandable: ^4.1.4
   charts_flutter: ^0.9.0
+  google_sign_in: ^4.5.1
   intl: ^0.16.1
 
 flutter_icons: 
@@ -73,6 +74,7 @@ flutter:
      - images/admin.jpg
      - images/closed.png
      - images/feedback.jpg
+     - images/google_logo.png
     
 
 

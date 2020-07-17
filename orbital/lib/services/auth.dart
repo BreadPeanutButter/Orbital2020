@@ -11,6 +11,7 @@ class Auth {
   String email = "";
   String uid = "";
   String dateJoined = "";
+  String googleSignedIn = "";
 
   Auth() {
     getCurrentUser();
@@ -25,6 +26,7 @@ class Auth {
     name = document.data["Name"];
     email = document.data["Email"];
     dateJoined = df.format(document.data["DateJoined"].toDate());
+    googleSignedIn = document.data["googleSignedIn"];
     return true;
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:orbital/services/auth.dart';
 import 'app_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,6 +18,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    
+  Future<Null> signOutGoogle() async {
+    await FirebaseAuth.instance.signOut();
+    await googleSignIn.disconnect();
+    await googleSignIn.signOut();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+    });
+  }
+
   signOut() async {
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     await firebaseAuth.signOut();
@@ -112,50 +126,82 @@ class _ProfileState extends State<Profile> {
         });
   }
 
-  Widget actionButtons() {
-    return Padding(
-      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 30.0),
-      child: new Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: Container(
-                  child: new RaisedButton(
-                child: new Text("Logout"),
-                textColor: Colors.white,
-                color: Colors.green,
-                onPressed: () {
-                  signOut();
-                },
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(20.0)),
-              )),
+  Widget actionButtons(String googleSignedIn) {
+    if(googleSignedIn != "true"){
+      return Padding(
+        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 30.0),
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: Container(
+                    child: new RaisedButton(
+                  child: new Text("Logout"),
+                  textColor: Colors.white,
+                  color: Colors.green,
+                  onPressed: () {
+                    signOut();
+                  },
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0)),
+                )),
+              ),
+              flex: 2,
             ),
-            flex: 2,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: 5.0),
-              child: Container(
-                  child: new RaisedButton(
-                child: new Text("Change password"),
-                textColor: Colors.white,
-                color: Colors.red,
-                onPressed: () {
-                  showAlertDialog(context);
-                },
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(20.0)),
-              )),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 5.0),
+                child: Container(
+                    child: new RaisedButton(
+                  child: new Text("Change password"),
+                  textColor: Colors.white,
+                  color: Colors.red,
+                  onPressed: () {
+                    showAlertDialog(context);
+                  },
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0)),
+                )),
+              ),
+              flex: 2,
             ),
-            flex: 2,
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    }
+
+    else{
+      return Padding(
+        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 30.0),
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: Container(
+                    child: new RaisedButton(
+                  child: new Text("Logout"),
+                  textColor: Colors.white,
+                  color: Colors.green,
+                  onPressed: () {
+                    signOutGoogle();
+                  },
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0)),
+                )),
+              ),
+              flex: 2,
+            )
+          ]
+        )
+      );
+    }
+
   }
 
   BoxDecoration myBoxDecoration() {
@@ -268,6 +314,7 @@ class _ProfileState extends State<Profile> {
     String name = widget.auth.name;
     String email = widget.auth.email;
     String dateJoined = 'Joined ' + widget.auth.dateJoined;
+    String googleSignedIn = widget.auth.googleSignedIn;
     return new Scaffold(
         appBar: new AppBar(
           title: Text(
@@ -297,7 +344,7 @@ class _ProfileState extends State<Profile> {
             myLayoutWidget(myWidgetEmail(email)),
             SizedBox(height: 25),
             myLayoutWidget(myWidgetDate(dateJoined)),
-            actionButtons(),
+            actionButtons(googleSignedIn),
           ],
         ));
   }
