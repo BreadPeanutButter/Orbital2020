@@ -223,6 +223,7 @@ class _CreateCCAState extends State<CreateCCA> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: TextFormField(
+                          maxLines: null,
                           autovalidate: true,
                           validator: (input) {
                             if (input.isEmpty || input == null) {
@@ -239,7 +240,7 @@ class _CreateCCAState extends State<CreateCCA> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: TextFormField(
-                          maxLines: null,
+                          maxLines: 1,
                           autovalidate: true,
                           validator: (input) {
                             if (input.isEmpty || input == null) {

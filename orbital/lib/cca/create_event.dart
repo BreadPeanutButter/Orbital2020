@@ -92,6 +92,7 @@ class _CreateEventState extends State<CreateEvent> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: TextFormField(
+                          maxLines: null,
                           autovalidate: true,
                           validator: (input) {
                             if (input.isEmpty) {

@@ -311,6 +311,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
+                            maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Name of event"),
                             autocorrect: true,
@@ -321,6 +322,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
+                            maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Provide events details",
                                 hintText: 'What the event is about'),
@@ -332,6 +334,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
+                            maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Provide event date and time",
                                 hintText: 'When is the event held'),
@@ -343,6 +346,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
+                            maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Provide event location",
                                 hintText: 'Where is the event held'),
@@ -354,6 +358,7 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                     Container(
                         padding: EdgeInsets.all(8),
                         child: new TextField(
+                            maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Provide sign up instructions",
                                 hintText: 'How to sign up'),
