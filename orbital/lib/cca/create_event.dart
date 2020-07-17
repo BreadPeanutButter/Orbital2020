@@ -212,8 +212,7 @@ class _CreateEventState extends State<CreateEvent> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Success!"),
-          content: new Text(
-              "Congratulations, you have published a new event! You can now view ${doc['Name']}."),
+          content: new Text("Congratulations, you have published a new event!"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             OutlineButton(
@@ -224,6 +223,7 @@ class _CreateEventState extends State<CreateEvent> {
                   Navigator.pop(ctx);
                   FocusScope.of(context).unfocus();
                   Navigator.pop(ctx);
+                  FocusScope.of(context).unfocus();
                 }),
 
             SizedBox(width: 110),
