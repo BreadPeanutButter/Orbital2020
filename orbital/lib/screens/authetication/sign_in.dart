@@ -102,9 +102,18 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               SizedBox(height: 30),
+              CupertinoButton.filled(
+                onPressed: () =>  Navigator.pushNamed(context, '/exploreanonymous'),
+                child: Text('Guest Sign In'),
+              ),
+              SizedBox(height: 30,)
             ],
           )),
     );
+  }
+
+  Future signInAnonymously(){
+    return _auth.signInAnonymously();
   }
 
   void createRecord(Firestore databaseReference, FirebaseUser user) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orbital/anonymous/explore_anonymous.dart';
 import 'screens/event_feed/event_feed.dart';
 import 'screens/explore/explore.dart';
 import 'package:orbital/screens/authetication/sign_in.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (BuildContext ctx) => SignIn(),
         '/explore': (BuildContext ctx) => Explore(),
-        '/eventfeed': (BuildContext ctx) => EventFeed()
+        '/eventfeed': (BuildContext ctx) => EventFeed(),
+        '/exploreanonymous' : (BuildContext ctx) => ExploreAnonymous()
       },
     );
   }
