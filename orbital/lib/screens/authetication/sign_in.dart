@@ -36,31 +36,43 @@ class _SignInState extends State<SignIn> {
                   borderRadius: BorderRadius.circular(20.0),
                   child: Image.asset("images/logo.png", fit: BoxFit.fill)),
               SizedBox(height: 30),
-              TextFormField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Provide an email';
-                  }
-                },
-                decoration: InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'you@example.com',
-                    icon: Icon(Icons.email)),
-                keyboardType: TextInputType.emailAddress,
-                onSaved: (input) => _email = input,
-              ),
-              TextFormField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Provide a password';
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  icon: Icon(Icons.vpn_key),
+              SizedBox(
+                width: 400,
+                child: Column(
+                  children: [
+                    SizedBox(
+                        width: 365,
+                        child: TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Provide an email';
+                            }
+                          },
+                          decoration: InputDecoration(
+                              labelText: 'Email',
+                              hintText: 'you@example.com',
+                              icon: Icon(Icons.email)),
+                          keyboardType: TextInputType.emailAddress,
+                          onSaved: (input) => _email = input,
+                        )),
+                    SizedBox(
+                      width: 365,
+                      child: TextFormField(
+                        validator: (input) {
+                          if (input.isEmpty) {
+                            return 'Provide a password';
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          icon: Icon(Icons.vpn_key),
+                        ),
+                        onSaved: (input) => _password = input,
+                        obscureText: true,
+                      ),
+                    ),
+                  ],
                 ),
-                onSaved: (input) => _password = input,
-                obscureText: true,
               ),
               SizedBox(height: 30),
               SizedBox(
