@@ -113,16 +113,17 @@ class _SignInState extends State<SignIn> {
                                 children: <Widget>[
                                   Image.asset(
                                     "images/google_logo.png",
-                                    height: 35,
+                                    height: 33,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      'Sign in with Google',
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.grey[700],
-                                      ),
+                                    child: Flexible(
+                                      fit: FlexFit.tight,
+                                      child: Text('Sign in with Google',
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.grey[700],
+                                          )),
                                     ),
                                   ),
                                 ]),
