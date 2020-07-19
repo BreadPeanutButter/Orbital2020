@@ -141,9 +141,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 Navigator.of(context).pop(true);
               });
               return AlertDialog(
-                title: Text('Sign in failed'),
-                content:
-                    Text("This email is being used! Please try another email."),
+                title: Text('Oops! Sign up failed'),
+                content: Text(
+                    "This email is already registered. Please sign in with your existing account."),
                 actions: [
                   FlatButton(
                     onPressed: () =>
