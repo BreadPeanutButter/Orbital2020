@@ -8,7 +8,7 @@ import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 
 
-enum Drawers {explore , logout}
+enum Drawers {explore , eventfeed, logout}
 
 class AppDrawerAnonymous extends StatelessWidget {
   Drawers drawer;
@@ -49,7 +49,32 @@ class AppDrawerAnonymous extends StatelessWidget {
                 )),
             onTap: () => Navigator.pushNamed(context, '/explore_anonymous'),
           )),
-          SizedBox(height: 480,),
+
+          Ink(
+            decoration: BoxDecoration(
+              color: drawer == Drawers.eventfeed
+                  ? Colors.blue[400]
+                  : Colors.transparent,
+              border: drawer == Drawers.eventfeed
+                  ? Border.all(width: 2, color: Colors.grey[600])
+                  : null,
+            ),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.newspaper,
+                color: drawer == Drawers.eventfeed
+                    ? Colors.grey[800]
+                    : Colors.grey[700],
+                size: 35,
+              ),
+              title: Text('Event Feed',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  )),
+              onTap: () => Navigator.pushNamed(context, '/eventfeedanonymous'),
+          )),
+          SizedBox(height: 390,),
           Ink(
           decoration: BoxDecoration(
             color: drawer == Drawers.logout
