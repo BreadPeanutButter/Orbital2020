@@ -122,12 +122,18 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
       );
     }
 
-    void _publishEvent() async {
-      print(imageURL);
-      widget.ccaDocument.reference.updateData(
-          {'Description': description, 'Contact': contact, 'image': imageURL});
-      DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
-      _successDialog(snapShot);
+    void _publish() async {
+      if (_key.currentState.validate()) {
+        _key.currentState.save();
+        print(imageURL);
+        widget.ccaDocument.reference.updateData({
+          'Description': description,
+          'Contact': contact,
+          'image': imageURL
+        });
+        DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
+        _successDialog(snapShot);
+      }
     }
 
     Future uploadImage(BuildContext context) async {
@@ -202,23 +208,41 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
                           ),
                     Container(
                         padding: EdgeInsets.all(8),
-                        child: new TextField(
+                        child: new TextFormField(
+                            validator: (input) {
+                              if (input.isEmpty || input == null) {
+                                return 'Provide a CCA Description';
+                              }
+                            },
+                            autovalidate: true,
+                            maxLines: null,
                             decoration: const InputDecoration(
-                                labelText: "Name of event"),
+                              labelText: "Description",
+                              hintText: 'What we do',
+                            ),
                             autocorrect: true,
                             controller: descriptionController,
-                            onChanged: (String value) {
+                            onSaved: (String value) {
                               description = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
-                        child: new TextField(
+                        child: new TextFormField(
+                            validator: (input) {
+                              if (input.isEmpty || input == null) {
+                                return 'Provide contact. Enter each form of contact on a new line.';
+                              }
+                            },
+                            autovalidate: true,
+                            maxLines: null,
                             decoration: const InputDecoration(
-                                labelText: "Provide events details",
-                                hintText: 'What the event is about'),
+                              labelText: 'Contact details',
+                              hintText:
+                                  'Email: cca@nus.com\nWhatsapp: 8888 8888',
+                            ),
                             autocorrect: true,
                             controller: contactController,
-                            onChanged: (String value) {
+                            onSaved: (String value) {
                               contact = value;
                             })),
                     SizedBox(height: 20),
@@ -227,7 +251,7 @@ class _CCAAdminEditState extends State<CCAAdminEdit> {
                       child: CupertinoButton.filled(
                           child: Text('Done'),
                           onPressed: () {
-                            _publishEvent();
+                            _publish();
                           }),
                     ),
                   ]),

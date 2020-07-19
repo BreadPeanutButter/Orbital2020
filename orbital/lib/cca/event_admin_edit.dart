@@ -187,18 +187,21 @@ class _EventAdminEditState extends State<EventAdminEdit> {
     }
 
     void _publishEvent() async {
-      print(widget.imageURL);
-      widget.ccaDocument.reference.updateData({
-        'Name': widget.name,
-        'Details': widget.details,
-        'Location': widget.location,
-        'RegisterInstructions': widget.registrationInstructions,
-        'EventTime': widget.eventTime,
-        'image': widget.imageURL,
-        'Closed': widget.closed
-      });
-      DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
-      _successDialogEdit(snapShot);
+      if (_key.currentState.validate()) {
+        _key.currentState.save();
+        print(widget.imageURL);
+        widget.ccaDocument.reference.updateData({
+          'Name': widget.name,
+          'Details': widget.details,
+          'Location': widget.location,
+          'RegisterInstructions': widget.registrationInstructions,
+          'EventTime': widget.eventTime,
+          'image': widget.imageURL,
+          'Closed': widget.closed
+        });
+        DocumentSnapshot snapShot = await widget.ccaDocument.reference.get();
+        _successDialogEdit(snapShot);
+      }
     }
 
     Future uploadImage(BuildContext context) async {
@@ -310,61 +313,91 @@ class _EventAdminEditState extends State<EventAdminEdit> {
                           ),
                     Container(
                         padding: EdgeInsets.all(8),
-                        child: new TextField(
+                        child: new TextFormField(
+                            autovalidate: true,
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return 'Provide event name';
+                              }
+                            },
                             maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Name of event"),
                             autocorrect: true,
                             controller: nameController,
-                            onChanged: (String value) {
+                            onSaved: (String value) {
                               widget.name = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
-                        child: new TextField(
+                        child: new TextFormField(
+                            autovalidate: true,
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return 'Provide event details';
+                              }
+                            },
                             maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Provide events details",
                                 hintText: 'What the event is about'),
                             autocorrect: true,
                             controller: detailsController,
-                            onChanged: (String value) {
+                            onSaved: (String value) {
                               widget.details = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
-                        child: new TextField(
+                        child: new TextFormField(
+                            autovalidate: true,
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return 'Provide event date and time';
+                              }
+                            },
                             maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Provide event date and time",
                                 hintText: 'When is the event held'),
                             autocorrect: true,
                             controller: eventTimeController,
-                            onChanged: (String value) {
+                            onSaved: (String value) {
                               widget.eventTime = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
-                        child: new TextField(
+                        child: new TextFormField(
+                            autovalidate: true,
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return 'Provide location of event';
+                              }
+                            },
                             maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Provide event location",
                                 hintText: 'Where is the event held'),
                             autocorrect: true,
                             controller: locationController,
-                            onChanged: (String value) {
+                            onSaved: (String value) {
                               widget.location = value;
                             })),
                     Container(
                         padding: EdgeInsets.all(8),
-                        child: new TextField(
+                        child: new TextFormField(
+                            autovalidate: true,
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return 'Provide sign up instructions';
+                              }
+                            },
                             maxLines: null,
                             decoration: const InputDecoration(
                                 labelText: "Provide sign up instructions",
                                 hintText: 'How to sign up'),
                             autocorrect: true,
                             controller: RIController,
-                            onChanged: (String value) {
+                            onSaved: (String value) {
                               widget.registrationInstructions = value;
                             })),
                     SizedBox(height: 20),
