@@ -201,7 +201,7 @@ class _SignInState extends State<SignIn> {
       return true;
     } catch (e) {
       print(e.message);
-      print("Error logging with google");
+      print("Error signing in with google");
       return false;
     }
   }
