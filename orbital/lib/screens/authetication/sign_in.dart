@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orbital/screens/authetication/sign_up.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -31,7 +32,6 @@ class _SignInState extends State<SignIn> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
-              SizedBox(height: 10),
               ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
                   child: Image.asset("images/logo.png", fit: BoxFit.fill)),
@@ -63,107 +63,147 @@ class _SignInState extends State<SignIn> {
                 obscureText: true,
               ),
               SizedBox(height: 30),
-              CupertinoButton.filled(
-                onPressed: _signIn,
-                child: Text('Log in'),
-              ),
-              SizedBox(height: 30),
-              CupertinoButton.filled(
-                  onPressed: navigateToSignUp, child: Text('Sign Up')),
-              SizedBox(height: 30),
-              OutlineButton(
-                splashColor: Colors.grey,
-                onPressed: () async { 
-                  await loginWithGoogle(); 
-                },
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-                highlightElevation: 0,
-                borderSide: BorderSide(color: Colors.grey),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                     children: <Widget>[
-                       Image.asset("images/google_logo.png", height: 35,),
-                        Padding(
-                           padding: const EdgeInsets.only(left: 10),
-                           child: Text(
-                              'Sign in with Google',
-                              style: TextStyle(
-                                 fontSize: 20,
-                                color: Colors.grey,
-                              ),
-
-                           ),
-                        ),
-                     ]
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              CupertinoButton.filled(
-                onPressed: () =>  Navigator.pushNamed(context, '/exploreanonymous'),
-                child: Text('Guest Sign In'),
-              ),
-              SizedBox(height: 30,)
+              SizedBox(
+                  width: 400,
+                  child: Column(children: [
+                    SizedBox(
+                        width: 280,
+                        height: 55,
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                          color: Colors.blue,
+                          onPressed: _signIn,
+                          child: Text(
+                            'Sign in',
+                            style: TextStyle(fontSize: 22),
+                          ),
+                        )),
+                    SizedBox(height: 20),
+                    SizedBox(
+                        height: 55,
+                        width: 280,
+                        child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40)),
+                            color: Colors.blue,
+                            onPressed: navigateToSignUp,
+                            child: Text(
+                              'Sign Up',
+                              style: TextStyle(fontSize: 22),
+                            ))),
+                    SizedBox(height: 20),
+                    SizedBox(
+                        width: 280,
+                        height: 55,
+                        child: OutlineButton(
+                          splashColor: Colors.grey,
+                          onPressed: () async {
+                            await loginWithGoogle();
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                          highlightElevation: 0,
+                          borderSide: BorderSide(color: Colors.grey[600]),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/google_logo.png",
+                                    height: 35,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Sign in with Google',
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        )),
+                    SizedBox(height: 20),
+                    SizedBox(
+                        height: 55,
+                        width: 280,
+                        child: FlatButton.icon(
+                          icon: Icon(FontAwesomeIcons.userSecret),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                          color: Colors.blue,
+                          onPressed: () =>
+                              Navigator.pushNamed(context, '/exploreanonymous'),
+                          label: Text(
+                            'Guest Sign In',
+                            style: TextStyle(fontSize: 22),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 30,
+                    )
+                  ]))
             ],
           )),
     );
   }
 
-  Future signInAnonymously(){
+  Future signInAnonymously() {
     return _auth.signInAnonymously();
   }
 
   void createRecord(Firestore databaseReference, FirebaseUser user) async {
-        await databaseReference.collection("User").document(user.uid).setData({
-        'Email': user.email,
-        'Name': user.displayName,
-        'Favourite': <String>[],
-        'BookmarkedEvent': <String>[],
-        'DateJoined': DateTime.now(),
-        'googleSignedIn': "true"
-      });
-    } 
-
+    await databaseReference.collection("User").document(user.uid).setData({
+      'Email': user.email,
+      'Name': user.displayName,
+      'Favourite': <String>[],
+      'BookmarkedEvent': <String>[],
+      'DateJoined': DateTime.now(),
+      'googleSignedIn': "true"
+    });
+  }
 
   Future<bool> loginWithGoogle() async {
-      try {
-        GoogleSignInAccount account = await _googleSignIn.signIn();
-        if(account == null )
-          return false;
-        AuthResult res = await _auth.signInWithCredential(GoogleAuthProvider.getCredential(
-          idToken: (await account.authentication).idToken,
-          accessToken: (await account.authentication).accessToken,
-        ));
-        final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    try {
+      GoogleSignInAccount account = await _googleSignIn.signIn();
+      if (account == null) return false;
+      AuthResult res =
+          await _auth.signInWithCredential(GoogleAuthProvider.getCredential(
+        idToken: (await account.authentication).idToken,
+        accessToken: (await account.authentication).accessToken,
+      ));
+      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-        final AuthCredential credential = GoogleAuthProvider.getCredential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final FirebaseUser user =
+          (await _auth.signInWithCredential(credential)).user;
 
-        final snapShot = await databaseReference.collection("User").document(user.uid).get();
-        if (!snapShot.exists){
-            createRecord(databaseReference, user);
-            Navigator.pushNamed(context, '/explore');
-        }
-
-        else{
-          Navigator.pushNamed(context, '/explore');
-        }
-                        
-        if(res.user == null)
-          return false;
-        return true;
-      } catch (e) {
-        print(e.message);
-        print("Error logging with google");
-        return false;
+      final snapShot =
+          await databaseReference.collection("User").document(user.uid).get();
+      if (!snapShot.exists) {
+        createRecord(databaseReference, user);
+        Navigator.pushNamed(context, '/explore');
+      } else {
+        Navigator.pushNamed(context, '/explore');
       }
+
+      if (res.user == null) return false;
+      return true;
+    } catch (e) {
+      print(e.message);
+      print("Error logging with google");
+      return false;
+    }
   }
 
   void navigateToSignUp() {

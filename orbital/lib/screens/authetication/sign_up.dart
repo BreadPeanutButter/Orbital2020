@@ -58,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
               TextFormField(
                 validator: (input) {
                   if (input.length < 8) {
-                    return 'Longer password please';
+                    return 'Your password has to have at least 8 characters';
                   }
                 },
                 decoration: InputDecoration(
@@ -68,7 +68,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 onSaved: (input) => _password = input,
                 obscureText: true,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 40),
               CupertinoButton.filled(onPressed: signUp, child: Text('Sign Up')),
             ],
           ))),
