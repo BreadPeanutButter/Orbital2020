@@ -67,7 +67,7 @@ class _SignInState extends State<SignIn> {
                   width: 400,
                   child: Column(children: [
                     SizedBox(
-                        width: 280,
+                        width: 290,
                         height: 55,
                         child: FlatButton(
                           shape: RoundedRectangleBorder(
@@ -82,7 +82,7 @@ class _SignInState extends State<SignIn> {
                     SizedBox(height: 20),
                     SizedBox(
                         height: 55,
-                        width: 280,
+                        width: 290,
                         child: FlatButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(40)),
@@ -94,7 +94,7 @@ class _SignInState extends State<SignIn> {
                             ))),
                     SizedBox(height: 20),
                     SizedBox(
-                        width: 280,
+                        width: 290,
                         height: 55,
                         child: OutlineButton(
                           splashColor: Colors.grey,
@@ -131,7 +131,7 @@ class _SignInState extends State<SignIn> {
                     SizedBox(height: 20),
                     SizedBox(
                         height: 55,
-                        width: 280,
+                        width: 290,
                         child: FlatButton.icon(
                           icon: Icon(FontAwesomeIcons.userSecret),
                           shape: RoundedRectangleBorder(
