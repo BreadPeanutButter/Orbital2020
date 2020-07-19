@@ -123,7 +123,7 @@ class EventFeedbackAdmin extends StatelessWidget {
 
   Widget expendableStats() {
     return ExpandableNotifier(
-        initialExpanded: true,
+        initialExpanded: false,
         child: ExpandablePanel(
             header: Row(children: [
               Icon(
@@ -194,50 +194,51 @@ class EventFeedbackAdmin extends StatelessWidget {
   Widget feedbackWidget(DocumentSnapshot doc) {
     final df = new DateFormat('dd/MM/yyyy');
     return Container(
-      margin: EdgeInsets.all(2),
-      padding: const EdgeInsets.fromLTRB(5, 4, 3, 4),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.grey,
-          width: 2.0,
+        margin: EdgeInsets.all(2),
+        padding: const EdgeInsets.fromLTRB(5, 4, 3, 4),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(4.0)),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(4.0)),
-      ),
-      child: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              doc['Anonymous']
-                  ? Flexible(
-                      flex: 6,
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  doc['Anonymous']
+                      ? Flexible(
+                          flex: 6,
+                          fit: FlexFit.tight,
+                          child: Text("${doc['Name']}"))
+                      : Flexible(
+                          flex: 6,
+                          fit: FlexFit.tight,
+                          child: Text("${doc['Name']}\n${doc['Email']}")),
+                  Spacer(
+                    flex: 5,
+                  ),
+                  Flexible(
+                      flex: 3,
                       fit: FlexFit.tight,
-                      child: Text("${doc['Name']}"))
-                  : Flexible(
-                      flex: 6,
-                      fit: FlexFit.tight,
-                      child: Text("${doc['Name']}\n${doc['Email']}")),
-              Spacer(
-                flex: 5,
+                      child: Text("${df.format(doc['DateTime'].toDate())}")),
+                ],
               ),
-              Flexible(
-                  flex: 3,
-                  fit: FlexFit.tight,
-                  child: Text("${df.format(doc['DateTime'].toDate())}")),
+              SizedBox(
+                height: 7,
+              ),
+              Text("Rating: ${doc['Rating']}/5.0"),
+              SizedBox(
+                height: 7,
+              ),
+              Text("${doc['Comment']}"),
             ],
           ),
-          SizedBox(
-            height: 7,
-          ),
-          Text("Rating: ${doc['Rating']}/5.0"),
-          SizedBox(
-            height: 4,
-          ),
-          Text("${doc['Comment']}"),
-        ],
-      ),
-    );
+        ));
   }
 
   Widget expendableFeedback(AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -254,8 +255,7 @@ class EventFeedbackAdmin extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20))
       ]),
       collapsed: SizedBox(),
-      expanded: ListView(
-        shrinkWrap: true,
+      expanded: Column(
         children: snapshot.data.documents.map((DocumentSnapshot document) {
           return feedbackWidget(document);
         }).toList(),
