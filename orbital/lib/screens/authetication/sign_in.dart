@@ -117,14 +117,11 @@ class _SignInState extends State<SignIn> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
-                                    child: Flexible(
-                                      fit: FlexFit.tight,
-                                      child: Text('Sign in with Google',
-                                          style: TextStyle(
-                                            fontSize: 22,
-                                            color: Colors.grey[700],
-                                          )),
-                                    ),
+                                    child: Text('Sign in with Google',
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          color: Colors.grey[700],
+                                        )),
                                   ),
                                 ]),
                           ),
