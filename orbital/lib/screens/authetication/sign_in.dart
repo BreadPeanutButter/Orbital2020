@@ -164,7 +164,8 @@ class _SignInState extends State<SignIn> {
       'Favourite': <String>[],
       'BookmarkedEvent': <String>[],
       'DateJoined': DateTime.now(),
-      'googleSignedIn': "true"
+      'AdminOf': <String>[],
+      'googleSignedIn': true
     });
   }
 

@@ -11,7 +11,7 @@ class Auth {
   String email = "";
   String uid = "";
   String dateJoined = "";
-  String googleSignedIn = "";
+  bool googleSignedIn = false;
 
   Auth() {
     getCurrentUser();

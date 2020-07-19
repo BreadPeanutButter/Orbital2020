@@ -25,10 +25,7 @@ class _ProfileState extends State<Profile> {
     await FirebaseAuth.instance.signOut();
     await googleSignIn.disconnect();
     await googleSignIn.signOut();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-    });
+    
   }
 
   signOut() async {
@@ -50,7 +47,6 @@ class _ProfileState extends State<Profile> {
     Widget continueButton = FlatButton(
       child: Text("Continue"),
       onPressed: () {
-        resetEmail(widget.auth.email);
         SchedulerBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context)
               .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
@@ -126,8 +122,38 @@ class _ProfileState extends State<Profile> {
         });
   }
 
-  Widget actionButtons(String googleSignedIn) {
-    if(googleSignedIn != "true"){
+
+  void _successDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Logout"),
+          content:
+              new Text("You have logout from your account"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            OutlineButton(
+                highlightedBorderColor: Colors.blue,
+                borderSide: BorderSide(color: Colors.blue),
+                child: new Text("Ok"),
+                onPressed: () {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/', (Route<dynamic> route) => false);
+                  });
+                }),
+
+            SizedBox(width: 110),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget actionButtons(bool googleSignedIn) {
+    if(googleSignedIn != true){
       return Padding(
         padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 30.0),
         child: new Row(
@@ -190,6 +216,7 @@ class _ProfileState extends State<Profile> {
                   color: Colors.green,
                   onPressed: () {
                     signOutGoogle();
+                    _successDialog(); 
                   },
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(20.0)),
@@ -314,7 +341,7 @@ class _ProfileState extends State<Profile> {
     String name = widget.auth.name;
     String email = widget.auth.email;
     String dateJoined = 'Joined ' + widget.auth.dateJoined;
-    String googleSignedIn = widget.auth.googleSignedIn;
+    bool googleSignedIn = widget.auth.googleSignedIn;
     return new Scaffold(
         appBar: new AppBar(
           title: Text(
