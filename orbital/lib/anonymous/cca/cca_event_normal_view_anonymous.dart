@@ -171,6 +171,16 @@ class _EventNormalViewAnonymousState extends State<EventNormalViewAnonymous> {
 
 
     return Scaffold(
-        body: helper());
+      appBar: AppBar(
+        title: Text(name, style: TextStyle(color: Colors.black)),
+        centerTitle: true,
+        leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () => Navigator.pop(context),
+        color: Colors.white,
+        )),
+            
+        body: helper()
+        );
   }
 }
