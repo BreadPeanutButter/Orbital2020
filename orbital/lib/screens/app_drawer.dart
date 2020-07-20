@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:orbital/favourites/favourites.dart';
 import 'package:orbital/my_ccas/my_ccas.dart';
 import 'package:orbital/my_events/my_events.dart';
@@ -7,18 +10,66 @@ import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
 
-enum Drawers { eventfeed, explore, bookmark, profile, myCCAs, favourites }
+enum Drawers { eventfeed, explore, bookmark, profile, myCCAs, favourites,logout }
 
 class AppDrawer extends StatelessWidget {
   Drawers drawer;
   Auth auth;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   AppDrawer({@required this.drawer}) {
     auth = new Auth();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Future<Null> signOutGoogle() async {
+    await FirebaseAuth.instance.signOut();
+    await googleSignIn.disconnect();
+    await googleSignIn.signOut();
+    
+  }
+
+  signOut(BuildContext context) async {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth.signOut();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+    });
+  }
+
+  
+  void _successDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Logout"),
+          content:
+              new Text("You have logout from your account"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            OutlineButton(
+                highlightedBorderColor: Colors.blue,
+                borderSide: BorderSide(color: Colors.blue),
+                child: new Text("Ok"),
+                onPressed: () {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/', (Route<dynamic> route) => false);
+                  });
+                }),
+
+            SizedBox(width: 110),
+          ],
+        );
+      },
+    );
+  }
+
+
+  Drawer drawerWidget(BuildContext context){
+    bool googleSignedIn = auth.googleSignedIn;
     return new Drawer(
         child: Column(children: <Widget>[
       DrawerHeader(
@@ -176,6 +227,49 @@ class AppDrawer extends StatelessWidget {
                           auth: auth,
                         ))),
           )),
+           SizedBox(height: 200,),
+          Ink(
+          decoration: BoxDecoration(
+            color: drawer == Drawers.logout
+                ? Colors.blue[400]
+                : Colors.transparent,
+          ),
+          child: ListTile(
+            leading: Icon(
+              FontAwesomeIcons.powerOff,
+              size: 35,
+              color: drawer == Drawers.logout
+                  ? Colors.blue[900]
+                  : Colors.blue[600],
+            ),
+            title: Text('Logout',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                )),
+            onTap: () => !googleSignedIn ? signOut(context) : {
+              signOutGoogle(),
+              _successDialog(context)
+               
+            } 
+          ))
     ]));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (auth.name.isEmpty || auth.email.isEmpty) {
+      return FutureBuilder(
+          future: auth.getCurrentUser(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return drawerWidget(context);
+            }
+          });
+    } else {
+      return drawerWidget(context);
+    }
   }
 }

@@ -20,23 +20,6 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
-    
-  Future<Null> signOutGoogle() async {
-    await FirebaseAuth.instance.signOut();
-    await googleSignIn.disconnect();
-    await googleSignIn.signOut();
-    
-  }
-
-  signOut() async {
-    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    await firebaseAuth.signOut();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-    });
-  }
-
   showAlertDialog(BuildContext context) {
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
@@ -162,23 +145,6 @@ class _ProfileState extends State<Profile> {
           children: <Widget>[
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(right: 10.0),
-                child: Container(
-                    child: new RaisedButton(
-                  child: new Text("Logout"),
-                  textColor: Colors.white,
-                  color: Colors.green,
-                  onPressed: () {
-                    signOut();
-                  },
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(20.0)),
-                )),
-              ),
-              flex: 2,
-            ),
-            Expanded(
-              child: Padding(
                 padding: EdgeInsets.only(left: 5.0),
                 child: Container(
                     child: new RaisedButton(
@@ -200,33 +166,7 @@ class _ProfileState extends State<Profile> {
     }
 
     else{
-      return Padding(
-        padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 30.0),
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(right: 10.0),
-                child: Container(
-                    child: new RaisedButton(
-                  child: new Text("Logout"),
-                  textColor: Colors.white,
-                  color: Colors.green,
-                  onPressed: () {
-                    signOutGoogle();
-                    _successDialog(); 
-                  },
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(20.0)),
-                )),
-              ),
-              flex: 2,
-            )
-          ]
-        )
-      );
+      return SizedBox();
     }
 
   }
