@@ -238,9 +238,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(
               FontAwesomeIcons.powerOff,
               size: 35,
-              color: drawer == Drawers.logout
-                  ? Colors.blue[900]
-                  : Colors.blue[600],
+              color: Colors.red
             ),
             title: Text('Logout',
                 style: TextStyle(
