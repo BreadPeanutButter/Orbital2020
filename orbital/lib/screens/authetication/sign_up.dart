@@ -31,43 +31,53 @@ class _SignUpPageState extends State<SignUpPage> {
               ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
                   child: Image.asset("images/logo.png", fit: BoxFit.fill)),
-              TextFormField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Please provide a username';
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  icon: Icon(Icons.account_box),
-                ),
-                onSaved: (input) => _name = input,
-              ),
-              TextFormField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Provide an email';
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  icon: Icon(Icons.email),
-                ),
-                onSaved: (input) => _email = input,
-              ),
-              TextFormField(
-                validator: (input) {
-                  if (input.length < 8) {
-                    return 'Your password has to have at least 8 characters';
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  icon: Icon(Icons.vpn_key),
-                ),
-                onSaved: (input) => _password = input,
-                obscureText: true,
-              ),
+              SizedBox(
+                  width: 400,
+                  child: Column(children: [
+                    SizedBox(
+                        width: 365,
+                        child: TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Please provide a username';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                            icon: Icon(Icons.account_box),
+                          ),
+                          onSaved: (input) => _name = input,
+                        )),
+                    SizedBox(
+                        width: 365,
+                        child: TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Provide an email';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            icon: Icon(Icons.email),
+                          ),
+                          onSaved: (input) => _email = input,
+                        )),
+                    SizedBox(
+                        width: 365,
+                        child: TextFormField(
+                          validator: (input) {
+                            if (input.length < 8) {
+                              return 'Your password has to have at least 8 characters';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            icon: Icon(Icons.vpn_key),
+                          ),
+                          onSaved: (input) => _password = input,
+                          obscureText: true,
+                        ))
+                  ])),
               SizedBox(height: 40),
               CupertinoButton.filled(onPressed: signUp, child: Text('Sign Up')),
             ],
@@ -83,7 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
       'BookmarkedEvent': <String>[],
       'DateJoined': DateTime.now(),
       'AdminOf': <String>[],
-      'googleSignedIn' : false,
+      'googleSignedIn': false,
     });
   }
 

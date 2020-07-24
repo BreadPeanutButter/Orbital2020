@@ -68,7 +68,7 @@ class AppDrawerAnonymous extends StatelessWidget {
             onTap: () => Navigator.pushNamed(context, '/eventfeedanonymous'),
           )),
       SizedBox(
-        height: 350,
+        height: 370,
       ),
       Ink(
           decoration: BoxDecoration(

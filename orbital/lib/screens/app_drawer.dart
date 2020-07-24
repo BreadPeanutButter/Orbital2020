@@ -232,7 +232,7 @@ class AppDrawer extends StatelessWidget {
                         ))),
           )),
       SizedBox(
-        height: 140,
+        height: 160,
       ),
       Ink(
           decoration: BoxDecoration(
