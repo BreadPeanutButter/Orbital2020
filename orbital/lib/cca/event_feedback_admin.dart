@@ -205,25 +205,25 @@ class EventFeedbackAdmin extends StatelessWidget {
         ),
         child: Container(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   doc['Anonymous']
                       ? Flexible(
-                          flex: 6,
+                          flex: 3,
                           fit: FlexFit.tight,
                           child: Text("${doc['Name']}"))
                       : Flexible(
-                          flex: 6,
+                          flex: 3,
                           fit: FlexFit.tight,
                           child: Text("${doc['Name']}\n${doc['Email']}")),
                   Spacer(
-                    flex: 5,
+                    flex: 3,
                   ),
                   Flexible(
-                      flex: 3,
+                      flex: 2,
                       fit: FlexFit.tight,
                       child: Text("${df.format(doc['DateTime'].toDate())}")),
                 ],
