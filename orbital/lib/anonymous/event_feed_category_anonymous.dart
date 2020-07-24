@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:orbital/anonymous/cca/cca_event_normal_view_anonymous.dart';
-import 'package:orbital/cca/event_admin_view.dart';
-import 'package:orbital/cca/event_normal_view.dart';
-import 'package:orbital/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -80,12 +77,11 @@ class EventFeedCategoryAnonymous extends StatelessWidget {
   }
 
   void goToEventPage(BuildContext context, DocumentSnapshot document) async {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => EventNormalViewAnonymous(
-                    document: document,
-                  )));
-    }
-  
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EventNormalViewAnonymous(
+                  document: document,
+                )));
+  }
 }

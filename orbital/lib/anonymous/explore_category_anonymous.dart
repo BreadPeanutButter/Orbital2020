@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:orbital/anonymous/cca/cca_normal_view_anonymous.dart';
-import 'package:orbital/cca/cca_normal_view.dart';
 
 class ExploreCategoryAnonymous extends StatelessWidget {
   final database = Firestore.instance;
@@ -63,11 +62,10 @@ class ExploreCategoryAnonymous extends StatelessWidget {
 
   void goToCCAViewPage(BuildContext context, DocumentSnapshot document) {
     Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => CCANormalViewAnonymous(
-                    document: document,
-                  )));
-    
+        context,
+        MaterialPageRoute(
+            builder: (context) => CCANormalViewAnonymous(
+                  document: document,
+                )));
   }
 }

@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:orbital/anonymous/app_drawer_anonymous.dart';
 import 'package:orbital/anonymous/event_feed_all_anonymous.dart';
 import 'package:orbital/anonymous/event_feed_category_anonymous.dart';
-import 'package:orbital/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 
 class EventFeedAnonymous extends StatelessWidget {
   final database = Firestore.instance;

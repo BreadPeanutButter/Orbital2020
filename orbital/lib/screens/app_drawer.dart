@@ -10,7 +10,15 @@ import 'package:orbital/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile.dart';
 
-enum Drawers { eventfeed, explore, bookmark, profile, myCCAs, favourites,logout }
+enum Drawers {
+  eventfeed,
+  explore,
+  bookmark,
+  profile,
+  myCCAs,
+  favourites,
+  logout
+}
 
 class AppDrawer extends StatelessWidget {
   Drawers drawer;
@@ -25,7 +33,6 @@ class AppDrawer extends StatelessWidget {
     await FirebaseAuth.instance.signOut();
     await googleSignIn.disconnect();
     await googleSignIn.signOut();
-    
   }
 
   signOut(BuildContext context) async {
@@ -37,7 +44,6 @@ class AppDrawer extends StatelessWidget {
     });
   }
 
-  
   void _successDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -45,8 +51,7 @@ class AppDrawer extends StatelessWidget {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Logout"),
-          content:
-              new Text("You have logout from your account"),
+          content: new Text("You have logout from your account"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             OutlineButton(
@@ -67,8 +72,7 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-
-  Drawer drawerWidget(BuildContext context){
+  Drawer drawerWidget(BuildContext context) {
     bool googleSignedIn = auth.googleSignedIn;
     return new Drawer(
         child: Column(children: <Widget>[
@@ -227,30 +231,26 @@ class AppDrawer extends StatelessWidget {
                           auth: auth,
                         ))),
           )),
-           SizedBox(height: 200,),
-          Ink(
+      SizedBox(
+        height: 140,
+      ),
+      Ink(
           decoration: BoxDecoration(
             color: drawer == Drawers.logout
                 ? Colors.blue[400]
                 : Colors.transparent,
           ),
           child: ListTile(
-            leading: Icon(
-              FontAwesomeIcons.powerOff,
-              size: 35,
-              color: Colors.red
-            ),
-            title: Text('Logout',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                )),
-            onTap: () => !googleSignedIn ? signOut(context) : {
-              signOutGoogle(),
-              _successDialog(context)
-               
-            } 
-          ))
+              leading:
+                  Icon(FontAwesomeIcons.powerOff, size: 35, color: Colors.red),
+              title: Text('Logout',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  )),
+              onTap: () => !googleSignedIn
+                  ? signOut(context)
+                  : {signOutGoogle(), _successDialog(context)}))
     ]));
   }
 
