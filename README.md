@@ -2,17 +2,17 @@
 
 Table of Contents
 =================
- * [NUS WhatToDo](#nus-whattodo)
-         * [Team](#team)
-         * [Download and Install NUS WhatToDo](#download-and-install-nus-whattodo)
-         * [Motivation](#motivation)
-         * [Aim](#aim)
-         * [Concept Validation](#concept-validation)
-         * [User Stories](#user-stories)
-         * [Tech Stack](#tech-stack)
-         * [Database Design](#database-design)
-         * [Features](#features)
-         * [Challenges Faced](#challenges-faced)
+* [NUS WhatToDo](#nus-whattodo)
+     * [Team](#team)
+     * [Download and Install NUS WhatToDo](#download-and-install-nus-whattodo)
+     * [Motivation](#motivation)
+     * [Aim](#aim)
+     * [Concept Validation](#concept-validation)
+     * [User Stories](#user-stories)
+     * [Tech Stack](#tech-stack)
+     * [Database Design](#database-design)
+     * [Features](#features)
+     * [Challenges Faced](#challenges-faced)
 
 
 
